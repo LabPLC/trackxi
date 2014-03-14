@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="codigo.labplc.mx.trackxi"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="18" />
+
+    <permission
+        android:name="codigo.labplc.mx.mitaxiusuario.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="codigo.labplc.mx.mitaxiusuario.maps.googlev2.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="codigo.labplc.mx.trackxi.Trackxi"
+            android:configChanges="orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="codigo.labplc.mx.trackxi.buscarplaca.BuscaPlaca"
+            android:configChanges="orientation"
+            android:label="@string/title_activity_busca_placa"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="codigo.labplc.mx.trackxi.paginador.Paginador"
+            android:configChanges="orientation"
+            android:label="@string/title_activity_busca_placa"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.NoActionBar" >
+        </activity>
+        <activity
+            android:name="codigo.labplc.mx.trackxi.buscarplaca.paginador.DatosAuto"
+            android:configChanges="orientation"
+            android:label="@string/title_activity_busca_placa"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog.NoActionBar" >
+        </activity>
+        <activity
+            android:name="codigo.labplc.mx.trackxi.registro.MitaxiRegisterManuallyActivity"
+            android:configChanges="orientation"
+            android:label="@string/title_activity_busca_placa"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.NoActionBar"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <activity
+            android:name="codigo.labplc.mx.trackxi.buscarchofer.BuscarChofer"
+            android:configChanges="orientation"
+            android:label="@string/title_activity_buscar_chofer"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="codigo.labplc.mx.trackxi.buscarplaca.paginador.paginas.Datos"
+            android:configChanges="orientation"
+            android:label="@string/title_activity_datos"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="codigo.labplc.mx.trackxi.Adeudos"
+            android:label="@string/title_activity_adeudos" >
+        </activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:background="@drawable/marco" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/paraque_titulo"
+            android:textColor="@color/generic_amarillo" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@drawable/marco"
+            android:orientation="vertical"
+            android:padding="10dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/paraque_subtitulo"
+                android:textColor="@color/generic_amarillo" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="#000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/paraque_nombre"
+                android:textColor="@color/generic_amarillo" />
+
+            <View
+                android:layout_width="30dp"
+                android:layout_height="2dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="2dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/paraque_correo"
+                android:textColor="@color/generic_amarillo" />
+
+            <View
+                android:layout_width="30dp"
+                android:layout_height="2dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="2dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/paraque_telemer"
+                android:textColor="@color/generic_amarillo" />
+
+            <View
+                android:layout_width="30dp"
+                android:layout_height="2dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="2dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/paraque_correoemer"
+                android:textColor="@color/generic_amarillo" />
+
+            <View
+                android:layout_width="30dp"
+                android:layout_height="2dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/dialogo_paraque_btnAceptar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/boton_redondo_focus"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="@string/paraque_aceptar"
+            android:textColor="@color/generic_amarillo" />
+    </LinearLayout>
+
+</FrameLayout>
