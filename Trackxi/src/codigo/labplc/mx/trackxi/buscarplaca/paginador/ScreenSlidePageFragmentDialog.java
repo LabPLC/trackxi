@@ -11,6 +11,8 @@ import android.widget.TextView;
 import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.buscarchofer.BuscarChofer;
 import codigo.labplc.mx.trackxi.buscarplaca.BuscaPlaca;
+import codigo.labplc.mx.trackxi.buscarplaca.paginador.paginas.Adeudos;
+import codigo.labplc.mx.trackxi.buscarplaca.paginador.paginas.Comentarios;
 import codigo.labplc.mx.trackxi.buscarplaca.paginador.paginas.Datos;
 
 /**
@@ -75,6 +77,13 @@ public class ScreenSlidePageFragmentDialog extends Fragment {
 		if(index==1){
 			Datos datos=new Datos(actividad);
 			return datos.getView();
+		}else if(index==2){
+			Adeudos adeudos= new Adeudos(actividad);
+			return adeudos.getView();
+			
+		}else if(index==3){
+			Comentarios comentarios = new Comentarios(actividad);
+			return comentarios.getView();
 		}else{
 		
 			ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_screen_slide_page, container, false);

@@ -52,5 +52,6 @@
     <string name="title_activity_buscar_chofer">BuscarChofer</string>
     <string name="title_activity_datos">Datos</string>
     <string name="title_activity_adeudos">Adeudos</string>
+    <string name="title_activity_comentarios">Comentarios</string>
 
 </resources>

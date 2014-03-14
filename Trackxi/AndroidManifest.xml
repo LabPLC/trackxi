@@ -83,8 +83,12 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="codigo.labplc.mx.trackxi.Adeudos"
+            android:name="codigo.labplc.mx.trackxi.buscarplaca.paginador.paginas.Adeudos"
             android:label="@string/title_activity_adeudos" >
+        </activity>
+        <activity
+            android:name="codigo.labplc.mx.trackxi.buscarplaca.paginador.paginas.Comentarios"
+            android:label="@string/title_activity_comentarios" >
         </activity>
     </application>
 

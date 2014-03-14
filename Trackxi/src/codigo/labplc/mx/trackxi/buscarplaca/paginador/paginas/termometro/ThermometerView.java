@@ -60,10 +60,10 @@ public class ThermometerView extends View {
 	public void initUI()
 	{
 		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-		params.leftMargin = (int) Utils.convertDpToPixel(getContext(), 16);
-		params.rightMargin = (int) Utils.convertDpToPixel(getContext(), 16);
-		params.topMargin = (int) Utils.convertDpToPixel(getContext(), 32);
-		params.bottomMargin = (int) Utils.convertDpToPixel(getContext(), 16);
+		params.leftMargin = (int) Utils.convertDpToPixel(getContext(), 5);
+		params.rightMargin = (int) Utils.convertDpToPixel(getContext(), 5);
+		params.topMargin = (int) Utils.convertDpToPixel(getContext(), 5);
+		params.bottomMargin = (int) Utils.convertDpToPixel(getContext(), 5);
 		setLayoutParams(params);
 		
 		setLayerType(View.LAYER_TYPE_SOFTWARE, null);
@@ -80,7 +80,7 @@ public class ThermometerView extends View {
         
         textPaint = new Paint();
         backgroundPaint.setAntiAlias(true);
-		textPaint.setColor(Color.BLACK);
+		textPaint.setColor(Color.WHITE);
 		textPaint.setStyle(Paint.Style.FILL);
 		textPaint.setTextSize(30);
         

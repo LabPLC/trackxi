@@ -9,11 +9,26 @@
     tools:context=".Adeudos" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/adeudos_titulo_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="Especificaciones del vehículo" />
+        android:text=""
+        android:textColor="@color/generic_amarillo" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignLeft="@+id/adeudos_titulo_main"
+        android:layout_below="@+id/adeudos_titulo_main" >
+
+        <LinearLayout
+            android:id="@+id/adeudos_ll_contenedor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

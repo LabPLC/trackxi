@@ -15,7 +15,7 @@ import codigo.labplc.mx.trackxi.buscarplaca.paginador.paginas.termometro.Thermom
 public class Datos extends View {
 
 	private TextView marca,submarca,modelo,descripcion;
-	private LinearLayout container;
+	private LinearLayout container,container_usuario;
 	private View view;
 	private Activity context;
 	
@@ -47,17 +47,22 @@ public class Datos extends View {
 	modelo = (TextView)view.findViewById(R.id.datos_tv_modelo);
 	descripcion =(TextView)view.findViewById(R.id.datos_tv_descripcion);
 	container = (LinearLayout)view.findViewById(R.id.Thermometer_Container);
+	container_usuario = (LinearLayout)view.findViewById(R.id.Thermometer_Container_usuarios);
 	
 	crearTermometro();
 		
 	}
 
 	public void crearTermometro(){
-		for (int i = 0; i < 1; i++) {
+
 			final ThermometerView thermometer = new ThermometerView(context);
 			thermometer.setThermometerProgress(50);
 	        container.addView(thermometer);
-		}
+	        final ThermometerView thermometer_usuario = new ThermometerView(context);
+	        thermometer_usuario.setThermometerProgress(80);
+	        container_usuario.addView(thermometer_usuario);
+	        
+		
 	}
 	
 	public View getView(){
