@@ -40,12 +40,13 @@
         android:layout_alignLeft="@+id/mitaxi_register_tv_appname"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="148dp"
-        android:background="@drawable/selector_btn_generic"
+        android:background="@drawable/boton_redondo_press"
         android:paddingBottom="15dp"
         android:paddingTop="15dp"
         android:gravity="center"
+        android:textSize="30dp"
         android:text="@string/mitaxisplash_hola"
-        android:textColor="@drawable/selector_txt_boton_redondo"
+        android:textColor="@color/white"
         android:textStyle="bold" />
 
 </RelativeLayout>

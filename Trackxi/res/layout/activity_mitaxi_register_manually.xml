@@ -65,7 +65,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight=".25"
-            android:src="@drawable/ic_foto_usuario" />
+            android:src="@drawable/ic_launcher_perfil" />
 
         <ScrollView
             android:id="@+id/mitaxiregistermanually_sv_container_infouser"

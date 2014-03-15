@@ -1,31 +1,23 @@
 package codigo.labplc.mx.trackxi.dialogos;
 
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONTokener;
+import java.io.File;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
+import android.content.Intent;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 import codigo.labplc.mx.trackxi.R;
-import codigo.labplc.mx.trackxi.buscarplaca.bean.AutoBean;
-import codigo.labplc.mx.trackxi.buscarplaca.paginador.FragmentPagerAdapterDialog;
-import codigo.labplc.mx.trackxi.network.NetworkUtils;
-import codigo.labplc.mx.trackxi.paginador.MyFragmentPagerAdapter;
-import codigo.labplc.mx.trackxi.paginador.Paginador;
-import codigo.labplc.mx.trackxi.paginador.ScreenSlidePageFragment;
-
-import com.viewpagerindicator.TitlePageIndicator;
 
 /**
  * Clase que maneja los di‡logos 

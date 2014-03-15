@@ -41,7 +41,7 @@
                 android:layout_height="2dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:background="#000" />
+                android:background="@color/generic_amarillo" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -90,6 +90,18 @@
                 android:layout_height="2dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="2dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/paraque_foto"
+                android:textColor="@color/generic_amarillo" />
+
+            <View
+                android:layout_width="30dp"
+                android:layout_height="2dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="2dp" />
         </LinearLayout>
 
         <Button
@@ -98,11 +110,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_marginRight="20dp"
-            android:background="@drawable/boton_redondo_focus"
+            android:background="@drawable/selector_btn_generic"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:text="@string/paraque_aceptar"
-            android:textColor="@color/generic_amarillo" />
+            android:textColor="@drawable/selector_txt_boton_redondo" >
+        </Button>
     </LinearLayout>
 
 </FrameLayout>

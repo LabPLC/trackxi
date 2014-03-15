@@ -2,6 +2,8 @@ package codigo.labplc.mx.trackxi.registro;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,6 +24,8 @@ import org.json.JSONTokener;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -35,9 +39,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -50,6 +54,12 @@ import codigo.labplc.mx.trackxi.registro.validador.EditTextValidator;
 
 public class MitaxiRegisterManuallyActivity extends Activity implements
 		OnClickListener {
+	
+	
+	private int RESULT_LOAD_IMAGE = 1;
+	private int RESULT_LOAD_FOTO =2;
+	
+	private AlertDialog customDialog= null;	//Creamos el dialogo generico
 
 	private EditText etInfousername;
 	private EditText etInfouseremail;
@@ -59,6 +69,7 @@ public class MitaxiRegisterManuallyActivity extends Activity implements
 	private ImageView userfoto;
 	private String foto;
 	private UserBean user;
+	private boolean hasFoto= false;
 
 	private boolean[] listHasErrorEditText = { false, false, false, false };
 
@@ -76,8 +87,7 @@ public class MitaxiRegisterManuallyActivity extends Activity implements
 	 */
 	public void initUI() {
 		// creamos la ruta de la foto con codigo unico
-		foto = Environment.getExternalStorageDirectory() + "/imagen"
-				+ getCode() + ".jpg";
+		foto = Environment.getExternalStorageDirectory() + "/imagen"+ getCode() + ".jpg";
 
 		etInfousername = (EditText) findViewById(R.id.mitaxiregistermanually_et_infousername);
 		etInfouseremail = (EditText) findViewById(R.id.mitaxiregistermanually_et_infouseremail);
@@ -89,11 +99,10 @@ public class MitaxiRegisterManuallyActivity extends Activity implements
 
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-				Uri output = Uri.fromFile(new File(foto));
-				intent.putExtra(MediaStore.EXTRA_OUTPUT, output);
-				startActivityForResult(intent, 1); // 1 para la camara, 2 para
-													// la galeria
+				
+				origenDeLaImagen().show();
+				
+				
 			}
 		});
 
@@ -139,7 +148,7 @@ public class MitaxiRegisterManuallyActivity extends Activity implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.mitaxiregistermanually_btn_ok:
-			if (!isAnyEditTextEmpty()) {
+			if (!isAnyEditTextEmpty()&&hasFoto) {
 				if (!hasErrorEditText()) {
 					if (NetworkUtils.isNetworkConnectionOk(getBaseContext())) {
 						try {
@@ -228,7 +237,6 @@ public class MitaxiRegisterManuallyActivity extends Activity implements
 			empty = true;
 		if (EditTextValidator.isEditTextEmpty(etInfousermailemergency))
 			empty = true;
-
 		return empty;
 	}
 
@@ -248,19 +256,33 @@ public class MitaxiRegisterManuallyActivity extends Activity implements
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == 1) {
+		if (requestCode == RESULT_LOAD_FOTO) {
 			File file = new File(foto);
 			if (file.exists()) {
-				Bitmap myBitmap = BitmapFactory.decodeFile(file
-						.getAbsolutePath());
+				Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
 				Matrix mat = new Matrix();
 				mat.postRotate(-90);
-				Bitmap bMapRotate = Bitmap.createBitmap(myBitmap, 0, 0,
-						myBitmap.getWidth(), myBitmap.getHeight(), mat, true);
+				Bitmap bMapRotate = Bitmap.createBitmap(myBitmap, 0, 0,myBitmap.getWidth(), myBitmap.getHeight(), mat, true);
 				userfoto.setImageBitmap(bMapRotate);
+				hasFoto=true;
 			}
 
 		}
+		if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK&& null != data) {
+			 Uri imageUri = data.getData();
+			 Bitmap myBitmap;
+			try {
+				myBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+				userfoto.setImageBitmap(myBitmap);
+				hasFoto=true;
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+				
+			 
+	    }
 	}
 
 	/**
@@ -293,8 +315,7 @@ public class MitaxiRegisterManuallyActivity extends Activity implements
 				HttpConnectionParams.setConnectionTimeout(par, HTTP_TIMEOUT);
 				HttpConnectionParams.setSoTimeout(par, HTTP_TIMEOUT);
 				ConnManagerParams.setTimeout(par, HTTP_TIMEOUT);
-				HttpPost httppost = new HttpPost(
-						"http://datos.labplc.mx/~mikesaurio/taxi.php?act=pasajero&type=addpost");
+				HttpPost httppost = new HttpPost("http://datos.labplc.mx/~mikesaurio/taxi.php?act=pasajero&type=addpost");
 				MultipartEntity entity = new MultipartEntity();
 				entity.addPart("nombre", new StringBody(user.getNombre() + ""));
 				entity.addPart("correo", new StringBody(user.getCorreo() + ""));
@@ -378,4 +399,53 @@ public class MitaxiRegisterManuallyActivity extends Activity implements
 		}
 
 	}
+	
+	
+	/**
+	 * Dialogo para que el usuario reporte una anomalia en el taxi o el chofer
+	 *
+	 * @param Activity (actividad que llama al diálogo)
+	 * @return Dialog (regresa el dialogo creado)
+	 **/
+	public Dialog origenDeLaImagen()
+    {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	    View view = getLayoutInflater().inflate(R.layout.dialogo_tipo_de_imagen, null);
+	    builder.setView(view);
+	    builder.setCancelable(true);
+		
+        //escucha del boton aceptar
+        ((Button) view.findViewById(R.id.dialogo_tipo_de_imagen_btnCancelar)).setOnClickListener(new OnClickListener() {
+             
+            @Override
+            public void onClick(View view)
+            {
+            	
+            	//Camara
+				Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+				Uri output = Uri.fromFile(new File(foto));
+				intent.putExtra(MediaStore.EXTRA_OUTPUT, output);
+				startActivityForResult(intent, RESULT_LOAD_FOTO); // 1 para la camara, 2 para la galeria
+         
+            	customDialog.dismiss();  //cerramos el diálogo  
+            }
+        });
+            
+          //escucha del boton cancelar
+            ((Button) view.findViewById(R.id.dialogo_tipo_de_imagen_btnAceptar)).setOnClickListener(new OnClickListener() {
+                 
+                @Override
+                public void onClick(View view)
+                {
+	
+    				//Galeria
+    				Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+    				startActivityForResult(i, RESULT_LOAD_IMAGE);
+    				
+                    customDialog.dismiss();  //cerramos el diálogo  
+                }
+            
+        });
+          return (customDialog=builder.create());//regresamos el diálogo;//regresamos el diálogo
+    }   
 }

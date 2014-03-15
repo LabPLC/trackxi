@@ -1,7 +1,14 @@
 package codigo.labplc.mx.trackxi.buscarplaca.paginador.paginas.utlileria;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.DisplayMetrics;
 
 public class Utils {
@@ -19,4 +26,6 @@ public class Utils {
 	    float dp = px / (metrics.densityDpi / 160f);
 	    return dp;
 	}
+	
+	
 }

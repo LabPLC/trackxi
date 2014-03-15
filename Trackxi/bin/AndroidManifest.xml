@@ -35,7 +35,7 @@
             android:configChanges="orientation"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.NoActionBar" >
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,21 +53,21 @@
             android:configChanges="orientation"
             android:label="@string/title_activity_busca_placa"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.NoActionBar" >
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
         </activity>
         <activity
             android:name="codigo.labplc.mx.trackxi.buscarplaca.paginador.DatosAuto"
             android:configChanges="orientation"
             android:label="@string/title_activity_busca_placa"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.DeviceDefault.Dialog.NoActionBar" >
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.NoActionBar" >
         </activity>
         <activity
             android:name="codigo.labplc.mx.trackxi.registro.MitaxiRegisterManuallyActivity"
             android:configChanges="orientation"
             android:label="@string/title_activity_busca_placa"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.NoActionBar"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity

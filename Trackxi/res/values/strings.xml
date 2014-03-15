@@ -48,6 +48,7 @@
     <string name="paraque_correo">Correo: Para identificarte.</string>
     <string name="paraque_telemer">Teléfono de emergencia: Para comunicarnos con un conocido en caso de que te sientas amenazado.</string>
     <string name="paraque_correoemer">Correo de emergencia: Para hacer el seguimiento de tu camino y estado mientras te sientas amenazado.</string>
+    <string name="paraque_foto">Foto: Para personaliar tu perfil.</string>
     <string name="paraque_aceptar">Aceptar</string>
     <string name="title_activity_buscar_chofer">BuscarChofer</string>
     <string name="title_activity_datos">Datos</string>
