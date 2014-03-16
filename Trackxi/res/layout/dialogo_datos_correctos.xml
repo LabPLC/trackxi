@@ -58,20 +58,21 @@
             android:orientation="horizontal" >
 
             <Button
-                android:id="@+id/dialogo_datos_correctos_btnCancelar"
-                android:layout_width="0dp"
+                android:id="@+id/dialogo_datos_correctos_btn_iniciar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
-                android:layout_marginRight="5dp"
-                android:layout_weight=".5"
-                android:background="@drawable/boton_redondo_focus"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_btn_generic"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:text="Cancelar"
-                android:textColor="@color/generic_amarillo" />
+                android:text="Iniciar Viaje"
+                android:textColor="@drawable/selector_txt_boton_redondo" />
 
-            <Button
+            <!--
+                 <Button
                 android:id="@+id/dialogo_datos_correctos_btnAceptar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -84,7 +85,9 @@
                 android:paddingRight="10dp"
                 android:text="Aceptar"
                 android:textColor="@color/generic_amarillo" />
+            -->
         </LinearLayout>
+
     </LinearLayout>
 
 </FrameLayout>

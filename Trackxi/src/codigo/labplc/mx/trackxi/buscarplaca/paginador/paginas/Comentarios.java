@@ -57,7 +57,7 @@ public class Comentarios extends View {
 		
 		
 		for(int i = 0;i< autoBean.getArrayComentarioBean().size();i++){
-			llenarComentario(autoBean.getArrayComentarioBean().get(i).getComentario(),autoBean.getArrayComentarioBean().get(i).getCalificacion());
+			llenarComentario(autoBean.getArrayComentarioBean().get(i).getComentario(),autoBean.getArrayComentarioBean().get(i).getCalificacion(),i);
 		}
 		
 
@@ -65,17 +65,17 @@ public class Comentarios extends View {
 	}
 
 	
-	public void llenarComentario( String concepto, float valor) {
-		LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	public void llenarComentario( String concepto, float valor,int i) {
+	final	LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		view_row = inflater.inflate(R.layout.comentarios_row, null);
 		
-		TextView comentarios_row_tv_descripcion = (TextView)view_row.findViewById(R.id.comentarios_row_tv_descripcion);
+	final	TextView comentarios_row_tv_descripcion = (TextView)view_row.findViewById(R.id.comentarios_row_tv_descripcion);
 		comentarios_row_tv_descripcion.setText(concepto);
 
-		RatingBar comentarios_row_rating=(RatingBar)view_row.findViewById(R.id.comentarios_row_rating);
+	final	RatingBar comentarios_row_rating=(RatingBar)view_row.findViewById(R.id.comentarios_row_rating);
 		comentarios_row_rating.setRating(valor);
 		
-		container.addView(view_row);
+		container.addView(view_row,i);
 		
 	}
 

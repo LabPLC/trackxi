@@ -3,7 +3,9 @@ package codigo.labplc.mx.trackxi.buscarplaca;
 import java.io.IOException;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -195,4 +197,6 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 	public View getView(){
 		return view;
 	}
+	
+
 }

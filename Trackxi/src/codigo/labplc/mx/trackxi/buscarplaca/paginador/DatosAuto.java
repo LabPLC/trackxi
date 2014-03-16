@@ -9,13 +9,21 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import android.app.AlertDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.buscarplaca.bean.AutoBean;
 import codigo.labplc.mx.trackxi.buscarplaca.bean.ComentarioBean;
+import codigo.labplc.mx.trackxi.configuracion.UserSettingActivity;
 import codigo.labplc.mx.trackxi.network.NetworkUtils;
 
 import com.viewpagerindicator.TitlePageIndicator;
@@ -40,6 +48,9 @@ public class DatosAuto extends FragmentActivity{
 	private boolean hasRevista=true;
 	private float sumaCalificacion =0.0f;
 	private boolean entreComentarios=false;
+
+	private static final int RESULT_SETTINGS = 1;
+	
 	
 	
 	@Override
@@ -96,7 +107,58 @@ public class DatosAuto extends FragmentActivity{
 		TitlePageIndicator titleIndicator = (TitlePageIndicator) findViewById(R.id.indicator_dialg);
 		titleIndicator.setViewPager(pager);
 		
+		
+		Button dialogo_datos_correctos_btn_iniciar = (Button) findViewById(R.id.dialogo_datos_correctos_btn_iniciar);
+		dialogo_datos_correctos_btn_iniciar.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+			//*************,dmwd,xmdxeldxmedmxdkmxdjkmkjd kdc kd ck
+			}
+		});
+		
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.trackxi_setting, menu);
+		return true;
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		switch (requestCode) {
+		case RESULT_SETTINGS:
+			showUserSettings();
+			break;
+		}
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+
+		case R.id.action_settings:
+			Intent i = new Intent(this, UserSettingActivity.class);
+			startActivityForResult(i, RESULT_SETTINGS);
+			break;
+
+		}
+
+		return true;
+	}
+	private void showUserSettings() {
+		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+		StringBuilder builder = new StringBuilder();
+
+		builder.append("\n Send report:"+ sharedPrefs.getBoolean("prefSendReport", false));
+
+		builder.append("\n Sync Frequency: "+ sharedPrefs.getString("prefSyncFrequency", "NULL"));
+	}
+	
 
 	/**
 	 * carga todos los comentarios de una placa

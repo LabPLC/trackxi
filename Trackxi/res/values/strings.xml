@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Trackxi</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Configuración</string>
     <string name="hello_world">Hello world!</string>
 
     <!-- Splash -->
@@ -54,31 +54,41 @@
     <string name="title_activity_datos">Datos</string>
     <string name="title_activity_adeudos">Adeudos</string>
     <string name="title_activity_comentarios">Comentarios</string>
-    
-     <!-- Textos Datos Auto -->
-    <string name="texto_calificacion_20">Es un taxi altamente riesgoso, te sugerimos que no te subas, de haberlo hecho toma todas las precauciones posibles.</string>
-	<string name="texto_calificacion_40">Es un taxi riesgoso, de preferencia toma otro, pero, si debes tomarlo toma todas las precauciones posibles.</string>
-	<string name="texto_calificacion_60">Es un taxi de bajo riesgo, te sugerimos lo tomes con mucha precaución y estes al pendiente.</string>
-	<string name="texto_calificacion_80">Es un taxi confiable, aún así recuerda que tu seguridad es muy importante toma siempre todas las precauciones.</string>
-	<string name="texto_calificacion_100">Es un taxi muy bien calificado, por lo que puede ser muy confiable, aún así recuerda que tu seguridad es muy importante toma siempre todas las precauciones, tienes una alta posibilidad de tener un viaje agradable.</string>
 
-	  <!-- Tenencia -->
+    <!-- Textos Datos Auto -->
+    <string name="texto_calificacion_20">Es un taxi altamente riesgoso, te sugerimos que no te subas, de haberlo hecho toma todas las precauciones posibles.</string>
+    <string name="texto_calificacion_40">Es un taxi riesgoso, de preferencia toma otro, pero, si debes tomarlo toma todas las precauciones posibles.</string>
+    <string name="texto_calificacion_60">Es un taxi de bajo riesgo, te sugerimos lo tomes con mucha precaución y estes al pendiente.</string>
+    <string name="texto_calificacion_80">Es un taxi confiable, aún así recuerda que tu seguridad es muy importante toma siempre todas las precauciones.</string>
+    <string name="texto_calificacion_100">Es un taxi muy bien calificado, por lo que puede ser muy confiable, aún así recuerda que tu seguridad es muy importante toma siempre todas las precauciones, tienes una alta posibilidad de tener un viaje agradable.</string>
+
+    <!-- Tenencia -->
     <string name="sin_adeudo_tenencia">Este vehiculo no tiene adeudos.</string>
     <string name="con_adeudo_tenencia">Este vehiculo es irregular.</string>
-    
-      <!-- Revista -->
+
+    <!-- Revista -->
     <string name="sin_revista">Este vehiculo no esta en la revista.</string>
     <string name="con_revista">Este vehiculo es regular.</string>
-    
-      <!-- año carro -->
+
+    <!-- año carro -->
     <string name="carro_viejo">Este vehiculo ya no es optimo.</string>
     <string name="carro_nuevo">Este vehiculo aun es optimo.</string>
-    
-     <!-- infraccion -->
+
+    <!-- infraccion -->
     <string name="tiene_infraccion">Este vehiculo tiene multas</string>
     <string name="no_tiene_infraccion">Este vehiculo no tiene multas</string>
-    
-     <!-- verificaciones -->
+
+    <!-- verificaciones -->
     <string name="tiene_verificaciones">Este vehiculo tiene calcomanía: </string>
     <string name="no_tiene_verificaciones">Este vehiculo no tiene verificaciones</string>
+    <string name="title_activity_trackxi_setting">TrackxiSettingActivity</string>
+    
+    <!-- Preferencias -->
+    <string name="pref_send_report">Enviar reportes de fallo</string>
+    <string name="pref_send_report_summary">Ayudanos a mejorar la app</string>
+    <string name="pref_sync_frequency">Frecuencia de rastreo</string>
+    <string name="pref_sync_frequency_summary">Selecciona la frecuancia</string>
+    <string name="pref_user_profile">Configuración</string>
+    <string name="pref_update_setting">Configuración</string>
+
 </resources>

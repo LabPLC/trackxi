@@ -37,10 +37,8 @@ public class Paginador extends FragmentActivity {
 		// this.pager.setPageTransformer(true, new ZoomOutPageTransformer());
 
 		// Create an adapter with the fragments we show on the ViewPager
-		MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(
-				getSupportFragmentManager());
-		adapter.addFragment(ScreenSlidePageFragment.newInstance(getResources()
-				.getColor(R.color.android_blue), 1,Paginador.this));
+		MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
+		adapter.addFragment(ScreenSlidePageFragment.newInstance(getResources().getColor(R.color.android_blue), 1,Paginador.this));
 		/*adapter.addFragment(ScreenSlidePageFragment.newInstance(getResources()
 				.getColor(R.color.android_red), 2,Paginador.this));*/
 		this.pager.setAdapter(adapter);
