@@ -55,7 +55,7 @@ public class FragmentPagerAdapterDialog extends FragmentPagerAdapter {
 		if(posicion==1){
 			return "General";
 		}else if(posicion==2){
-			return "Datos";
+			return "Detalles";
 		}else if(posicion==3){
 			return "M‡s";
 		}

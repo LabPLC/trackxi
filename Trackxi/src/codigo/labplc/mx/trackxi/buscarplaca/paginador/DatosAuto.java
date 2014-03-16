@@ -1,5 +1,6 @@
 package codigo.labplc.mx.trackxi.buscarplaca.paginador;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import org.json.JSONArray;
@@ -11,8 +12,10 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.buscarplaca.bean.AutoBean;
+import codigo.labplc.mx.trackxi.buscarplaca.bean.ComentarioBean;
 import codigo.labplc.mx.trackxi.network.NetworkUtils;
 
 import com.viewpagerindicator.TitlePageIndicator;
@@ -29,12 +32,15 @@ public class DatosAuto extends FragmentActivity{
 	private int PUNTOS_ANIO_VEHICULO = 20;
 	private AutoBean autoBean;
 	private AlertDialog customDialog= null;	//Creamos el dialogo generico
-	ViewPager pager = null;
-	FragmentPagerAdapterDialog pagerAdapter;
-	String placa;
+	private ViewPager pager = null;
+	private FragmentPagerAdapterDialog pagerAdapter;
+	private String placa;
 	private int imagen_verde = 1;
 	private int imagen_rojo = 2;
 	private boolean hasRevista=true;
+	private float sumaCalificacion =0.0f;
+	private boolean entreComentarios=false;
+	
 	
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -57,6 +63,7 @@ public class DatosAuto extends FragmentActivity{
 		}
 		
 		datosVehiculo(hasRevista);
+		cargaComentarios();
 		
 		
 		
@@ -89,6 +96,47 @@ public class DatosAuto extends FragmentActivity{
 		TitlePageIndicator titleIndicator = (TitlePageIndicator) findViewById(R.id.indicator_dialg);
 		titleIndicator.setViewPager(pager);
 		
+	}
+
+	/**
+	 * carga todos los comentarios de una placa
+	 */
+	private void cargaComentarios() {
+		try{
+			  String Sjson=  NetworkUtils.doHttpConnection("http://datos.labplc.mx/~mikesaurio/taxi.php?act=pasajero&type=getcomentario&placa="+placa);
+			  	JSONObject json= (JSONObject) new JSONTokener(Sjson).nextValue();
+			      JSONObject json2 = json.getJSONObject("message");
+			      JSONObject jsonResponse = new JSONObject(json2.toString());
+			      JSONArray cast = jsonResponse.getJSONArray("calificacion");
+			      ArrayList<ComentarioBean> arrayComenario= new ArrayList<ComentarioBean>();
+			      for (int i=0; i<cast.length(); i++) {
+			          	JSONObject oneObject = cast.getJSONObject(i);
+						 try {
+							 ComentarioBean	  comentarioBean = new ComentarioBean();
+							 comentarioBean.setComentario((String) oneObject.getString("comentario"));
+							 Float calif =Float.parseFloat((String)oneObject.getString("calificacion"));
+							 comentarioBean.setCalificacion(calif);
+							 arrayComenario.add(comentarioBean);
+							 
+							 sumaCalificacion+=calif;
+							 entreComentarios=true;
+							 
+						 } catch (JSONException e) {  
+							 e.printStackTrace();
+						 }
+						 
+			      }
+			      autoBean.setArrayComentarioBean(arrayComenario);
+			      if(entreComentarios){
+			    	  float califParcial = (sumaCalificacion/cast.length());
+			    	  PUNTOS_USUARIO = (int) (califParcial * 100 /5);
+			    	  autoBean.setCalificacion_usuarios(PUNTOS_USUARIO);
+			      }else{
+			    	  autoBean.setCalificacion_usuarios(0);
+			      }
+			}catch(JSONException e){
+				e.printStackTrace();
+			}
 	}
 
 	/**

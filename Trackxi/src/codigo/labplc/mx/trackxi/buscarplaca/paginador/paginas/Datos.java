@@ -66,11 +66,11 @@ public class Datos extends View {
 		
 		descripcion.setText(autoBean.getDescripcion_calificacion_app());
 		if(autoBean.getCalificacion_final()<=40){
-			descripcion.setTextColor(Color.RED);
+			descripcion.setBackgroundColor(Color.RED);
 		}else if(autoBean.getCalificacion_final()>40 && autoBean.getCalificacion_final()<80){
-			descripcion.setTextColor(getResources().getColor(R.color.generic_amarillo));
+			descripcion.setBackgroundColor(getResources().getColor(R.color.generic_amarillo));
 		}else if(autoBean.getCalificacion_final()>=80){
-			descripcion.setTextColor(Color.GREEN);
+			descripcion.setBackgroundColor(Color.GREEN);
 		}
 		
 		crearTermometro();

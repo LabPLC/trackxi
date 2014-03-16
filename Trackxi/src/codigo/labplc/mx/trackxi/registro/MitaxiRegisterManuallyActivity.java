@@ -39,6 +39,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -46,9 +47,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 import codigo.labplc.mx.trackxi.R;
+import codigo.labplc.mx.trackxi.Trackxi;
 import codigo.labplc.mx.trackxi.dialogos.Dialogos;
 import codigo.labplc.mx.trackxi.expresionesregulares.RegularExpressions;
 import codigo.labplc.mx.trackxi.network.NetworkUtils;
+import codigo.labplc.mx.trackxi.paginador.Paginador;
 import codigo.labplc.mx.trackxi.registro.bean.UserBean;
 import codigo.labplc.mx.trackxi.registro.validador.EditTextValidator;
 
@@ -218,6 +221,11 @@ public class MitaxiRegisterManuallyActivity extends Activity implements
 		editor.putString("correoemer", user.getCorreoemergencia());
 		editor.putString("uuid", user.getUUID());
 		editor.commit();
+		
+		Intent mainIntent = new Intent().setClass(MitaxiRegisterManuallyActivity.this, Paginador.class);
+		 startActivity(mainIntent);
+		 
+		 MitaxiRegisterManuallyActivity.this.finish();
 
 	}
 
@@ -343,14 +351,13 @@ public class MitaxiRegisterManuallyActivity extends Activity implements
 				resultado = sb.toString();
 				httpclient = null;
 				response = null;
-
 				if (resultado != null) {
 					String errorJson = "";
 					String successsJson = "";
 					String pk_user = "";
 
-					JSONObject json = (JSONObject) new JSONTokener(resultado)
-							.nextValue();
+					JSONObject json = (JSONObject) new JSONTokener(resultado).nextValue();
+		
 					JSONObject json2 = json.getJSONObject("message");
 					try {
 						errorJson = (String) json2.get("error");
@@ -370,8 +377,7 @@ public class MitaxiRegisterManuallyActivity extends Activity implements
 						savePreferences(user); // guardamos todo en preferencias
 
 					} else if (errorJson != null) {
-						Dialogos.Toast(getApplicationContext(),"Ya existe el correo",
-								Toast.LENGTH_LONG);
+						Dialogos.Toast(getApplicationContext(),"Ya existe el correo",Toast.LENGTH_LONG);
 					}
 				} else {
 					Dialogos.Toast(getApplicationContext(),

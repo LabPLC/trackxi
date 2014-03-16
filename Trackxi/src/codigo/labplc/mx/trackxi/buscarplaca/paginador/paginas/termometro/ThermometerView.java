@@ -23,7 +23,7 @@ public class ThermometerView extends View {
     
     private int startProgress = 0;
     private int progress = 50;
-    public static final int JUMP_PROGRESS_ANIMATION = 10;
+    public static final int JUMP_PROGRESS_ANIMATION = 1;
     
     private int duration = 2000; //duration in millis
     

@@ -52,6 +52,7 @@
         android:layout_alignLeft="@+id/datos_tv_modelo"
         android:layout_below="@+id/datos_tv_modelo"
         android:textColor="@color/generic_amarillo"
+        android:paddingTop="10dp"
         android:text="Nivel de confianza" />
 
     <LinearLayout
@@ -89,7 +90,8 @@
         android:layout_height="match_parent"
         android:layout_alignLeft="@+id/textView6"
         android:layout_below="@+id/textView6"
-        android:textColor="@color/generic_amarillo"
+        android:textColor="@color/white"
+        android:padding="5dp"
         android:text="blablablabla" />
 
     <TextView
@@ -99,6 +101,7 @@
         android:layout_alignLeft="@+id/Thermometer_Container_usuarios"
         android:layout_below="@+id/Thermometer_Container_usuarios"
         android:textColor="@color/generic_amarillo"
+        android:paddingTop="10dp"
         android:text="Descripción" />
 
 </RelativeLayout>

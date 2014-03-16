@@ -57,7 +57,7 @@ public class Comentarios extends View {
 		
 		
 		for(int i = 0;i< autoBean.getArrayComentarioBean().size();i++){
-			llenarAdeudo(autoBean.getArrayComentarioBean().get(i).getComentario(),autoBean.getArrayComentarioBean().get(i).getCalificacion());
+			llenarComentario(autoBean.getArrayComentarioBean().get(i).getComentario(),autoBean.getArrayComentarioBean().get(i).getCalificacion());
 		}
 		
 
@@ -65,7 +65,7 @@ public class Comentarios extends View {
 	}
 
 	
-	public void llenarAdeudo( String concepto, float valor) {
+	public void llenarComentario( String concepto, float valor) {
 		LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		view_row = inflater.inflate(R.layout.comentarios_row, null);
 		
