@@ -13,6 +13,7 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import codigo.labplc.mx.trackxi.R;
+import codigo.labplc.mx.trackxi.buscarplaca.bean.AutoBean;
 
 public class Comentarios extends View {
 
@@ -20,27 +21,32 @@ public class Comentarios extends View {
 	private View view_row;
 	private Activity context;
 	private LinearLayout container;
-	private int width;
+	private AutoBean autoBean;
 	
 	
 	public Comentarios(Activity context) {
 		super(context);
-		init(context);
+		this.context = context;
 	}
 
 	public Comentarios(Activity context, AttributeSet attrs) {
 		super(context, attrs);
-		init(context);
+		this.context = context;
 	}
 
 	public Comentarios(Activity context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
-		init(context);
+		this.context = context;
 	}
+	
+	public void init(AutoBean autoBean){
+		this.autoBean=autoBean;
+		init();
+	}
+	
 
-	public void init(Activity con) {
+	public void init() {
 
-		this.context = con;
 
 		LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		view = inflater.inflate(R.layout.activity_adeudos, null);
@@ -49,18 +55,11 @@ public class Comentarios extends View {
 		adeudos_titulo_main.setText("Comentarios");
 		container=(LinearLayout)view.findViewById(R.id.adeudos_ll_contenedor);
 		
-
-		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-		Display display = wm.getDefaultDisplay();
-		 
-		Point size = new Point();
-		display.getSize(size);
-		width = size.x;
-
 		
-		llenarAdeudo("Patan Horrible, no sabe manejar",2.0f);
-		llenarAdeudo("Muy malo",1.75f);
-		llenarAdeudo("bolakdskjdhskjdhfskdjhfskjdvksjdcnkjsdncskjdcnsshdbcshcbshdbcks",5.0f);
+		for(int i = 0;i< autoBean.getArrayComentarioBean().size();i++){
+			llenarAdeudo(autoBean.getArrayComentarioBean().get(i).getComentario(),autoBean.getArrayComentarioBean().get(i).getCalificacion());
+		}
+		
 
 
 	}

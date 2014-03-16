@@ -66,8 +66,6 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 		
 		context.getWindow().setFormat(PixelFormat.UNKNOWN);
 		
-	
-		
 		surfaceView = (SurfaceView) view.findViewById(R.id.camerapreview);
 		surfaceHolder = surfaceView.getHolder();
 		surfaceHolder.addCallback(this);
@@ -102,6 +100,7 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 	            		Intent intent= new Intent(context,DatosAuto.class);
 	            		intent.putExtra("placa", Splaca);
 	            		context.startActivityForResult(intent, 0);
+	            		placa.setText("");
 	            		
 					} catch (Exception e) {
 						new Dialogos().Toast(context.getBaseContext(), "Taxi no valido", Toast.LENGTH_LONG);

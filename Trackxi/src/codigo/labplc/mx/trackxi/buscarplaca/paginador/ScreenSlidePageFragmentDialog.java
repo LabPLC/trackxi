@@ -9,8 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import codigo.labplc.mx.trackxi.R;
-import codigo.labplc.mx.trackxi.buscarchofer.BuscarChofer;
-import codigo.labplc.mx.trackxi.buscarplaca.BuscaPlaca;
+import codigo.labplc.mx.trackxi.buscarplaca.bean.AutoBean;
 import codigo.labplc.mx.trackxi.buscarplaca.paginador.paginas.Adeudos;
 import codigo.labplc.mx.trackxi.buscarplaca.paginador.paginas.Comentarios;
 import codigo.labplc.mx.trackxi.buscarplaca.paginador.paginas.Datos;
@@ -35,6 +34,7 @@ public class ScreenSlidePageFragmentDialog extends Fragment {
 	private int color;
 	private int index;
 	static Activity actividad;
+	private static AutoBean autoBean;
 
 	/**
 	 * Instances a new fragment with a background color and an index page.
@@ -45,11 +45,12 @@ public class ScreenSlidePageFragmentDialog extends Fragment {
 	 *            index page
 	 * @return a new page
 	 */
-	public static ScreenSlidePageFragmentDialog newInstance(int color, int index,Activity act) {
+	public static ScreenSlidePageFragmentDialog newInstance(int color, int index,Activity act,AutoBean pl) {
 
 		// Instantiate a new fragment
 		ScreenSlidePageFragmentDialog fragment = new ScreenSlidePageFragmentDialog();
 		actividad=act;
+		autoBean=pl;
 		// Save the parameters
 		Bundle bundle = new Bundle();
 		bundle.putInt(BACKGROUND_COLOR, color);
@@ -76,13 +77,16 @@ public class ScreenSlidePageFragmentDialog extends Fragment {
 		
 		if(index==1){
 			Datos datos=new Datos(actividad);
+			datos.init(autoBean);
 			return datos.getView();
 		}else if(index==2){
 			Adeudos adeudos= new Adeudos(actividad);
+			adeudos.init(autoBean);
 			return adeudos.getView();
 			
 		}else if(index==3){
 			Comentarios comentarios = new Comentarios(actividad);
+			comentarios.init(autoBean);
 			return comentarios.getView();
 		}else{
 		
