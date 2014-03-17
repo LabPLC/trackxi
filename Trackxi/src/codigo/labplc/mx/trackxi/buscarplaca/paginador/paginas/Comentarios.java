@@ -57,7 +57,7 @@ public class Comentarios extends View {
 		
 		
 		for(int i = 0;i< autoBean.getArrayComentarioBean().size();i++){
-			llenarComentario(autoBean.getArrayComentarioBean().get(i).getComentario(),autoBean.getArrayComentarioBean().get(i).getCalificacion(),i);
+		llenarComentario(autoBean.getArrayComentarioBean().get(i).getComentario(),autoBean.getArrayComentarioBean().get(i).getCalificacion(),i);
 		}
 		
 

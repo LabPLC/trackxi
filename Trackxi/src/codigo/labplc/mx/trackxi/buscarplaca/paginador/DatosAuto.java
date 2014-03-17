@@ -9,8 +9,13 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
@@ -19,12 +24,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import codigo.labplc.mx.trackxi.R;
+import codigo.labplc.mx.trackxi.Trackxi;
 import codigo.labplc.mx.trackxi.buscarplaca.bean.AutoBean;
 import codigo.labplc.mx.trackxi.buscarplaca.bean.ComentarioBean;
 import codigo.labplc.mx.trackxi.configuracion.UserSettingActivity;
+import codigo.labplc.mx.trackxi.dialogos.Dialogos;
 import codigo.labplc.mx.trackxi.network.NetworkUtils;
+import codigo.labplc.mx.trackxi.paginador.Paginador;
+import codigo.labplc.mx.trackxi.tracking.ServicioGeolocalizacion;
 
 import com.viewpagerindicator.TitlePageIndicator;
 
@@ -50,6 +58,7 @@ public class DatosAuto extends FragmentActivity{
 	private boolean entreComentarios=false;
 
 	private static final int RESULT_SETTINGS = 1;
+	private LocationManager mLocationManager;
 	
 	
 	
@@ -61,6 +70,7 @@ public class DatosAuto extends FragmentActivity{
 		Bundle bundle = getIntent().getExtras();
 		placa = bundle.getString("placa");	
 		
+		mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		
 		// Instantiate a ViewPager
 		this.pager = (ViewPager) this.findViewById(R.id.pager_dialog);
@@ -113,7 +123,20 @@ public class DatosAuto extends FragmentActivity{
 			
 			@Override
 			public void onClick(View v) {
-			//*************,dmwd,xmdxeldxmedmxdkmxdjkmkjd kdc kd ck
+				
+				if (!mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+					new Dialogos().showDialogGPS(DatosAuto.this,"GPS apagado", "ÀDeseas activarlo?");		
+				}else{
+					
+				
+					/**
+					 * Se inicia el servicio de geolocalizaci—n
+					 */
+					ServicioGeolocalizacion.taxiActivity = DatosAuto.this;
+					startService(new Intent(DatosAuto.this,ServicioGeolocalizacion.class));
+					DatosAuto.this.finish();
+				}
+				
 			}
 		});
 		
@@ -345,4 +368,15 @@ public class DatosAuto extends FragmentActivity{
 		return false;
 	}
 
+	
+	
+	
+	@Override
+	public void onBackPressed() {
+		Intent mainIntent = new Intent().setClass(DatosAuto.this, Paginador.class);
+		startActivity(mainIntent);
+		super.onBackPressed();
+	}
+	
+	
 }

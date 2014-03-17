@@ -1,21 +1,16 @@
 package codigo.labplc.mx.trackxi.dialogos;
 
 
-import java.io.File;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 import codigo.labplc.mx.trackxi.R;
 
@@ -76,7 +71,34 @@ public class Dialogos {
 	
 	
 	
-	
+	/**
+	 * Muestra diálogo en dado caso que el GPS esté apagado
+	 * 
+	 * @param titulo Título del diálogo
+	 * @param message Mensaje del diálogo
+	 */
+	public void showDialogGPS(final Activity act,String title, String message) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(act);
+        builder.setTitle(title);
+        builder.setMessage(message);
+		builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				Intent settingsIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+				settingsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+				act.startActivity(settingsIntent);
+			}
+		});
+		builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				dialog.cancel();
+			}
+		});
+		
+		AlertDialog dialog = builder.create();
+		dialog.show();
+		dialog.setCancelable(false);
+		dialog.setCanceledOnTouchOutside(false);
+	}
 	
 	
 	

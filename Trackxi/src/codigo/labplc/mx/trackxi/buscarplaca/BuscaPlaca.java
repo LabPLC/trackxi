@@ -26,8 +26,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import codigo.labplc.mx.trackxi.R;
+import codigo.labplc.mx.trackxi.Trackxi;
 import codigo.labplc.mx.trackxi.buscarplaca.paginador.DatosAuto;
 import codigo.labplc.mx.trackxi.dialogos.Dialogos;
+import codigo.labplc.mx.trackxi.paginador.Paginador;
 
 public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 
@@ -99,10 +101,12 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 	            		//cerramos el teclado
 	            		InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
 	            		imm.hideSoftInputFromWindow(placa.getWindowToken(), 0);
-	            		Intent intent= new Intent(context,DatosAuto.class);
+	            		
+	            		Intent intent= new Intent().setClass(context,DatosAuto.class);
 	            		intent.putExtra("placa", Splaca);
 	            		context.startActivityForResult(intent, 0);
 	            		placa.setText("");
+	            		context.finish();
 	            		
 					} catch (Exception e) {
 						new Dialogos().Toast(context.getBaseContext(), "Taxi no valido", Toast.LENGTH_LONG);

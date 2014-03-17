@@ -82,7 +82,7 @@
     <string name="tiene_verificaciones">Este vehiculo tiene calcomanía: </string>
     <string name="no_tiene_verificaciones">Este vehiculo no tiene verificaciones</string>
     <string name="title_activity_trackxi_setting">TrackxiSettingActivity</string>
-    
+
     <!-- Preferencias -->
     <string name="pref_send_report">Enviar reportes de fallo</string>
     <string name="pref_send_report_summary">Ayudanos a mejorar la app</string>
@@ -90,5 +90,6 @@
     <string name="pref_sync_frequency_summary">Selecciona la frecuancia</string>
     <string name="pref_user_profile">Configuración</string>
     <string name="pref_update_setting">Configuración</string>
+    <string name="title_activity_mapa_tracking">Mapa_tracking</string>
 
 </resources>
