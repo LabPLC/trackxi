@@ -91,5 +91,7 @@
     <string name="pref_user_profile">Configuración</string>
     <string name="pref_update_setting">Configuración</string>
     <string name="title_activity_mapa_tracking">Mapa_tracking</string>
+    <string name="title_activity_califica_chofer">Califica_chofer</string>
+    <string name="title_activity_califica_taxi">Califica_taxi</string>
 
 </resources>

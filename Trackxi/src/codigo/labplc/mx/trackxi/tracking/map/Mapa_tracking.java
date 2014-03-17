@@ -11,10 +11,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.Button;
 import codigo.labplc.mx.trackxi.R;
-import codigo.labplc.mx.trackxi.dialogos.Dialogos;
-import codigo.labplc.mx.trackxi.network.NetworkUtils;
+import codigo.labplc.mx.trackxi.tracking.Califica_taxi;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -30,9 +30,11 @@ public class Mapa_tracking extends Activity {
 	 private GoogleMap map;
 	private double latitud=0;
 	private double longitud=0;
-	private  String[] tokens;
 	private MarkerOptions marker;
 	private MarkerOptions marker_taxi;
+	private Button mapa_tracking_terminoviaje;
+	private String placa;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -42,18 +44,26 @@ public class Mapa_tracking extends Activity {
 		if(bundle!=null){
 			latitud = bundle.getDouble("latitud_inicial");	
 			longitud = bundle.getDouble("longitud_inicial");
+
+
 		}
+		
+		mapa_tracking_terminoviaje =(Button)findViewById(R.id.mapa_tracking_terminoviaje);
+		mapa_tracking_terminoviaje.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent_califica = new Intent(Mapa_tracking.this, Califica_taxi.class);
+				startActivity(intent_califica);
+				finish();
+			}
+		});
 		
 		setUpMapIfNeeded();
 		
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.mapa_tracking, menu);
-		return true;
-	}
+	
 	
 	 private void setUpMapIfNeeded() {
 			if (map == null) {
@@ -117,9 +127,6 @@ public class Mapa_tracking extends Activity {
 		 * manejo de transmiciones
 		 */
 		private BroadcastReceiver onBroadcast = new BroadcastReceiver() {
-			
-
-	
 
 			@Override
 			public void onReceive(Context ctxt, Intent t) {

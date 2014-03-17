@@ -9,12 +9,24 @@
     tools:context=".Mapa_tracking" >
 
        <fragment
-            android:id="@+id/mitaxi_trip_map"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            class="com.google.android.gms.maps.MapFragment" />
+           android:id="@+id/mitaxi_trip_map"
+           android:layout_width="match_parent"
+           android:layout_height="50dp"
+           android:layout_above="@+id/mapa_tracking_terminoviaje"
+           android:layout_alignParentLeft="true"
+           android:layout_alignParentRight="true"
+           android:layout_alignParentTop="true"
+           class="com.google.android.gms.maps.MapFragment" />
+
+       <Button
+           android:id="@+id/mapa_tracking_terminoviaje"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_alignLeft="@+id/mitaxi_trip_map"
+           android:layout_alignParentBottom="true"
+           android:layout_marginBottom="16dp"
+           android:background="@drawable/selector_btn_generic"
+           android:textColor="@drawable/selector_txt_boton_redondo"
+           android:text="Terminó viaje..." />
+
 </RelativeLayout>

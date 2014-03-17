@@ -50,7 +50,7 @@ public class DatosAuto extends FragmentActivity{
 	private AlertDialog customDialog= null;	//Creamos el dialogo generico
 	private ViewPager pager = null;
 	private FragmentPagerAdapterDialog pagerAdapter;
-	private String placa;
+	private  String placa;
 	private int imagen_verde = 1;
 	private int imagen_rojo = 2;
 	private boolean hasRevista=true;
@@ -69,6 +69,11 @@ public class DatosAuto extends FragmentActivity{
 		
 		Bundle bundle = getIntent().getExtras();
 		placa = bundle.getString("placa");	
+		
+		SharedPreferences prefs = getSharedPreferences("MisPreferenciasTrackxi", Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = prefs.edit();
+		editor.putString("placa", placa);
+		editor.commit();
 		
 		mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		
@@ -377,6 +382,7 @@ public class DatosAuto extends FragmentActivity{
 		startActivity(mainIntent);
 		super.onBackPressed();
 	}
+	
 	
 	
 }

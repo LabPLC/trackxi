@@ -73,7 +73,9 @@ public class Comentarios extends View {
 		comentarios_row_tv_descripcion.setText(concepto);
 
 	final	RatingBar comentarios_row_rating=(RatingBar)view_row.findViewById(R.id.comentarios_row_rating);
-		comentarios_row_rating.setRating(valor);
+			comentarios_row_rating.setTag(i);
+			comentarios_row_rating.setId(i);
+			comentarios_row_rating.setRating(valor);
 		
 		container.addView(view_row,i);
 		

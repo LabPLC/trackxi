@@ -2,12 +2,11 @@ package codigo.labplc.mx.trackxi.tracking;
 
 import java.util.ArrayList;
 
-import com.google.android.gms.maps.model.LatLng;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -21,7 +20,6 @@ import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 import codigo.labplc.mx.trackxi.R;
-import codigo.labplc.mx.trackxi.Trackxi;
 import codigo.labplc.mx.trackxi.buscarplaca.paginador.DatosAuto;
 import codigo.labplc.mx.trackxi.tracking.map.Mapa_tracking;
 
@@ -45,13 +43,13 @@ public class ServicioGeolocalizacion extends Service implements Runnable{
 	private boolean isFirstLocation= true;
 	private Thread thread;
 	ArrayList<String> pointsLat = new ArrayList<String>();
-	ArrayList<String> pointsLon = new ArrayList<String>();;
+	ArrayList<String> pointsLon = new ArrayList<String>();
 
+	
     @Override
     public void onCreate() {
           Toast.makeText(this,"Servicio creado", Toast.LENGTH_SHORT).show();
           super.onCreate();
- 
       	mLocationListener = new MyLocationListener();
 		mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
     }
@@ -72,7 +70,7 @@ public class ServicioGeolocalizacion extends Service implements Runnable{
 		
         Toast.makeText(this,"Servicio detenido ",Toast.LENGTH_SHORT).show();
     	    super.onDestroy();
-       
+    	    CancelNotification(this,0);
     }
 
     @Override
@@ -202,22 +200,30 @@ public class ServicioGeolocalizacion extends Service implements Runnable{
 		    Intent intent_mapa = new Intent(this, Mapa_tracking.class);
 		    intent_mapa.putExtra("latitud_inicial", latitud_inicial);
 		    intent_mapa.putExtra("longitud_inicial", longitud_inicial);
-		    
 		    PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent_mapa, PendingIntent.FLAG_UPDATE_CURRENT);
+		    
+		    Intent intent_califica = new Intent(this, Califica_taxi.class);
+		    PendingIntent pIntent_cal = PendingIntent.getActivity(this, 0, intent_califica, PendingIntent.FLAG_UPDATE_CURRENT);
 
-		    // Actions are just fake
 		    Notification noti = new Notification.Builder(this)
 		        .setContentTitle("Traxi")
 		        .setContentText("¿Qué quieres hacer?").setSmallIcon(R.drawable.ic_launcher_icono)
 		     //   .setContentIntent(pIntent)
 		        .addAction(R.drawable.ic_launcher_map, "viaje", pIntent)
-		        .addAction(R.drawable.ic_launcher_verde, "otro", pIntent).build();
+		        .addAction(R.drawable.ic_launcher_fin_viaje, "Finalizar", pIntent_cal).build();
 		    NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-		    // hide the notification after its selected
 		  //  noti.flags |= Notification.FLAG_AUTO_CANCEL;
 
 		    notificationManager.notify(0, noti);
 	    }
 
+	
+	 public static void CancelNotification(Context ctx, int notifyId) {
+		    String ns = Context.NOTIFICATION_SERVICE;
+		    NotificationManager nMgr = (NotificationManager) ctx.getSystemService(ns);
+		    nMgr.cancel(notifyId);
+		}
+	
 
+	
 }
