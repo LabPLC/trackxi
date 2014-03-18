@@ -6,7 +6,6 @@ package codigo.labplc.mx.trackxi.registro.bean;
 public class UserBean {
 	private String nombre;//nombre de usuario
 	private String correo; //correo del usuario
-	private String tel; //telefono del usuario
 	private String telemergencia; //telefono de emergencia
 	private String UUID; //llave del usuario
 	private String correoemergencia; //correo de emergencia
@@ -30,12 +29,7 @@ public class UserBean {
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
-	public String getTel() {
-		return tel;
-	}
-	public void setTel(String tel) {
-		this.tel = tel;
-	}
+	
 	public String getTelemergencia() {
 		return telemergencia;
 	}

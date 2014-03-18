@@ -2,15 +2,19 @@
 <resources>
 
     <!-- Generic button -->
-    <color name="generic_btn_unpressed">#FFBB33</color>
+    <color name="generic_btn_unpressed">#EACC98</color>
     <color name="generic_btn_pressed">#FF8800</color>
-    <color name="generic_amarillo">#f0c648</color>
+    <color name="generic_amarillo">#EACC98</color>
     <color name="selector_btn_background_pressed">#FF0099CC</color>
     <color name="selector_btn_background_focused">#77000000</color>
     <color name="selector_btn_background_default">#77000000</color>
     <color name="selector_btn_textcolor_pressed">#FFFFFFFF</color>
     <color name="selector_btn_textcolor_focused">#FFFFFFFF</color>
     <color name="selector_btn_textcolor_default">#FFFFFFFF</color>
+    
+    
+    <!-- colores nuevos -->
+     <color name="rojo_logo">#EF4147</color>
 
     <!-- More info http://developer.android.com/design/style/color.html -->
 

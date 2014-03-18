@@ -24,6 +24,9 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -130,6 +133,9 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.NoActionBar" >
         </activity>
+        
+          <receiver android:name="codigo.labplc.mx.trackxi.panic.MyReceiver" >
+          </receiver>
     </application>
 
 </manifest>

@@ -13,7 +13,7 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         android:text="@string/mitaxiregister_name"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/generic_amarillo"
+        android:textColor="@color/rojo_logo"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -141,10 +141,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
+           <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" 
+                android:orientation="horizontal">
+                
             <EditText
                 android:id="@+id/mitaxiregistermanually_et_telemer"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight=".8"
                 android:ems="10"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
@@ -154,6 +160,18 @@
                 android:textColor="@android:color/black"
                 android:textColorHint="@android:color/darker_gray" />
 
+            <Button
+                android:id="@+id/mitaxiregistermanually_btn_contactos"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".2"
+                android:background="@drawable/selector_btn_generic"
+                android:textColor="@drawable/selector_txt_boton_redondo"
+                android:layout_margin="3dp"
+                android:layout_gravity="center"
+                android:text="..." />
+
+		</LinearLayout> 
             <EditText
                 android:id="@+id/mitaxiregistermanually_et_correoemer"
                 android:layout_width="match_parent"
@@ -178,7 +196,7 @@
         android:layout_marginTop="20dp"
         android:text="@string/mitaxiregister_et_emergencias"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/generic_amarillo"
+        android:textColor="@color/rojo_logo"
         android:textStyle="bold" />
 
     <ImageView
