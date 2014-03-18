@@ -34,12 +34,12 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
-import android.provider.Contacts.People;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
 import android.provider.MediaStore;
@@ -49,17 +49,18 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.dialogos.Dialogos;
 import codigo.labplc.mx.trackxi.expresionesregulares.RegularExpressions;
+import codigo.labplc.mx.trackxi.fonts.fonts;
 import codigo.labplc.mx.trackxi.network.NetworkUtils;
 import codigo.labplc.mx.trackxi.paginador.Paginador;
 import codigo.labplc.mx.trackxi.registro.bean.UserBean;
 import codigo.labplc.mx.trackxi.registro.validador.EditTextValidator;
 
-public class MitaxiRegisterManuallyActivity extends Activity implements
-		OnClickListener {
+public class MitaxiRegisterManuallyActivity extends Activity {
 
 	private int RESULT_LOAD_IMAGE = 1;
 	private int RESULT_LOAD_FOTO = 2;
@@ -93,13 +94,29 @@ public class MitaxiRegisterManuallyActivity extends Activity implements
 	 */
 	public void initUI() {
 		// creamos la ruta de la foto con codigo unico
-		foto = Environment.getExternalStorageDirectory() + "/imagen"
-				+ getCode() + ".jpg";
+		foto = Environment.getExternalStorageDirectory() + "/imagen"+ getCode() + ".jpg";
 
+
+		TextView mitaxiregistermanually_tv_label= (TextView)findViewById(R.id.mitaxiregistermanually_tv_label);
+		 mitaxiregistermanually_tv_label.setTypeface(new fonts(this).getTypeFace(fonts.FLAG_ROJO));
+		 
+		 TextView mitaxiregistermanually_tv_emergencia= (TextView)findViewById(R.id.mitaxiregistermanually_tv_emergencia);
+		 mitaxiregistermanually_tv_emergencia.setTypeface(new fonts(this).getTypeFace(fonts.FLAG_ROJO));
+		 
+		
+		
 		etInfousername = (EditText) findViewById(R.id.mitaxiregistermanually_et_infousername);
+		etInfousername.setTypeface(new fonts(this).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
+		
 		etInfouseremail = (EditText) findViewById(R.id.mitaxiregistermanually_et_infouseremail);
+		etInfouseremail.setTypeface(new fonts(this).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
+		
 		etInfousertelemergency = (EditText) findViewById(R.id.mitaxiregistermanually_et_telemer);
+		etInfousertelemergency.setTypeface(new fonts(this).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
+		
+		
 		etInfousermailemergency = (EditText) findViewById(R.id.mitaxiregistermanually_et_correoemer);
+		etInfousermailemergency.setTypeface(new fonts(this).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
 
 		Button contacto_emer = (Button) findViewById(R.id.mitaxiregistermanually_btn_contactos);
 		contacto_emer.setOnClickListener(new View.OnClickListener() {
@@ -138,32 +155,21 @@ public class MitaxiRegisterManuallyActivity extends Activity implements
 		etInfousertelemergency.setTag(RegularExpressions.KEY_IS_NUMBER);
 		etInfousermailemergency.setTag(RegularExpressions.KEY_IS_EMAIL);
 
-		etInfousername
-				.addTextChangedListener(new EditTextValidator().new CurrencyTextWatcher(
-						getBaseContext(), etInfousername, listHasErrorEditText,
-						0));
-		etInfouseremail
-				.addTextChangedListener(new EditTextValidator().new CurrencyTextWatcher(
-						getBaseContext(), etInfouseremail,
-						listHasErrorEditText, 1));
-		etInfousertelemergency
-				.addTextChangedListener(new EditTextValidator().new CurrencyTextWatcher(
-						getBaseContext(), etInfousertelemergency,
-						listHasErrorEditText, 2));
-		etInfousermailemergency
-				.addTextChangedListener(new EditTextValidator().new CurrencyTextWatcher(
-						getBaseContext(), etInfousermailemergency,
-						listHasErrorEditText, 3));
-		findViewById(R.id.mitaxiregistermanually_btn_ok).setOnClickListener(
-				this);
-		findViewById(R.id.mitaxiregistermanually_btn_cancel)
-				.setOnClickListener(this);
-	}
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.mitaxiregistermanually_btn_ok:
+		etInfousername.addTextChangedListener(new EditTextValidator().new CurrencyTextWatcher(
+						getBaseContext(), etInfousername, listHasErrorEditText,0));
+		etInfouseremail.addTextChangedListener(new EditTextValidator().new CurrencyTextWatcher(
+						getBaseContext(), etInfouseremail,listHasErrorEditText, 1));
+		etInfousertelemergency.addTextChangedListener(new EditTextValidator().new CurrencyTextWatcher(
+						getBaseContext(), etInfousertelemergency,listHasErrorEditText, 2));
+		etInfousermailemergency.addTextChangedListener(new EditTextValidator().new CurrencyTextWatcher(
+						getBaseContext(), etInfousermailemergency,listHasErrorEditText, 3));
+		
+	Button mitaxiregistermanually_btn_ok =(Button)findViewById(R.id.mitaxiregistermanually_btn_ok);
+	mitaxiregistermanually_btn_ok.setTypeface(new fonts(this).getTypeFace(fonts.FLAG_AMARILLO));
+	mitaxiregistermanually_btn_ok.setOnClickListener(new View.OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
 			if (!isAnyEditTextEmpty() && hasFoto) {
 				if (!hasErrorEditText()) {
 					if (NetworkUtils.isNetworkConnectionOk(getBaseContext())) {
@@ -174,27 +180,29 @@ public class MitaxiRegisterManuallyActivity extends Activity implements
 									"error fatal :(", Toast.LENGTH_LONG);
 						}
 					} else {
-						Dialogos.Toast(getApplicationContext(),
-								getString(R.string.no_internet_connection),
-								Toast.LENGTH_LONG);
+						Dialogos.Toast(getApplicationContext(),getString(R.string.no_internet_connection),Toast.LENGTH_LONG);
 					}
 				} else {
-					Dialogos.Toast(getApplicationContext(),
-							getString(R.string.edittext_wrong_info),
-							Toast.LENGTH_LONG);
+					Dialogos.Toast(getApplicationContext(),getString(R.string.edittext_wrong_info),Toast.LENGTH_LONG);
 				}
 			} else {
-				Dialogos.Toast(getApplicationContext(),
-						getString(R.string.edittext_emtpy), Toast.LENGTH_LONG);
+				Dialogos.Toast(getApplicationContext(),getString(R.string.edittext_emtpy), Toast.LENGTH_LONG);
 			}
-			break;
-
-		case R.id.mitaxiregistermanually_btn_cancel:
-
-			finish();
-			break;
 		}
+	});
+		Button mitaxiregistermanually_btn_cancel=(Button)findViewById(R.id.mitaxiregistermanually_btn_cancel);
+		mitaxiregistermanually_btn_cancel.setTypeface(new fonts(this).getTypeFace(fonts.FLAG_AMARILLO));
+		mitaxiregistermanually_btn_cancel.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
+
 	}
+
+	
 
 	public boolean hasErrorEditText() {
 		for (boolean hasError : listHasErrorEditText)
@@ -292,8 +300,7 @@ public class MitaxiRegisterManuallyActivity extends Activity implements
 			}
 
 		}
-		if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK
-				&& null != data) {
+		if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK	&& null != data) {
 			Uri imageUri = data.getData();
 			Bitmap myBitmap;
 			try {
@@ -477,8 +484,9 @@ public class MitaxiRegisterManuallyActivity extends Activity implements
 	
 	public void getContactInfo(Intent intent)
 	{
-
-	   Cursor cursor =  managedQuery(intent.getData(), null, null, null, null);      
+		
+	  Cursor   cursor =  managedQuery(intent.getData(), null, null, null, null);      
+	  if(!cursor.isClosed()&&cursor!=null){
 	   while (cursor.moveToNext()) 
 	   {           
 	       String contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
@@ -514,8 +522,11 @@ public class MitaxiRegisterManuallyActivity extends Activity implements
 	       }
 	       emails.close();
  
-	  }  //while (cursor.moveToNext())        
+	  }  //while (cursor.moveToNext())  
 	   cursor.close();
+	    cursor = null;
+	  }
+	   
 	}
 	
 }

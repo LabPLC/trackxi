@@ -100,7 +100,7 @@
                     android:hint="@string/mitaxiregister_et_name_hint"
                     android:inputType="textPersonName|textCapWords"
                     android:paddingTop="@dimen/activity_vertical_margin"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/gris_letra"
                     android:textColorHint="@android:color/darker_gray" />
 
                 <EditText
@@ -113,7 +113,7 @@
                     android:hint="@string/mitaxiregister_et_email_hint"
                     android:inputType="textEmailAddress"
                     android:paddingTop="@dimen/activity_vertical_margin"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/gris_letra"
                     android:textColorHint="@android:color/darker_gray" />
             </LinearLayout>
         </ScrollView>
@@ -141,37 +141,37 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-           <LinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" 
-                android:orientation="horizontal">
-                
-            <EditText
-                android:id="@+id/mitaxiregistermanually_et_telemer"
-                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight=".8"
-                android:ems="10"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:hint="@string/mitaxiregister_et_telemergency_hint"
-                android:inputType="phone"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                android:textColor="@android:color/black"
-                android:textColorHint="@android:color/darker_gray" />
+                android:orientation="horizontal" >
 
-            <Button
-                android:id="@+id/mitaxiregistermanually_btn_contactos"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".2"
-                android:background="@drawable/selector_btn_generic"
-                android:textColor="@drawable/selector_txt_boton_redondo"
-                android:layout_margin="3dp"
-                android:layout_gravity="center"
-                android:text="..." />
+                <EditText
+                    android:id="@+id/mitaxiregistermanually_et_telemer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".8"
+                    android:ems="10"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:hint="@string/mitaxiregister_et_telemergency_hint"
+                    android:inputType="phone"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:textColor="@color/gris_letra"
+                    android:textColorHint="@android:color/darker_gray" />
 
-		</LinearLayout> 
+                <Button
+                    android:id="@+id/mitaxiregistermanually_btn_contactos"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="3dp"
+                    android:layout_weight=".2"
+                    android:background="@drawable/selector_btn_generic"
+                    android:text="..."
+                    android:textColor="@drawable/selector_txt_boton_redondo" />
+            </LinearLayout>
+
             <EditText
                 android:id="@+id/mitaxiregistermanually_et_correoemer"
                 android:layout_width="match_parent"
@@ -182,7 +182,7 @@
                 android:hint="@string/mitaxiregister_et_mailemergency_hint"
                 android:inputType="textEmailAddress"
                 android:paddingTop="@dimen/activity_vertical_margin"
-                android:textColor="@android:color/black"
+                android:textColor="@color/gris_letra"
                 android:textColorHint="@android:color/darker_gray" />
         </LinearLayout>
     </ScrollView>

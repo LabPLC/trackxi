@@ -15,6 +15,7 @@
     
     <!-- colores nuevos -->
      <color name="rojo_logo">#EF4147</color>
+          <color name="gris_letra">#6D6E70</color>
 
     <!-- More info http://developer.android.com/design/style/color.html -->
 

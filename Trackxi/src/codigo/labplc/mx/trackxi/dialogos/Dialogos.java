@@ -11,8 +11,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import codigo.labplc.mx.trackxi.R;
+import codigo.labplc.mx.trackxi.fonts.fonts;
 
 /**
  * Clase que maneja los di‡logos 
@@ -57,9 +59,17 @@ public class Dialogos {
 	    View view = activity.getLayoutInflater().inflate(R.layout.dialogo_paraque, null);
 	    builder.setView(view);
 	    builder.setCancelable(false);
-        //escucha del boton aceptar
+        //tipografias
+	    ((Button) view.findViewById(R.id.dialogo_paraque_btnAceptar)).setTypeface(new fonts(activity).getTypeFace(fonts.FLAG_AMARILLO));
+	    ((TextView) view.findViewById(R.id.dialogo_paraque_tv_titulo)).setTypeface(new fonts(activity).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
+	    ((TextView) view.findViewById(R.id.dialogo_paraque_tv_correo)).setTypeface(new fonts(activity).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
+	    ((TextView) view.findViewById(R.id.dialogo_paraque_tv_correoemer)).setTypeface(new fonts(activity).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
+	    ((TextView) view.findViewById(R.id.dialogo_paraque_tv_nombre)).setTypeface(new fonts(activity).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
+	    ((TextView) view.findViewById(R.id.dialogo_paraque_tv_subtitulo)).setTypeface(new fonts(activity).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
+	    ((TextView) view.findViewById(R.id.dialogo_paraque_tv_telefonoemer)).setTypeface(new fonts(activity).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
+	    ((TextView) view.findViewById(R.id.dialogo_paraque_tv_foto)).setTypeface(new fonts(activity).getTypeFace(fonts.FLAG_GRIS_OBSCURO)); 
+	  //escucha del boton aceptar
         ((Button) view.findViewById(R.id.dialogo_paraque_btnAceptar)).setOnClickListener(new OnClickListener() {
-             
             @Override
             public void onClick(View view)
             {
