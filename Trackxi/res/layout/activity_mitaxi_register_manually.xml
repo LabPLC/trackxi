@@ -13,7 +13,6 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         android:text="@string/mitaxiregister_name"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/rojo_logo"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -100,7 +99,6 @@
                     android:hint="@string/mitaxiregister_et_name_hint"
                     android:inputType="textPersonName|textCapWords"
                     android:paddingTop="@dimen/activity_vertical_margin"
-                    android:textColor="@color/gris_letra"
                     android:textColorHint="@android:color/darker_gray" />
 
                 <EditText
@@ -113,7 +111,6 @@
                     android:hint="@string/mitaxiregister_et_email_hint"
                     android:inputType="textEmailAddress"
                     android:paddingTop="@dimen/activity_vertical_margin"
-                    android:textColor="@color/gris_letra"
                     android:textColorHint="@android:color/darker_gray" />
             </LinearLayout>
         </ScrollView>
@@ -157,7 +154,6 @@
                     android:hint="@string/mitaxiregister_et_telemergency_hint"
                     android:inputType="phone"
                     android:paddingTop="@dimen/activity_vertical_margin"
-                    android:textColor="@color/gris_letra"
                     android:textColorHint="@android:color/darker_gray" />
 
                 <Button
@@ -182,7 +178,6 @@
                 android:hint="@string/mitaxiregister_et_mailemergency_hint"
                 android:inputType="textEmailAddress"
                 android:paddingTop="@dimen/activity_vertical_margin"
-                android:textColor="@color/gris_letra"
                 android:textColorHint="@android:color/darker_gray" />
         </LinearLayout>
     </ScrollView>
@@ -196,7 +191,6 @@
         android:layout_marginTop="20dp"
         android:text="@string/mitaxiregister_et_emergencias"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/rojo_logo"
         android:textStyle="bold" />
 
     <ImageView
@@ -206,6 +200,6 @@
         android:layout_alignRight="@+id/mitaxiregistermanually_sv_container_infouser_emer"
         android:layout_below="@+id/mitaxiregistermanually_sv_container_infouser_emer"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/mi_taxi_assets_info" />
+        android:src="@drawable/ic_help" />
 
 </RelativeLayout>

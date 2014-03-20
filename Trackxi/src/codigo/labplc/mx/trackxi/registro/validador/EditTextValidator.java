@@ -20,8 +20,9 @@ public class EditTextValidator {
 	 *            (EditText) la vista de tipo {@link EditText}
 	 */
 	public void setErrorMessage(Context context, String errorMessage, EditText editText) {
-		int errorColor = Color.RED;
+		int errorColor = Color.WHITE;
 		ForegroundColorSpan fgcspan = new ForegroundColorSpan(errorColor);
+		
 		SpannableStringBuilder ssbuilder = new SpannableStringBuilder(
 				errorMessage);
 		ssbuilder.setSpan(fgcspan, 0, errorMessage.length(), 0);

@@ -19,8 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/paraque_titulo"
-            android:textColor="@color/gris_letra" />
+            android:text="@string/paraque_titulo" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,22 +34,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/paraque_subtitulo"
-                android:textColor="@color/gris_letra" />
+                android:text="@string/paraque_subtitulo" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/generic_amarillo" />
+                android:background="@color/gris_claro" />
 
             <TextView
                  android:id="@+id/dialogo_paraque_tv_nombre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/paraque_nombre"
-                android:textColor="@color/gris_letra" />
+                android:text="@string/paraque_nombre" />
 
             <View
                 android:layout_width="30dp"
@@ -62,8 +59,7 @@
                  android:id="@+id/dialogo_paraque_tv_correo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/paraque_correo"
-                android:textColor="@color/gris_letra" />
+                android:text="@string/paraque_correo" />
 
             <View
                 android:layout_width="30dp"
@@ -75,8 +71,7 @@
                  android:id="@+id/dialogo_paraque_tv_telefonoemer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/paraque_telemer"
-                android:textColor="@color/gris_letra" />
+                android:text="@string/paraque_telemer" />
 
             <View
                 android:layout_width="30dp"
@@ -88,8 +83,7 @@
                  android:id="@+id/dialogo_paraque_tv_correoemer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/paraque_correoemer"
-                android:textColor="@color/gris_letra" />
+                android:text="@string/paraque_correoemer" />
 
             <View
                 android:layout_width="30dp"
@@ -101,8 +95,7 @@
                  android:id="@+id/dialogo_paraque_tv_foto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/paraque_foto"
-                android:textColor="@color/gris_letra" />
+                android:text="@string/paraque_foto"/>
 
             <View
                 android:layout_width="30dp"

@@ -99,24 +99,32 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 
 		TextView mitaxiregistermanually_tv_label= (TextView)findViewById(R.id.mitaxiregistermanually_tv_label);
 		 mitaxiregistermanually_tv_label.setTypeface(new fonts(this).getTypeFace(fonts.FLAG_ROJO));
+		 mitaxiregistermanually_tv_label.setTextColor(new fonts(this).getColorTypeFace(fonts.FLAG_ROJO));
 		 
 		 TextView mitaxiregistermanually_tv_emergencia= (TextView)findViewById(R.id.mitaxiregistermanually_tv_emergencia);
 		 mitaxiregistermanually_tv_emergencia.setTypeface(new fonts(this).getTypeFace(fonts.FLAG_ROJO));
+		 mitaxiregistermanually_tv_emergencia.setTextColor(new fonts(this).getColorTypeFace(fonts.FLAG_ROJO));
 		 
 		
 		
 		etInfousername = (EditText) findViewById(R.id.mitaxiregistermanually_et_infousername);
-		etInfousername.setTypeface(new fonts(this).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
+		etInfousername.setTypeface(new fonts(this).getTypeFace(fonts.FLAG_ROJO));
+		etInfousername.setTextColor(new fonts(this).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
 		
 		etInfouseremail = (EditText) findViewById(R.id.mitaxiregistermanually_et_infouseremail);
-		etInfouseremail.setTypeface(new fonts(this).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
+		etInfouseremail.setTypeface(new fonts(this).getTypeFace(fonts.FLAG_ROJO));
+		etInfouseremail.setTextColor(new fonts(this).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
+
 		
 		etInfousertelemergency = (EditText) findViewById(R.id.mitaxiregistermanually_et_telemer);
-		etInfousertelemergency.setTypeface(new fonts(this).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
-		
+		etInfousertelemergency.setTypeface(new fonts(this).getTypeFace(fonts.FLAG_ROJO));
+		etInfousertelemergency.setTextColor(new fonts(this).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
+
 		
 		etInfousermailemergency = (EditText) findViewById(R.id.mitaxiregistermanually_et_correoemer);
-		etInfousermailemergency.setTypeface(new fonts(this).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
+		etInfousermailemergency.setTypeface(new fonts(this).getTypeFace(fonts.FLAG_ROJO));
+		etInfousermailemergency.setTextColor(new fonts(this).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
+
 
 		Button contacto_emer = (Button) findViewById(R.id.mitaxiregistermanually_btn_contactos);
 		contacto_emer.setOnClickListener(new View.OnClickListener() {
@@ -443,10 +451,15 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 				R.layout.dialogo_tipo_de_imagen, null);
 		builder.setView(view);
 		builder.setCancelable(true);
+		//fuentes
+((Button) view.findViewById(R.id.dialogo_tipo_de_imagen_btnCancelar)).setTypeface(new fonts(MitaxiRegisterManuallyActivity.this).getTypeFace(fonts.FLAG_AMARILLO));
+((Button) view.findViewById(R.id.dialogo_tipo_de_imagen_btnAceptar)).setTypeface(new fonts(MitaxiRegisterManuallyActivity.this).getTypeFace(fonts.FLAG_AMARILLO));
+((TextView) view.findViewById(R.id.dialogo_tipo_de_imagen_tv_texto)).setTypeface(new fonts(MitaxiRegisterManuallyActivity.this).getTypeFace(fonts.FLAG_ROJO));
+((TextView) view.findViewById(R.id.dialogo_tipo_de_imagen_tv_texto)).setTextColor(new fonts(MitaxiRegisterManuallyActivity.this).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
+
 
 		// escucha del boton aceptar
-		((Button) view.findViewById(R.id.dialogo_tipo_de_imagen_btnCancelar))
-				.setOnClickListener(new OnClickListener() {
+		((Button) view.findViewById(R.id.dialogo_tipo_de_imagen_btnCancelar)).setOnClickListener(new OnClickListener() {
 
 					@Override
 					public void onClick(View view) {
@@ -462,16 +475,13 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 				});
 
 		// escucha del boton cancelar
-		((Button) view.findViewById(R.id.dialogo_tipo_de_imagen_btnAceptar))
-				.setOnClickListener(new OnClickListener() {
+		((Button) view.findViewById(R.id.dialogo_tipo_de_imagen_btnAceptar)).setOnClickListener(new OnClickListener() {
 
 					@Override
 					public void onClick(View view) {
 
 						// Galeria
-						Intent i = new Intent(
-								Intent.ACTION_PICK,
-								android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+						Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 						startActivityForResult(i, RESULT_LOAD_IMAGE);
 
 						customDialog.dismiss(); // cerramos el diálogo
@@ -484,49 +494,52 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 	
 	public void getContactInfo(Intent intent)
 	{
+		try{
+			  Cursor   cursor =  managedQuery(intent.getData(), null, null, null, null);      
+			  if(!cursor.isClosed()&&cursor!=null){
+			   while (cursor.moveToNext()) 
+			   {           
+			       String contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+			       String name = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME)); 
+			       String hasPhone = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
 		
-	  Cursor   cursor =  managedQuery(intent.getData(), null, null, null, null);      
-	  if(!cursor.isClosed()&&cursor!=null){
-	   while (cursor.moveToNext()) 
-	   {           
-	       String contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-	       String name = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME)); 
-	       String hasPhone = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
-
-	       if ( hasPhone.equalsIgnoreCase("1"))
-	           hasPhone = "true";
-	       else
-	    	   
-	           hasPhone = "false" ;
-	       if (Boolean.parseBoolean(hasPhone)) 
-	       {
-	        Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = "+ contactId,null, null);
-	        while (phones.moveToNext()) 
-	        {
-	          String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-	          Log.d("**********phoneNumber", phoneNumber);
-	          etInfousertelemergency.setText(phoneNumber.replaceAll(" ", ""));
-	          break;
-	        }
-	        phones.close();
-	       }
-
-	       // Find Email Addresses
-	       Cursor emails = getContentResolver().query(ContactsContract.CommonDataKinds.Email.CONTENT_URI,null,ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + contactId,null, null);
-	       while (emails.moveToNext()) 
-	       {
-	        String emailAddress = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
-	        Log.d("**********correo", emailAddress);
-	        etInfousermailemergency.setText(emailAddress);
-	        break;
-	       }
-	       emails.close();
- 
-	  }  //while (cursor.moveToNext())  
-	   cursor.close();
-	    cursor = null;
-	  }
-	   
+			       if ( hasPhone.equalsIgnoreCase("1"))
+			           hasPhone = "true";
+			       else
+			    	   
+			           hasPhone = "false" ;
+			       if (Boolean.parseBoolean(hasPhone)) 
+			       {
+			        Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = "+ contactId,null, null);
+			        while (phones.moveToNext()) 
+			        {
+			          String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+			          Log.d("**********phoneNumber", phoneNumber);
+			          etInfousertelemergency.setText(phoneNumber.replaceAll(" ", ""));
+			          break;
+			        }
+			        phones.close();
+			       }
+		
+			       // Find Email Addresses
+			       Cursor emails = getContentResolver().query(ContactsContract.CommonDataKinds.Email.CONTENT_URI,null,ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + contactId,null, null);
+			       while (emails.moveToNext()) 
+			       {
+			        String emailAddress = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
+			        Log.d("**********correo", emailAddress);
+			        etInfousermailemergency.setText(emailAddress);
+			        break;
+			       }
+			       
+			       emails.close();
+			       break;
+			  }  //while (cursor.moveToNext())  
+			//   cursor.close();
+			 //   cursor = null;
+			  }
+		}catch(Exception e){
+			
+		}
 	}
 	
 }

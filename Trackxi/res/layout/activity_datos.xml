@@ -9,21 +9,20 @@
     tools:context=".Datos" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/datos_tv_titulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:textColor="@color/generic_amarillo"
-        android:text="Datos del vehículo:" />
+        android:text="Datos del vehículo" />
 
     <TextView
         android:id="@+id/datos_tv_marca"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/textView1"
-        android:layout_marginTop="14dp"
+        android:layout_alignLeft="@+id/datos_tv_titulo"
+        android:layout_below="@+id/datos_tv_titulo"
+        android:layout_marginTop="3dp"
         android:textColor="@color/generic_amarillo"
         android:text="Marca: " />
 
@@ -46,7 +45,7 @@
         android:text="Modelo: " />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/datos_tv_niveles_confianza"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/datos_tv_modelo"
@@ -59,14 +58,14 @@
         android:id="@+id/Thermometer_Container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView5"
-        android:layout_below="@+id/textView5"
+        android:layout_alignLeft="@+id/datos_tv_niveles_confianza"
+        android:layout_below="@+id/datos_tv_niveles_confianza"
         android:gravity="center"
         android:orientation="horizontal" >
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/datos_tv_calif_usuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/Thermometer_Container"
@@ -79,8 +78,8 @@
         android:id="@+id/Thermometer_Container_usuarios"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_below="@+id/textView2"
+        android:layout_alignLeft="@+id/datos_tv_calif_usuario"
+        android:layout_below="@+id/datos_tv_calif_usuario"
         android:orientation="vertical" >
     </LinearLayout>
 
@@ -88,14 +87,14 @@
         android:id="@+id/datos_tv_descripcion"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignLeft="@+id/textView6"
-        android:layout_below="@+id/textView6"
+        android:layout_alignLeft="@+id/datos_tv_titulo_desc"
+        android:layout_below="@+id/datos_tv_titulo_desc"
         android:textColor="@color/white"
         android:padding="5dp"
         android:text="blablablabla" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/datos_tv_titulo_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/Thermometer_Container_usuarios"

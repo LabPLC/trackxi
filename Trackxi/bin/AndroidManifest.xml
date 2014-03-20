@@ -35,7 +35,6 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
@@ -52,7 +51,6 @@
             android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -66,15 +64,13 @@
             android:name="codigo.labplc.mx.trackxi.paginador.Paginador"
             android:configChanges="orientation"
             android:label="@string/title_activity_busca_placa"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="codigo.labplc.mx.trackxi.buscarplaca.paginador.DatosAuto"
             android:configChanges="orientation"
             android:label="@string/title_activity_busca_placa"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.NoActionBar" >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="codigo.labplc.mx.trackxi.registro.MitaxiRegisterManuallyActivity"

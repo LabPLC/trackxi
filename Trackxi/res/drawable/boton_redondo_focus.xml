@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <stroke 
         android:width="2dp" 
-        android:color="@color/generic_amarillo"/>
+        android:color="@color/rojo_logo"/>
     <corners 
         android:radius="10dp" />
 

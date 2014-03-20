@@ -11,12 +11,10 @@
     <color name="selector_btn_textcolor_pressed">#FFFFFFFF</color>
     <color name="selector_btn_textcolor_focused">#FFFFFFFF</color>
     <color name="selector_btn_textcolor_default">#FFFFFFFF</color>
-    
-    
-    <!-- colores nuevos -->
-     <color name="rojo_logo">#EF4147</color>
-          <color name="gris_letra">#6D6E70</color>
 
+   
+    
+    
     <!-- More info http://developer.android.com/design/style/color.html -->
 
     <color name="white">#FFffffff</color>
@@ -36,5 +34,25 @@
     <color name="android_darkpink">#FFc3325f</color>
     <color name="android_purple">#FFaa66cc</color>
     <color name="android_darkpurple">#FF9933cc</color>
+    
+    
+        <color name="generic_amarillo">#EACC98</color>
+    <color name="generic_rojo_alfa">#BBEF4147</color>
+    <color name="rojo_logo">#EF4147</color>
+    <color name="mamey">#EB8C6B</color>
+    <color name="gris_claro">#E6E7E8</color>
+    <color name="gris_obscuro">#6D6E70</color>
+    
+    
+    
+    <!-- colores del paginador -->
+        <color name="vpi__background_holo_dark">#ff000000</color>
+    <color name="vpi__background_holo_light">#fff3f3f3</color>
+    <color name="vpi__bright_foreground_holo_dark">@color/vpi__background_holo_light</color>
+    <color name="vpi__bright_foreground_holo_light">@color/vpi__background_holo_dark</color>
+    <color name="vpi__bright_foreground_disabled_holo_dark">#ff4c4c4c</color>
+    <color name="vpi__bright_foreground_disabled_holo_light">#ffb2b2b2</color>
+    <color name="vpi__bright_foreground_inverse_holo_dark">@color/vpi__bright_foreground_holo_light</color>
+    <color name="vpi__bright_foreground_inverse_holo_light">@color/vpi__bright_foreground_holo_dark</color>
 
 </resources>

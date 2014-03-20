@@ -11,6 +11,7 @@ import android.widget.TextView;
 import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.buscarchofer.BuscarChofer;
 import codigo.labplc.mx.trackxi.buscarplaca.BuscaPlaca;
+import codigo.labplc.mx.trackxi.fonts.fonts;
 
 /**
  * 
@@ -63,7 +64,7 @@ public class ScreenSlidePageFragment extends Fragment {
 		super.onActivityCreated(savedInstanceState);
 
 		// Load parameters when the initial creation of the fragment is done
-		this.color = (getArguments() != null) ? getArguments().getInt(BACKGROUND_COLOR) : Color.GRAY;
+		this.color = (getArguments() != null) ? getArguments().getInt(BACKGROUND_COLOR) : R.color.white;
 		this.index = (getArguments() != null) ? getArguments().getInt(INDEX): -1;
 
 	}

@@ -24,15 +24,11 @@
             android:padding="10dp" >
 
             <TextView
+                android:id="@+id/dialogo_tipo_de_imagen_tv_texto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="¿Qué quieres abrir?"
-                android:background="@color/generic_amarillo"
-                android:textColor="@color/white" />
-
-            
-
+                android:text="¿Qué quieres abrir?" />
         </LinearLayout>
 
         <LinearLayout
@@ -51,7 +47,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/selector_btn_generic"
                 android:text="Camara"
-                android:textColor="@drawable/selector_txt_boton_redondo"  />
+                android:textColor="@drawable/selector_txt_boton_redondo" />
 
             <Button
                 android:id="@+id/dialogo_tipo_de_imagen_btnAceptar"

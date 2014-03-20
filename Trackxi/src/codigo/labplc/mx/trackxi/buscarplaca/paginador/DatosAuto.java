@@ -9,13 +9,12 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import android.app.AlertDialog;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
@@ -24,17 +23,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import codigo.labplc.mx.trackxi.R;
-import codigo.labplc.mx.trackxi.Trackxi;
 import codigo.labplc.mx.trackxi.buscarplaca.bean.AutoBean;
 import codigo.labplc.mx.trackxi.buscarplaca.bean.ComentarioBean;
 import codigo.labplc.mx.trackxi.configuracion.UserSettingActivity;
 import codigo.labplc.mx.trackxi.dialogos.Dialogos;
+import codigo.labplc.mx.trackxi.fonts.fonts;
 import codigo.labplc.mx.trackxi.network.NetworkUtils;
 import codigo.labplc.mx.trackxi.paginador.Paginador;
 import codigo.labplc.mx.trackxi.tracking.ServicioGeolocalizacion;
 
-import com.viewpagerindicator.TitlePageIndicator;
+import com.viewpagerindicator.CirclePageIndicator;
 
 public class DatosAuto extends FragmentActivity{
 	
@@ -66,10 +66,16 @@ public class DatosAuto extends FragmentActivity{
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 		this.setContentView(R.layout.dialogo_datos_correctos);
+	
+		
 		
 		Bundle bundle = getIntent().getExtras();
 		placa = bundle.getString("placa");	
 		
+		((TextView) findViewById(R.id.dialogo_datos_correctos_tv_titulo)).setTypeface(new fonts(this).getTypeFace(fonts.FLAG_ROJO));
+		((TextView) findViewById(R.id.dialogo_datos_correctos_tv_titulo)).setTextColor(new fonts(this).getColorTypeFace(fonts.FLAG_ROJO));
+		
+
 		SharedPreferences prefs = getSharedPreferences("MisPreferenciasTrackxi", Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = prefs.edit();
 		editor.putString("placa", placa);
@@ -77,53 +83,17 @@ public class DatosAuto extends FragmentActivity{
 		
 		mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		
-		// Instantiate a ViewPager
-		this.pager = (ViewPager) this.findViewById(R.id.pager_dialog);
-		autoBean= new AutoBean();
-		
-		if(!estaEnRevista()){
-			 PUNTOS_APP-=PUNTOS_REVISTA;
-			 autoBean.setDescripcion_revista(getResources().getString(R.string.sin_revista));
-			 autoBean.setImagen_revista(imagen_rojo);
-			 hasRevista=false;
-		}
-		
-		datosVehiculo(hasRevista);
-		cargaComentarios();
-		
-		
-		
-		
-		PUNTOS = ((PUNTOS_APP+PUNTOS_USUARIO)/2);
-		if(PUNTOS<=20){
-			autoBean.setDescripcion_calificacion_app(getResources().getString(R.string.texto_calificacion_20));
-		}else if(PUNTOS<=40 && PUNTOS>20){
-			autoBean.setDescripcion_calificacion_app(getResources().getString(R.string.texto_calificacion_40));
-		}else if(PUNTOS<=60 && PUNTOS>40){
-			autoBean.setDescripcion_calificacion_app(getResources().getString(R.string.texto_calificacion_60));
-		}else if(PUNTOS<=80 && PUNTOS>60){
-			autoBean.setDescripcion_calificacion_app(getResources().getString(R.string.texto_calificacion_80));
-		}else if(PUNTOS>=80){
-			autoBean.setDescripcion_calificacion_app(getResources().getString(R.string.texto_calificacion_100));
-		}
-		autoBean.setCalificacion_final(PUNTOS);
-		autoBean.setCalificaion_app(PUNTOS_APP);
-		
-		
-		// Create an adapter with the fragments we show on the ViewPager
-		FragmentPagerAdapterDialog adapter = new FragmentPagerAdapterDialog(getSupportFragmentManager());
-		adapter.addFragment(ScreenSlidePageFragmentDialog.newInstance(getResources().getColor(R.color.android_blue), 1,DatosAuto.this,autoBean));
-		adapter.addFragment(ScreenSlidePageFragmentDialog.newInstance(getResources().getColor(R.color.android_red), 2,DatosAuto.this,autoBean));
-		adapter.addFragment(ScreenSlidePageFragmentDialog.newInstance(getResources().getColor(R.color.android_darkpink), 3,DatosAuto.this,autoBean));
 
-		this.pager.setAdapter(adapter);
-
-		// Bind the title indicator to the adapter
-		TitlePageIndicator titleIndicator = (TitlePageIndicator) findViewById(R.id.indicator_dialg);
-		titleIndicator.setViewPager(pager);
+				pager = (ViewPager) this.findViewById(R.id.pager_dialog);
+				autoBean= new AutoBean();
+		
+		Upload nuevaTarea = new Upload();
+		nuevaTarea.execute();
+		
 		
 		
 		Button dialogo_datos_correctos_btn_iniciar = (Button) findViewById(R.id.dialogo_datos_correctos_btn_iniciar);
+		dialogo_datos_correctos_btn_iniciar.setTypeface(new fonts(this).getTypeFace(fonts.FLAG_AMARILLO));
 		dialogo_datos_correctos_btn_iniciar.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -132,11 +102,6 @@ public class DatosAuto extends FragmentActivity{
 				if (!mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 					new Dialogos().showDialogGPS(DatosAuto.this,"GPS apagado", "ÀDeseas activarlo?");		
 				}else{
-					
-				
-					/**
-					 * Se inicia el servicio de geolocalizaci—n
-					 */
 					ServicioGeolocalizacion.taxiActivity = DatosAuto.this;
 					startService(new Intent(DatosAuto.this,ServicioGeolocalizacion.class));
 					DatosAuto.this.finish();
@@ -383,6 +348,85 @@ public class DatosAuto extends FragmentActivity{
 		super.onBackPressed();
 	}
 	
-	
+	/**
+	 * clase que envia por post los datos del registro
+	 * 
+	 * @author mikesaurio
+	 * 
+	 */
+	class Upload extends AsyncTask<String, Void, Void> {
+
+		private ProgressDialog pDialog;;
+		public static final int HTTP_TIMEOUT = 30 * 1000;
+
+		@SuppressWarnings("deprecation")
+		@Override
+		protected Void doInBackground(String... params) {
+			try
+
+			{
+
+				if(!estaEnRevista()){
+					 PUNTOS_APP-=PUNTOS_REVISTA;
+					 autoBean.setDescripcion_revista(getResources().getString(R.string.sin_revista));
+					 autoBean.setImagen_revista(imagen_rojo);
+					 hasRevista=false;
+				}
+				
+				datosVehiculo(hasRevista);
+				cargaComentarios();
+				
+				PUNTOS = ((PUNTOS_APP+PUNTOS_USUARIO)/2);
+				if(PUNTOS<=25){
+					autoBean.setDescripcion_calificacion_app(getResources().getString(R.string.texto_calificacion_25));
+				}else if(PUNTOS<=49 && PUNTOS>25){
+					autoBean.setDescripcion_calificacion_app(getResources().getString(R.string.texto_calificacion_49));
+				}else if(PUNTOS<=60 && PUNTOS>49){
+					autoBean.setDescripcion_calificacion_app(getResources().getString(R.string.texto_calificacion_60));
+				}else if(PUNTOS<=80 && PUNTOS>60){
+					autoBean.setDescripcion_calificacion_app(getResources().getString(R.string.texto_calificacion_80));
+				}else if(PUNTOS<=90 && PUNTOS>80){
+					autoBean.setDescripcion_calificacion_app(getResources().getString(R.string.texto_calificacion_90));
+				}else if(PUNTOS>90){
+					autoBean.setDescripcion_calificacion_app(getResources().getString(R.string.texto_calificacion_100));
+				}
+				autoBean.setCalificacion_final(PUNTOS);
+				autoBean.setCalificaion_app(PUNTOS_APP);
+				
+				
+				// Create an adapter with the fragments we show on the ViewPager
+				FragmentPagerAdapterDialog adapter = new FragmentPagerAdapterDialog(getSupportFragmentManager());
+				adapter.addFragment(ScreenSlidePageFragmentDialog.newInstance(getResources().getColor(R.color.android_blue), 1,DatosAuto.this,autoBean));
+				adapter.addFragment(ScreenSlidePageFragmentDialog.newInstance(getResources().getColor(R.color.android_red), 2,DatosAuto.this,autoBean));
+				adapter.addFragment(ScreenSlidePageFragmentDialog.newInstance(getResources().getColor(R.color.android_darkpink), 3,DatosAuto.this,autoBean));
+
+				pager.setAdapter(adapter);
+
+				// Bind the title indicator to the adapter
+				CirclePageIndicator titleIndicator = (CirclePageIndicator) findViewById(R.id.indicator_dialg);
+				titleIndicator.setViewPager(pager);
+				
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		protected void onPreExecute() {
+			super.onPreExecute();
+			pDialog = new ProgressDialog(DatosAuto.this);
+			pDialog.setMessage("Cargando la informaci—n, espere....");
+			pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			pDialog.setCancelable(true);
+			pDialog.show();
+		}
+
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+			pDialog.dismiss();
+		}
+
+	}
 	
 }

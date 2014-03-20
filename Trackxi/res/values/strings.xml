@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Trackxi</string>
+    <string name="app_name">Traxi</string>
     <string name="action_settings">Configuración</string>
+      <string name="action_help">Ayuda</string>
     <string name="hello_world">Hello world!</string>
 
     <!-- Splash -->
@@ -25,7 +26,7 @@
     <string name="mitaxiregister_et_telemergency_hint">Teléfono de emergencia</string>
     <string name="mitaxiregister_et_mailemergency_hint">Correo de emergencia</string>
     <string name="mitaxiregister_et_paraque">¿Para qué?</string>
-    <string name="mitaxiregister_et_emergencias">contacto de emergencia</string>
+    <string name="mitaxiregister_et_emergencias">Contacto de emergencia</string>
     <string name="mitaxiregister_btn_cancel">Cancelar</string>
     <string name="mitaxiregister_btn_ok">Registrar</string>
 
@@ -42,8 +43,8 @@
     <string name="transaction_wrong">Ops#8230; Ocurrió un error al hacer la conexión con el servidor.</string>
 
     <!-- Para que DIALOGO -->
-    <string name="paraque_subtitulo">Los datos son necesarios para el alta</string>
-    <string name="paraque_titulo">Aviso</string>
+    <string name="paraque_subtitulo">Los datos son necesarios.</string>
+    <string name="paraque_titulo">AVISO</string>
     <string name="paraque_nombre">Nombre: Para saber como te llamaremos.</string>
     <string name="paraque_correo">Correo: Para identificarte.</string>
     <string name="paraque_telemer">Teléfono de emergencia: Para comunicarnos con un conocido en caso de que te sientas amenazado.</string>
@@ -56,12 +57,14 @@
     <string name="title_activity_comentarios">Comentarios</string>
 
     <!-- Textos Datos Auto -->
-    <string name="texto_calificacion_20">Es un taxi altamente riesgoso, te sugerimos que no te subas, de haberlo hecho toma todas las precauciones posibles.</string>
-    <string name="texto_calificacion_40">Es un taxi riesgoso, de preferencia toma otro, pero, si debes tomarlo toma todas las precauciones posibles.</string>
-    <string name="texto_calificacion_60">Es un taxi de bajo riesgo, te sugerimos lo tomes con mucha precaución y estes al pendiente.</string>
-    <string name="texto_calificacion_80">Es un taxi confiable, aún así recuerda que tu seguridad es muy importante toma siempre todas las precauciones.</string>
-    <string name="texto_calificacion_100">Es un taxi muy bien calificado, por lo que puede ser muy confiable, aún así recuerda que tu seguridad es muy importante toma siempre todas las precauciones, tienes una alta posibilidad de tener un viaje agradable.</string>
-
+    <string name="texto_calificacion_25">Este vehículo no está registrado como un taxi, así como presenta varios problemas en otros rubros. por lo que recibe una calificación reprobatoria. En caso de abordar el vehículo, sugerimos lo hagas con todas las precauciones posibles y mantenerte alerta.</string>
+    <string name="texto_calificacion_49">Este vehículo no está registrado como un taxi, así como presenta inconsistencias en otros rubros. por lo que recibe una calificación reprobatoria. En caso de abordar el vehículo, se sugiere que lo hagas con todas las precauciones posibles y mantenerte muy alerta</string>
+    <string name="texto_calificacion_60">Este vehículo está registrado como un taxi, pero presenta varios problemas en otros rubros. Es un taxi de bajo riesgo, pero se sugiere que en caso de abordar el vehículo, lo hagas con todas las precauciones posibles y mantenerte alerta.</string>
+    <string name="texto_calificacion_80">Este vehículo está registrado como un taxi, pero presenta algunos problemas en otros rubros. Es un taxi de confiable, pero como tu seguridad es importante se sugiere que te mantengas alerta.</string>
+    <string name="texto_calificacion_90">Este vehículo es un taxi altamente confiable, pero aún tiene áreas de oportunidad para mejorar. Es un taxi de confiable, pero como tu seguridad es importante se sugiere que te mantengas alerta.</string>
+    <string name="texto_calificacion_100">¡Felicidades! Encontraste un taxi altamente confiable y tienes una alta probabilidad de tener un viaje agradable. Este taxi es responsable al dar servicio, así como que está pendiente de sus obligaciones legales, pero como tu seguridad es impor- tante se sugiere que siempre te mantengas alerta.</string>
+    
+    
     <!-- Tenencia -->
     <string name="sin_adeudo_tenencia">Este vehiculo no tiene adeudos.</string>
     <string name="con_adeudo_tenencia">Este vehiculo es irregular.</string>

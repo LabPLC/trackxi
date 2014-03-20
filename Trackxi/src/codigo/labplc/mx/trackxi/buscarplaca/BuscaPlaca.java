@@ -3,9 +3,7 @@ package codigo.labplc.mx.trackxi.buscarplaca;
 import java.io.IOException;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -15,6 +13,9 @@ import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.ShutterCallback;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.InputType;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -24,12 +25,12 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import codigo.labplc.mx.trackxi.R;
-import codigo.labplc.mx.trackxi.Trackxi;
 import codigo.labplc.mx.trackxi.buscarplaca.paginador.DatosAuto;
 import codigo.labplc.mx.trackxi.dialogos.Dialogos;
-import codigo.labplc.mx.trackxi.paginador.Paginador;
+import codigo.labplc.mx.trackxi.fonts.fonts;
 
 public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 
@@ -70,25 +71,60 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 		
 		context.getWindow().setFormat(PixelFormat.UNKNOWN);
 		
+		((TextView) view.findViewById(R.id.inicio_de_trabajo_tv_nombre)).setTypeface(new fonts(context).getTypeFace(fonts.FLAG_ROJO));	
+		((TextView) view.findViewById(R.id.inicio_de_trabajo_tv_nombre)).setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_AMARILLO));
+		
+		((TextView) view.findViewById(R.id.inicio_de_trabajo_tv_foto)).setTypeface(new fonts(context).getTypeFace(fonts.FLAG_ROJO));
+		((TextView) view.findViewById(R.id.inicio_de_trabajo_tv_foto)).setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_AMARILLO));
+
+		
 		surfaceView = (SurfaceView) view.findViewById(R.id.camerapreview);
 		surfaceHolder = surfaceView.getHolder();
 		surfaceHolder.addCallback(this);
 		surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 		controlInflater = LayoutInflater.from(context.getBaseContext());
 		busca_placa_btn_tomarfoto =(Button)view.findViewById(R.id.busca_placa_btn_tomarfoto);
+		busca_placa_btn_tomarfoto.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_AMARILLO));
+		
 		busca_placa_btn_tomarfoto.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				camera.takePicture(myShutterCallback,
-					     myPictureCallback_RAW, myPictureCallback_JPG);
+				try{
+				camera.takePicture(myShutterCallback,myPictureCallback_RAW, myPictureCallback_JPG);
+				}catch(Exception e){
+					e.printStackTrace();
+				}
 			}
 		});
 		
 	
 	
 	placa = (EditText)view.findViewById(R.id.inicio_de_trabajo_et_placa);
+	placa.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
+	placa.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
+	placa.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME|InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
+	placa.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_ROJO));
+	placa.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
+	
+	placa.setFilters(new InputFilter[] {
+		    new InputFilter() {
+		        public CharSequence filter(CharSequence src, int start,
+		                int end, Spanned dst, int dstart, int dend) {
+		            if(src.equals("")){ // for backspace
+		                return src;
+		            }
+		            if(src.toString().matches("[a,b,m,A,B,M]?")){
+		                return src;
+		                
+		            }else  if(src.toString().matches("[0,1,2,3,4,5,6,7,8,9]*")){
+		                return src;
+		            }
+		            return "";
+		        }
+		    }
+		});
 	placa.addTextChangedListener(new TextWatcher() {
 		
 		@Override
@@ -107,11 +143,19 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 	            		context.startActivityForResult(intent, 0);
 	            		placa.setText("");
 	            		context.finish();
+	            		placa.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
 	            		
 					} catch (Exception e) {
 						new Dialogos().Toast(context.getBaseContext(), "Taxi no valido", Toast.LENGTH_LONG);
 	          	    	  placa.setText("");
 					}
+	            }
+	            else{
+	            	if(Splaca.length()>=1){
+	            		placa.setInputType(InputType.TYPE_CLASS_NUMBER);
+	            	}else{
+	            		placa.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
+	            	}
 	            }
 			
 		}

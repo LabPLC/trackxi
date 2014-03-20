@@ -1,15 +1,10 @@
 package codigo.labplc.mx.trackxi.buscarplaca.paginador.paginas;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONTokener;
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
-import android.util.EventLogTags.Description;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -17,7 +12,7 @@ import android.widget.TextView;
 import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.buscarplaca.bean.AutoBean;
 import codigo.labplc.mx.trackxi.buscarplaca.paginador.paginas.termometro.ThermometerView;
-import codigo.labplc.mx.trackxi.network.NetworkUtils;
+import codigo.labplc.mx.trackxi.fonts.fonts;
 
 public class Datos extends View {
 
@@ -53,10 +48,35 @@ public class Datos extends View {
 		LayoutInflater inflater = (LayoutInflater)   getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE); 
 		view = inflater.inflate(R.layout.activity_datos, null);
 		
+		((TextView) view.findViewById(R.id.datos_tv_niveles_confianza)).setTypeface(new fonts(context).getTypeFace(fonts.FLAG_MAMEY));	
+		((TextView) view.findViewById(R.id.datos_tv_niveles_confianza)).setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_MAMEY));
+		
+		((TextView) view.findViewById(R.id.datos_tv_calif_usuario)).setTypeface(new fonts(context).getTypeFace(fonts.FLAG_MAMEY));	
+		((TextView) view.findViewById(R.id.datos_tv_calif_usuario)).setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_MAMEY));
+		
+		((TextView) view.findViewById(R.id.datos_tv_titulo_desc)).setTypeface(new fonts(context).getTypeFace(fonts.FLAG_MAMEY));	
+		((TextView) view.findViewById(R.id.datos_tv_titulo_desc)).setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_MAMEY));
+		
+		TextView datos_tv_titulo = (TextView)view.findViewById(R.id.datos_tv_titulo);
+		datos_tv_titulo.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_MAMEY));
+		datos_tv_titulo.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_MAMEY));
+		
 		marca = (TextView)view.findViewById(R.id.datos_tv_marca);
+		marca.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
+		marca.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
+		
 		submarca = (TextView)view.findViewById(R.id.datos_tv_submarca);
+		submarca.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
+		submarca.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
+		
 		modelo = (TextView)view.findViewById(R.id.datos_tv_modelo);
+		modelo.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
+		modelo.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
+		
 		descripcion =(TextView)view.findViewById(R.id.datos_tv_descripcion);
+		descripcion.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
+		descripcion.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
+		
 		container = (LinearLayout)view.findViewById(R.id.Thermometer_Container);
 		container_usuario = (LinearLayout)view.findViewById(R.id.Thermometer_Container_usuarios);
 	
@@ -65,11 +85,12 @@ public class Datos extends View {
 		modelo.append(autoBean.getAnio());
 		
 		descripcion.setText(autoBean.getDescripcion_calificacion_app());
-		if(autoBean.getCalificacion_final()<=40){
-			descripcion.setBackgroundColor(Color.rgb(0xFF, 0x44, 0x44));
-		}else if(autoBean.getCalificacion_final()>40 && autoBean.getCalificacion_final()<80){
-			descripcion.setBackgroundColor(getResources().getColor(R.color.generic_amarillo));
-		}else if(autoBean.getCalificacion_final()>=80){
+		
+		if(autoBean.getCalificacion_final()<=49){
+			descripcion.setBackgroundColor(context.getResources().getColor(R.color.rojo_logo));
+		}else if(autoBean.getCalificacion_final()>40 && autoBean.getCalificacion_final()<=80){
+			descripcion.setBackgroundColor(context.getResources().getColor(R.color.generic_amarillo));
+		}else if(autoBean.getCalificacion_final()>80){
 			descripcion.setBackgroundColor(Color.rgb(0x99, 0xCC, 0x00));
 		}
 		

@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.buscarplaca.bean.AutoBean;
+import codigo.labplc.mx.trackxi.fonts.fonts;
 
 public class Adeudos extends View {
 
@@ -51,6 +52,10 @@ public class Adeudos extends View {
 		
 		TextView adeudos_titulo_main = (TextView)view.findViewById(R.id.adeudos_titulo_main);
 		adeudos_titulo_main.setText("Especificaciones del veh’culo");
+		adeudos_titulo_main.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_MAMEY));
+		adeudos_titulo_main.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_MAMEY));
+		
+		
 		container=(LinearLayout)view.findViewById(R.id.adeudos_ll_contenedor);
 		
 
@@ -72,7 +77,13 @@ public class Adeudos extends View {
 		
 		
 		TextView adeudos_row_titulo = (TextView)view_row.findViewById(R.id.adeudos_row_titulo);
+		adeudos_row_titulo.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
+		adeudos_row_titulo.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
+		
 		TextView adeudos_row_descripcion = (TextView)view_row.findViewById(R.id.adeudos_row_descripcion);
+		adeudos_row_descripcion.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
+		adeudos_row_descripcion.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
+		
 		ImageView adeudos_row_iv = (ImageView)view_row.findViewById(R.id.adeudos_row_iv);
 		
 		adeudos_row_titulo.setText(titulo);
