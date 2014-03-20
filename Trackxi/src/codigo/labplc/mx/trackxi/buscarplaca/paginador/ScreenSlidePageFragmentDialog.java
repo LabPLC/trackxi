@@ -67,7 +67,7 @@ public class ScreenSlidePageFragmentDialog extends Fragment {
 		super.onActivityCreated(savedInstanceState);
 
 		// Load parameters when the initial creation of the fragment is done
-		this.color = (getArguments() != null) ? getArguments().getInt(BACKGROUND_COLOR) : Color.GRAY;
+		this.color = (getArguments() != null) ? getArguments().getInt(BACKGROUND_COLOR) : Color.WHITE;
 		this.index = (getArguments() != null) ? getArguments().getInt(INDEX): -1;
 
 	}

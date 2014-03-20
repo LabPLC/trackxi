@@ -27,12 +27,12 @@ public class ThermometerView extends View {
     
     private int duration = 2000; //duration in millis
     
-    private int shadowColor = Color.RED;
-    private int startShadowColor = Color.argb(0x00, 0x00, 0x00, 0x00);
+    private int shadowColor = getResources().getColor(R.color.gris_obscuro);
+    private int startShadowColor = getResources().getColor(R.color.gris_claro);
     
-    private int backgroundColor = getResources().getColor(R.color.generic_amarillo);
-    private int progressColor = Color.rgb(0x99, 0xCC, 0x00);
-    private int startProgressColor = Color.rgb(0xFF, 0x44, 0x44);
+    private int backgroundColor = getResources().getColor(R.color.rojo_logo);
+    private int progressColor = getResources().getColor(R.color.gris_obscuro);
+    private int startProgressColor = getResources().getColor(R.color.gris_obscuro);
 
 	private ValueAnimator shadowColorAnimation;
     

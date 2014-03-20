@@ -16,7 +16,7 @@
         android:id="@+id/textView1"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@color/generic_amarillo" />
+        android:background="@color/rojo_logo" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,7 +29,6 @@
             android:layout_marginTop="3dp"
             android:layout_height="match_parent"
             android:layout_weight=".8"
-            android:background="@color/generic_amarillo"
             android:text="Descripcion"
             android:padding="3dp"
             android:textColor="@color/white" />

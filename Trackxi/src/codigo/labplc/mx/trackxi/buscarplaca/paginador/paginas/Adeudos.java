@@ -51,9 +51,8 @@ public class Adeudos extends View {
 		view = inflater.inflate(R.layout.activity_adeudos, null);
 		
 		TextView adeudos_titulo_main = (TextView)view.findViewById(R.id.adeudos_titulo_main);
-		adeudos_titulo_main.setText("Especificaciones del veh’culo");
 		adeudos_titulo_main.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_MAMEY));
-		adeudos_titulo_main.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_MAMEY));
+		adeudos_titulo_main.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
 		
 		
 		container=(LinearLayout)view.findViewById(R.id.adeudos_ll_contenedor);
@@ -77,11 +76,11 @@ public class Adeudos extends View {
 		
 		
 		TextView adeudos_row_titulo = (TextView)view_row.findViewById(R.id.adeudos_row_titulo);
-		adeudos_row_titulo.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
+		adeudos_row_titulo.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_GRIS_CLARO));
 		adeudos_row_titulo.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
 		
 		TextView adeudos_row_descripcion = (TextView)view_row.findViewById(R.id.adeudos_row_descripcion);
-		adeudos_row_descripcion.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
+		adeudos_row_descripcion.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_MAMEY));
 		adeudos_row_descripcion.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
 		
 		ImageView adeudos_row_iv = (ImageView)view_row.findViewById(R.id.adeudos_row_iv);
@@ -89,9 +88,9 @@ public class Adeudos extends View {
 		adeudos_row_titulo.setText(titulo);
 		adeudos_row_descripcion.setText(concepto);
 		if(imagen==imagen_verde){
-			adeudos_row_iv.setImageResource(R.drawable.ic_launcher_verde);
+			adeudos_row_iv.setImageResource(R.drawable.ic_launcher_paloma);
 		}else if(imagen==imagen_rojo){
-			adeudos_row_iv.setImageResource(R.drawable.ic_launcher_rojo);
+			adeudos_row_iv.setImageResource(R.drawable.ic_launcher_tache);
 		}
 		container.addView(view_row);
 		

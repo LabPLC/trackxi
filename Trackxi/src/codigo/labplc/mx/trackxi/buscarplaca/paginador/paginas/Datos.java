@@ -6,13 +6,16 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.buscarplaca.bean.AutoBean;
 import codigo.labplc.mx.trackxi.buscarplaca.paginador.paginas.termometro.ThermometerView;
 import codigo.labplc.mx.trackxi.fonts.fonts;
+import codigo.labplc.mx.trackxi.paginador.Paginador;
 
 public class Datos extends View {
 
@@ -49,51 +52,49 @@ public class Datos extends View {
 		view = inflater.inflate(R.layout.activity_datos, null);
 		
 		((TextView) view.findViewById(R.id.datos_tv_niveles_confianza)).setTypeface(new fonts(context).getTypeFace(fonts.FLAG_MAMEY));	
-		((TextView) view.findViewById(R.id.datos_tv_niveles_confianza)).setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_MAMEY));
+		((TextView) view.findViewById(R.id.datos_tv_niveles_confianza)).setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_AMARILLO));
 		
 		((TextView) view.findViewById(R.id.datos_tv_calif_usuario)).setTypeface(new fonts(context).getTypeFace(fonts.FLAG_MAMEY));	
-		((TextView) view.findViewById(R.id.datos_tv_calif_usuario)).setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_MAMEY));
+		((TextView) view.findViewById(R.id.datos_tv_calif_usuario)).setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_AMARILLO));
 		
-		((TextView) view.findViewById(R.id.datos_tv_titulo_desc)).setTypeface(new fonts(context).getTypeFace(fonts.FLAG_MAMEY));	
-		((TextView) view.findViewById(R.id.datos_tv_titulo_desc)).setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_MAMEY));
+		((TextView) view.findViewById(R.id.datos_tv_titulo_desc)).setTypeface(new fonts(context).getTypeFace(fonts.FLAG_GRIS_CLARO));	
+		((TextView) view.findViewById(R.id.datos_tv_titulo_desc)).setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
 		
+		
+		((TextView) view.findViewById(R.id.datos_general_tv_titulo_principal)).setTypeface(new fonts(context).getTypeFace(fonts.FLAG_MAMEY));	
+		((TextView) view.findViewById(R.id.datos_general_tv_titulo_principal)).setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
+		
+
 		TextView datos_tv_titulo = (TextView)view.findViewById(R.id.datos_tv_titulo);
-		datos_tv_titulo.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_MAMEY));
-		datos_tv_titulo.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_MAMEY));
+		datos_tv_titulo.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_GRIS_CLARO));
+		datos_tv_titulo.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
 		
 		marca = (TextView)view.findViewById(R.id.datos_tv_marca);
-		marca.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
+		marca.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_MAMEY));
 		marca.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
 		
-		submarca = (TextView)view.findViewById(R.id.datos_tv_submarca);
-		submarca.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
-		submarca.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
-		
-		modelo = (TextView)view.findViewById(R.id.datos_tv_modelo);
-		modelo.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
-		modelo.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
-		
+	
 		descripcion =(TextView)view.findViewById(R.id.datos_tv_descripcion);
-		descripcion.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
+		descripcion.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_MAMEY));
 		descripcion.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
 		
 		container = (LinearLayout)view.findViewById(R.id.Thermometer_Container);
 		container_usuario = (LinearLayout)view.findViewById(R.id.Thermometer_Container_usuarios);
 	
-		marca.append(autoBean.getMarca());
-		submarca.append(autoBean.getSubmarca());
-		modelo.append(autoBean.getAnio());
+		marca.setText(autoBean.getMarca()+", ");
+		marca.append(autoBean.getSubmarca()+", ");
+		marca.append(autoBean.getAnio());
 		
 		descripcion.setText(autoBean.getDescripcion_calificacion_app());
 		
-		if(autoBean.getCalificacion_final()<=49){
+	/*	if(autoBean.getCalificacion_final()<=49){
 			descripcion.setBackgroundColor(context.getResources().getColor(R.color.rojo_logo));
 		}else if(autoBean.getCalificacion_final()>40 && autoBean.getCalificacion_final()<=80){
 			descripcion.setBackgroundColor(context.getResources().getColor(R.color.generic_amarillo));
 		}else if(autoBean.getCalificacion_final()>80){
 			descripcion.setBackgroundColor(Color.rgb(0x99, 0xCC, 0x00));
 		}
-		
+		*/
 		crearTermometro();
 
 		
@@ -115,5 +116,8 @@ public class Datos extends View {
 	public View getView(){
 		return view;
 	}
+	
+	
+	
 
 }

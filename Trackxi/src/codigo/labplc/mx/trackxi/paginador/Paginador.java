@@ -48,18 +48,13 @@ public class Paginador extends FragmentActivity {
 	     ab.setDisplayShowTitleEnabled(false);     
 	     final LayoutInflater inflater = (LayoutInflater)getSystemService("layout_inflater");
 	     View view = inflater.inflate(R.layout.abs_layout,null);   
-	     ((TextView) view.findViewById(R.id.abs_layout_tv_titulo)).setTypeface(new fonts(Paginador.this).getTypeFace(fonts.FLAG_GRIS_CLARO));
+	     ((TextView) view.findViewById(R.id.abs_layout_tv_titulo)).setTypeface(new fonts(Paginador.this).getTypeFace(fonts.FLAG_MAMEY));
 	     ab.setDisplayShowCustomEnabled(true);
 	     
-	     ab.setCustomView(view,new ActionBar.LayoutParams(
-	    	        ViewGroup.LayoutParams.MATCH_PARENT,
-	    	        ViewGroup.LayoutParams.MATCH_PARENT));
+	     ab.setCustomView(view,new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
 	     ab.setCustomView(view);
 
-	     
-	     
-		ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.MATCH_PARENT, Gravity.CENTER);
-		
+
 		// Instantiate a ViewPager
 		this.pager = (ViewPager) this.findViewById(R.id.pager);
 

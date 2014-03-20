@@ -63,7 +63,7 @@
     <string name="texto_calificacion_80">Este vehículo está registrado como un taxi, pero presenta algunos problemas en otros rubros. Es un taxi de confiable, pero como tu seguridad es importante se sugiere que te mantengas alerta.</string>
     <string name="texto_calificacion_90">Este vehículo es un taxi altamente confiable, pero aún tiene áreas de oportunidad para mejorar. Es un taxi de confiable, pero como tu seguridad es importante se sugiere que te mantengas alerta.</string>
     <string name="texto_calificacion_100">¡Felicidades! Encontraste un taxi altamente confiable y tienes una alta probabilidad de tener un viaje agradable. Este taxi es responsable al dar servicio, así como que está pendiente de sus obligaciones legales, pero como tu seguridad es impor- tante se sugiere que siempre te mantengas alerta.</string>
-    
+       <string name="texto_significado_calif"> ¿Qué significa esta calificación?</string>  
     
     <!-- Tenencia -->
     <string name="sin_adeudo_tenencia">Este vehiculo no tiene adeudos.</string>
@@ -96,5 +96,16 @@
     <string name="title_activity_mapa_tracking">Mapa_tracking</string>
     <string name="title_activity_califica_chofer">Califica_chofer</string>
     <string name="title_activity_califica_taxi">Califica_taxi</string>
+    
+    
+    
+    <!-- titulos paginador -->
+      <string name="titulo_uno_general">GENERAL</string>
+    <string name="titulo_dos_detalles">DETALLES</string>
+    <string name="titulo_tres_comentarios">COMENTARIOS</string>
+    
+
+    
+    
 
 </resources>

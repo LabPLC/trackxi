@@ -10,17 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="20dp"
-        android:paddingTop="20dp" >
-
-        <TextView
-            android:id="@+id/dialogo_datos_correctos_tv_titulo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_weight="0.02"
-            android:text="Datos del Taxi" />
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,12 +31,16 @@
                 <com.viewpagerindicator.CirclePageIndicator
                     android:id="@+id/indicator_dialg"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                     />
 
               	<android.support.v4.view.ViewPager
                     android:id="@+id/pager_dialog"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:overScrollMode="never"  />
                    
             </LinearLayout>
 

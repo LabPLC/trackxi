@@ -14,6 +14,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.buscarplaca.bean.AutoBean;
+import codigo.labplc.mx.trackxi.fonts.fonts;
 
 public class Comentarios extends View {
 
@@ -52,7 +53,9 @@ public class Comentarios extends View {
 		view = inflater.inflate(R.layout.activity_adeudos, null);
 		
 		TextView adeudos_titulo_main = (TextView)view.findViewById(R.id.adeudos_titulo_main);
-		adeudos_titulo_main.setText("Comentarios");
+		adeudos_titulo_main.setText(getResources().getString(R.string.titulo_tres_comentarios));
+		adeudos_titulo_main.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_MAMEY));
+		adeudos_titulo_main.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
 		container=(LinearLayout)view.findViewById(R.id.adeudos_ll_contenedor);
 		
 		
@@ -70,6 +73,8 @@ public class Comentarios extends View {
 		view_row = inflater.inflate(R.layout.comentarios_row, null);
 		
 	final	TextView comentarios_row_tv_descripcion = (TextView)view_row.findViewById(R.id.comentarios_row_tv_descripcion);
+	comentarios_row_tv_descripcion.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_MAMEY));
+	comentarios_row_tv_descripcion.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
 		comentarios_row_tv_descripcion.setText(concepto);
 
 	final	RatingBar comentarios_row_rating=(RatingBar)view_row.findViewById(R.id.comentarios_row_rating);

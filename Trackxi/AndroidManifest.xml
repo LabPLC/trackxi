@@ -70,7 +70,8 @@
             android:name="codigo.labplc.mx.trackxi.buscarplaca.paginador.DatosAuto"
             android:configChanges="orientation"
             android:label="@string/title_activity_busca_placa"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+>
         </activity>
         <activity
             android:name="codigo.labplc.mx.trackxi.registro.MitaxiRegisterManuallyActivity"

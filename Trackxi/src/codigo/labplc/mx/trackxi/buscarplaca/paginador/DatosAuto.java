@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -19,14 +20,19 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.buscarplaca.bean.AutoBean;
 import codigo.labplc.mx.trackxi.buscarplaca.bean.ComentarioBean;
+import codigo.labplc.mx.trackxi.buscarplaca.paginador.paginas.Datos;
 import codigo.labplc.mx.trackxi.configuracion.UserSettingActivity;
 import codigo.labplc.mx.trackxi.dialogos.Dialogos;
 import codigo.labplc.mx.trackxi.fonts.fonts;
@@ -48,7 +54,6 @@ public class DatosAuto extends FragmentActivity{
 	private int PUNTOS_ANIO_VEHICULO = 20;
 	private AutoBean autoBean;
 	private AlertDialog customDialog= null;	//Creamos el dialogo generico
-	private ViewPager pager = null;
 	private FragmentPagerAdapterDialog pagerAdapter;
 	private  String placa;
 	private int imagen_verde = 1;
@@ -59,7 +64,8 @@ public class DatosAuto extends FragmentActivity{
 
 	private static final int RESULT_SETTINGS = 1;
 	private LocationManager mLocationManager;
-	
+	private CirclePageIndicator titleIndicator;
+	private 	ViewPager pager = null;
 	
 	
 	@Override
@@ -68,12 +74,27 @@ public class DatosAuto extends FragmentActivity{
 		this.setContentView(R.layout.dialogo_datos_correctos);
 	
 		
+		  final ActionBar ab = getActionBar();
+		     ab.setDisplayShowHomeEnabled(false);
+		     ab.setDisplayShowTitleEnabled(false);     
+		     final LayoutInflater inflater = (LayoutInflater)getSystemService("layout_inflater");
+		     View view = inflater.inflate(R.layout.abs_layout,null);   
+		     ((TextView) view.findViewById(R.id.abs_layout_tv_titulo)).setTypeface(new fonts(DatosAuto.this).getTypeFace(fonts.FLAG_MAMEY));
+		     ((TextView) view.findViewById(R.id.abs_layout_tv_titulo)).setText("DATOS DEL TAXI");
+		     ab.setDisplayShowCustomEnabled(true);
+		     
+		     ab.setCustomView(view,new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
+		     ab.setCustomView(view);
+		
+		
+		
+		
 		
 		Bundle bundle = getIntent().getExtras();
 		placa = bundle.getString("placa");	
 		
-		((TextView) findViewById(R.id.dialogo_datos_correctos_tv_titulo)).setTypeface(new fonts(this).getTypeFace(fonts.FLAG_ROJO));
-		((TextView) findViewById(R.id.dialogo_datos_correctos_tv_titulo)).setTextColor(new fonts(this).getColorTypeFace(fonts.FLAG_ROJO));
+//		((TextView) findViewById(R.id.dialogo_datos_correctos_tv_titulo)).setTypeface(new fonts(this).getTypeFace(fonts.FLAG_ROJO));
+	//	((TextView) findViewById(R.id.dialogo_datos_correctos_tv_titulo)).setTextColor(new fonts(this).getColorTypeFace(fonts.FLAG_ROJO));
 		
 
 		SharedPreferences prefs = getSharedPreferences("MisPreferenciasTrackxi", Context.MODE_PRIVATE);
@@ -81,11 +102,7 @@ public class DatosAuto extends FragmentActivity{
 		editor.putString("placa", placa);
 		editor.commit();
 		
-		mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		
-
-				pager = (ViewPager) this.findViewById(R.id.pager_dialog);
-				autoBean= new AutoBean();
 		
 		Upload nuevaTarea = new Upload();
 		nuevaTarea.execute();
@@ -308,9 +325,9 @@ public class DatosAuto extends FragmentActivity{
 		      for (int i=0; i<cast.length(); i++) {
 		          	JSONObject oneObject = cast.getJSONObject(i);
 					 try {
-						 marca = (String) oneObject.getString("marca");
+						 marca = (String) oneObject.getString("marca").replaceAll(" ","");
 						 autoBean.setMarca(marca);
-						 submarca = (String)  oneObject.getString("submarca");
+						 submarca = (String)  oneObject.getString("submarca").replaceAll(" ","");
 						 autoBean.setSubmarca(submarca);
 						 anio = (String)  oneObject.getString("anio").replaceAll(" ","");
 						 autoBean.setAnio(anio);
@@ -365,6 +382,11 @@ public class DatosAuto extends FragmentActivity{
 			try
 
 			{
+				
+				mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+				titleIndicator = (CirclePageIndicator) findViewById(R.id.indicator_dialg);
+				DatosAuto.this.pager = (ViewPager) DatosAuto.this.findViewById(R.id.pager_dialog);
+				autoBean= new AutoBean();
 
 				if(!estaEnRevista()){
 					 PUNTOS_APP-=PUNTOS_REVISTA;
@@ -394,17 +416,9 @@ public class DatosAuto extends FragmentActivity{
 				autoBean.setCalificaion_app(PUNTOS_APP);
 				
 				
-				// Create an adapter with the fragments we show on the ViewPager
-				FragmentPagerAdapterDialog adapter = new FragmentPagerAdapterDialog(getSupportFragmentManager());
-				adapter.addFragment(ScreenSlidePageFragmentDialog.newInstance(getResources().getColor(R.color.android_blue), 1,DatosAuto.this,autoBean));
-				adapter.addFragment(ScreenSlidePageFragmentDialog.newInstance(getResources().getColor(R.color.android_red), 2,DatosAuto.this,autoBean));
-				adapter.addFragment(ScreenSlidePageFragmentDialog.newInstance(getResources().getColor(R.color.android_darkpink), 3,DatosAuto.this,autoBean));
-
-				pager.setAdapter(adapter);
-
-				// Bind the title indicator to the adapter
-				CirclePageIndicator titleIndicator = (CirclePageIndicator) findViewById(R.id.indicator_dialg);
-				titleIndicator.setViewPager(pager);
+				
+				
+			
 				
 				
 			} catch (Exception e) {
@@ -425,8 +439,33 @@ public class DatosAuto extends FragmentActivity{
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
 			pDialog.dismiss();
+			
+			// Create an adapter with the fragments we show on the ViewPager
+			FragmentPagerAdapterDialog adapter = new FragmentPagerAdapterDialog(getSupportFragmentManager());
+			adapter.addFragment(ScreenSlidePageFragmentDialog.newInstance(getResources().getColor(R.color.android_blue), 1,DatosAuto.this,autoBean));
+			adapter.addFragment(ScreenSlidePageFragmentDialog.newInstance(getResources().getColor(R.color.android_red), 2,DatosAuto.this,autoBean));
+			adapter.addFragment(ScreenSlidePageFragmentDialog.newInstance(getResources().getColor(R.color.android_darkpink), 3,DatosAuto.this,autoBean));
+
+			
+			DatosAuto.this.pager.setAdapter(adapter);
+			titleIndicator.setViewPager(pager);
 		}
 
 	}
+	
+	 public void clickEvent(View v) {
+	        if (v.getId() == R.id.abs_layout_iv_menu) {
+	            showPopup(v);
+	        }
+
+	       
+	    }
+	
+	 public void showPopup(View v) {
+		    PopupMenu popup = new PopupMenu(DatosAuto.this, v);
+		    MenuInflater inflater = popup.getMenuInflater();
+		    inflater.inflate(R.menu.popup, popup.getMenu());
+		    popup.show();
+		}
 	
 }

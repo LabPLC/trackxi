@@ -17,7 +17,7 @@
         android:id="@+id/textView1"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@color/generic_amarillo" />
+        android:background="@color/rojo_logo" />
 
     <TextView
         android:id="@+id/comentarios_row_tv_descripcion"
