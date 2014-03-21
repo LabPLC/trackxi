@@ -75,6 +75,8 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 		super.onCreate();
 		mLocationListener = new MyLocationListener();
 		mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		
+		timer = new Timer();
 
 		// para le panic
 		IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
@@ -206,7 +208,7 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 			getApplicationContext().sendBroadcast(intent);
 
 			if(isSendMesagge){
-				timer = new Timer();
+
 				enviaCorreo();
 				isSendMesagge=false;
 			}

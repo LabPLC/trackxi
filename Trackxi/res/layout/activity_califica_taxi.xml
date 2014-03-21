@@ -12,13 +12,8 @@
         android:paddingBottom="20dp"
         android:paddingTop="20dp" >
 
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher" />
-
         <TextView
+            android:id="@+id/califica_taxi_tv_titulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -36,6 +31,7 @@
             android:padding="5dp" >
 
             <TextView
+                android:id="@+id/califica_taxi_tv_titulo_calif"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/generic_amarillo"
@@ -53,9 +49,9 @@
                 android:layout_marginTop="2dp" />
 
             <TextView
+                android:id="@+id/califica_taxi_tv_titulo_opinion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/generic_amarillo"
                 android:text="Danos tu opinion" />
 
             <EditText
@@ -64,11 +60,11 @@
                 android:layout_height="wrap_content"
                 android:padding="2dp"
                 android:hint="El servicio me pareció..."
+                android:background="@drawable/rounded_background"
                 android:layout_marginTop="5dp"
-                android:lines="7"
-                android:maxLength="140"
-                android:background="@color/generic_amarillo"
-                android:textColor="@color/white" />
+                android:lines="5"
+                android:maxLength="49"
+                 />
         </LinearLayout>
 
         <LinearLayout

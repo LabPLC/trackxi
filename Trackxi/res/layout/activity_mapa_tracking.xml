@@ -24,7 +24,6 @@
            android:layout_height="wrap_content"
            android:layout_alignLeft="@+id/mitaxi_trip_map"
            android:layout_alignParentBottom="true"
-           android:layout_marginBottom="16dp"
            android:background="@drawable/selector_btn_generic"
            android:textColor="@drawable/selector_txt_boton_redondo"
            android:text="Terminó viaje..." />

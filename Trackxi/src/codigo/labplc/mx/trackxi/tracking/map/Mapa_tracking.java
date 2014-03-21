@@ -2,6 +2,7 @@ package codigo.labplc.mx.trackxi.tracking.map;
 
 import java.util.ArrayList;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -10,10 +11,17 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.PopupMenu;
+import android.widget.TextView;
 import codigo.labplc.mx.trackxi.R;
+import codigo.labplc.mx.trackxi.fonts.fonts;
+import codigo.labplc.mx.trackxi.paginador.Paginador;
 import codigo.labplc.mx.trackxi.tracking.Califica_taxi;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -39,6 +47,19 @@ public class Mapa_tracking extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_mapa_tracking);
+		
+		
+		 final ActionBar ab = getActionBar();
+	     ab.setDisplayShowHomeEnabled(false);
+	     ab.setDisplayShowTitleEnabled(false);     
+	     final LayoutInflater inflater = (LayoutInflater)getSystemService("layout_inflater");
+	     View view = inflater.inflate(R.layout.abs_layout,null);   
+	     ((TextView) view.findViewById(R.id.abs_layout_tv_titulo)).setTypeface(new fonts(Mapa_tracking.this).getTypeFace(fonts.FLAG_MAMEY));
+	     ((TextView) view.findViewById(R.id.abs_layout_tv_titulo)).setText("MI VIAJE");
+	     ab.setDisplayShowCustomEnabled(true);
+	     
+	     ab.setCustomView(view,new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
+	     ab.setCustomView(view);
 
 		Bundle bundle = getIntent().getExtras();
 		if(bundle!=null){
@@ -89,7 +110,7 @@ public class Mapa_tracking extends Activity {
 			
 			// create marker
 			marker = new MarkerOptions().position(new LatLng(latitud, longitud)).title("Inicio del viaje");
-			marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+			marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher_chinche_llena));
 			
 			
 			CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(latitud, longitud)).zoom(21).build();
@@ -117,7 +138,6 @@ public class Mapa_tracking extends Activity {
 	    
 		private boolean checkReady() {
 	        if (map == null) {
-	          //  Log(getApplicationContext(), getString(R.string.map_not_ready), Log.INFO);
 	            return false;
 	        }
 	        return true;
@@ -178,5 +198,21 @@ public class Mapa_tracking extends Activity {
 			registerReceiver(onBroadcast, new IntentFilter("key"));
 			super.onResume();
 		}
+		
+		
+		 public void clickEvent(View v) {
+		        if (v.getId() == R.id.abs_layout_iv_menu) {
+		            showPopup(v);
+		        }
+
+		       
+		    }
+		
+		 public void showPopup(View v) {
+			    PopupMenu popup = new PopupMenu(Mapa_tracking.this, v);
+			    MenuInflater inflater = popup.getMenuInflater();
+			    inflater.inflate(R.menu.popup, popup.getMenu());
+			    popup.show();
+			}
 		
 }

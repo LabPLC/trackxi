@@ -128,7 +128,7 @@
             android:name="codigo.labplc.mx.trackxi.tracking.Califica_taxi"
             android:label="@string/title_activity_califica_taxi"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.NoActionBar" >
+            android:theme="@android:style/Theme.Holo.Dialog.NoActionBar">
         </activity>
         
           <receiver android:name="codigo.labplc.mx.trackxi.panic.MyReceiver" >
