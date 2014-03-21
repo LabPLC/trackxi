@@ -1,10 +1,13 @@
 package codigo.labplc.mx.trackxi.panic;
 
-import android.content.BroadcastReceiver;
+import java.util.ArrayList;
+
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
+import android.os.StrictMode;
 import android.os.Vibrator;
 import android.telephony.SmsManager;
 import android.util.Log;
@@ -21,34 +24,30 @@ public class PanicAlert {
     public void activate() {
     	Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
     	v.vibrate(3000);
-    	context.registerReceiver(this.mBatInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
     	
+
     }
     
-    private BroadcastReceiver mBatInfoReceiver = new BroadcastReceiver(){
-        @Override
-        public void onReceive(Context ctxt, Intent intent) {
-        
-        	levelBattery = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
-        }
-      };
-
       
      public int getLevelBattery(){
-    	 return levelBattery;
+    	 Intent i = new ContextWrapper(context).registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+    	return i.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
      }
      
      
-   //---sends an SMS message to another device---
 
      public void sendSMS(String phoneNumber, String message)
      {
-         SmsManager sms = SmsManager.getDefault();
-         sms.sendTextMessage(phoneNumber, null, message, null, null);
+    	 SmsManager smsManager = SmsManager.getDefault();
+    	    smsManager.sendTextMessage(phoneNumber, null, message, null, null);
+
       }
 
+     
      public void sendMail(String cabecera,String mensaje,String correoRemitente,String correoDestino ){
     	 try {   
+    		 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+    		 StrictMode.setThreadPolicy(policy); 
              GMailSender sender = new GMailSender(correoRemitente, "M41k154ur10");
              sender.sendMail(cabecera, mensaje,correoRemitente, correoDestino);  
          } catch (Exception e) {   

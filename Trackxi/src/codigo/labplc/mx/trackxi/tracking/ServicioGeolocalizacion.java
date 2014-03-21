@@ -1,6 +1,8 @@
 package codigo.labplc.mx.trackxi.tracking;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -20,6 +22,7 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.os.ResultReceiver;
+import android.os.Vibrator;
 import android.util.Log;
 import android.widget.Toast;
 import codigo.labplc.mx.trackxi.R;
@@ -50,7 +53,7 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 	ArrayList<String> pointsLat = new ArrayList<String>();
 	ArrayList<String> pointsLon = new ArrayList<String>();
 	private boolean isFirstTime = true;
-
+	private Timer timer;
 	// panic
 	private BroadcastReceiver mReceiver;
 	private ResultReceiver resultReceiver;
@@ -64,6 +67,7 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 	PanicAlert panic;
 	public static boolean countTimer = true;
 	public boolean isSendMesagge= false;
+    private int levelBattery;
 
 	@Override
 	public void onCreate() {
@@ -106,18 +110,25 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 						countStart = -1;
 						countTimer = true;
 						// activamos el mensaje de auxilio
+						
+						SharedPreferences prefs = getSharedPreferences("MisPreferenciasTrackxi",Context.MODE_PRIVATE);
+				           uuid = prefs.getString("uuid", null);
+				           telemer = prefs.getString("telemer", null);
+				           correoemer = prefs.getString("correoemer", null);
+				           placa = prefs.getString("placa", null);
+				           
 						panic = new PanicAlert(this.getApplicationContext());
 						panic.activate();
 						
-						SharedPreferences prefs = getSharedPreferences("MisPreferenciasTrackxi",Context.MODE_PRIVATE);
-					           uuid = prefs.getString("uuid", null);
-					           telemer = prefs.getString("telemer", null);
-					           correoemer = prefs.getString("correoemer", null);
-					           placa = prefs.getString("placa", null);
 						
-					    String mensajeEmer= "Estoy en peligro en taxi placas: "+placa+ " mi ubicacion es "+latitud+","+longitud+" batería: "+ panic.getLevelBattery()+" revisa tu correo";
-						panic.sendSMS(telemer,mensajeEmer);
+					
+					    String mensajeEmer= "Estoy en peligro!, eres mi contacto de emergencia, revisa tu correo porfavor";
+					 
+					    
+					    panic.sendSMS(telemer,mensajeEmer);
 						isSendMesagge=true;
+						
+					
 	
 					} else {
 						countStart += 1;
@@ -146,7 +157,8 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 		Toast.makeText(this, "Servicio detenido ", Toast.LENGTH_SHORT).show();
 		super.onDestroy();
 		CancelNotification(this, 0);
-
+		timer.cancel();
+		
 		// panic
 		unregisterReceiver(mReceiver);
 	}
@@ -156,7 +168,7 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 		return null;
 	}
 
-	/**
+/*	/**
 	 * handler
 	 */
 	private Handler handler = new Handler() {
@@ -187,8 +199,6 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 
 			pointsLat.add(latitud + "");
 			pointsLon.add(longitud + "");
-
-			Log.i("******", latitud + "," + longitud);
 			
 			Intent intent = new Intent("key");
 			intent.putExtra("latitud", pointsLat);
@@ -196,7 +206,8 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 			getApplicationContext().sendBroadcast(intent);
 
 			if(isSendMesagge){
-				handler_panic.postDelayed(runnable_panic,300000);// 1
+				timer = new Timer();
+				enviaCorreo();
 				isSendMesagge=false;
 			}
 			
@@ -283,6 +294,9 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 
 	public void showNotification() {
 		// notification is selected
+		Vibrator v = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
+    	v.vibrate(3000);
+
 		Intent intent_mapa = new Intent(this, Mapa_tracking.class);
 		intent_mapa.putExtra("latitud_inicial", latitud_inicial);
 		intent_mapa.putExtra("longitud_inicial", longitud_inicial);
@@ -295,14 +309,15 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 
 		Notification noti = new Notification.Builder(this)
 				.setContentTitle("Traxi").setContentText("¿Qué quieres hacer?")
-				.setSmallIcon(R.drawable.ic_launcher_icono)
+				.setSmallIcon(R.drawable.ic_launcher)
 				// .setContentIntent(pIntent)
-				.addAction(R.drawable.ic_launcher_map, "viaje", pIntent)
+				.addAction(R.drawable.ic_launcher_chinche, "viaje", pIntent)
 				.addAction(R.drawable.ic_launcher_fin_viaje, "Finalizar",
 						pIntent_cal).build();
 		NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		// noti.flags |= Notification.FLAG_AUTO_CANCEL;
-
+		
+	
 		notificationManager.notify(0, noti);
 	}
 
@@ -327,23 +342,23 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
     };
 
     
- // panic
- 	 /**
-      * hilo que al pasar el tiempo reeinicia los valores
-      */
-     private Runnable runnable_panic = new Runnable() {
-         @Override
-         public void run() {
- 		
-				panic.sendMail("TRAXI",
-						"Estoy en peligro en taxi placas: "+placa+ " mi ubicacion es "+latitud+","+longitud+" batería: "+ panic.getLevelBattery(),
+    public void enviaCorreo(){
+    	
+    	timer.scheduleAtFixedRate(new TimerTask() {
+
+    	    @Override
+    	    public void run() {
+    	    	Log.d("************CORREO", "Enviando");
+    	    	panic.sendMail("TRAXI",
+						"Estoy en peligro en taxi placas: "+placa+ " mi ubicacion es https://www.google.com.mx/maps/place/"+latitud+","+longitud+" batería: "+ panic.getLevelBattery()+"%",
 						"mikesaurio@gmail.com", 
 						correoemer);
-			
-         }
-     };
+    	    }
+    	},
+    	0,
+    	120000);
 
-	
-
+    }
+    
 	
 }
