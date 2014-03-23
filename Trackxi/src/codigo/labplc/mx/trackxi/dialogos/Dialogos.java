@@ -63,26 +63,26 @@ public class Dialogos {
         //tipografias
 	    ((Button) view.findViewById(R.id.dialogo_paraque_btnAceptar)).setTypeface(new fonts(activity).getTypeFace(fonts.FLAG_AMARILLO));
 	    
-	    ((TextView) view.findViewById(R.id.dialogo_paraque_tv_titulo)).setTypeface(new fonts(activity).getTypeFace(fonts.FLAG_MAMEY));
+	    ((TextView) view.findViewById(R.id.dialogo_paraque_tv_titulo)).setTypeface(new fonts(activity).getTypeFace(fonts.FLAG_ROJO));
 	    ((TextView) view.findViewById(R.id.dialogo_paraque_tv_titulo)).setTextColor(new fonts(activity).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
 	    
-	    ((TextView) view.findViewById(R.id.dialogo_paraque_tv_correo)).setTypeface(new fonts(activity).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
+	    ((TextView) view.findViewById(R.id.dialogo_paraque_tv_correo)).setTypeface(new fonts(activity).getTypeFace(fonts.FLAG_GRIS_CLARO));
 	    ((TextView) view.findViewById(R.id.dialogo_paraque_tv_correo)).setTextColor(new fonts(activity).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
 	    
 	    
-	    ((TextView) view.findViewById(R.id.dialogo_paraque_tv_correoemer)).setTypeface(new fonts(activity).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
+	    ((TextView) view.findViewById(R.id.dialogo_paraque_tv_correoemer)).setTypeface(new fonts(activity).getTypeFace(fonts.FLAG_GRIS_CLARO));
 	    ((TextView) view.findViewById(R.id.dialogo_paraque_tv_correoemer)).setTextColor(new fonts(activity).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
 	    
-	    ((TextView) view.findViewById(R.id.dialogo_paraque_tv_nombre)).setTypeface(new fonts(activity).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
+	    ((TextView) view.findViewById(R.id.dialogo_paraque_tv_nombre)).setTypeface(new fonts(activity).getTypeFace(fonts.FLAG_GRIS_CLARO));
 	    ((TextView) view.findViewById(R.id.dialogo_paraque_tv_nombre)).setTextColor(new fonts(activity).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
 	    
 	    ((TextView) view.findViewById(R.id.dialogo_paraque_tv_subtitulo)).setTypeface(new fonts(activity).getTypeFace(fonts.FLAG_ROJO));
 	    ((TextView) view.findViewById(R.id.dialogo_paraque_tv_subtitulo)).setTextColor(new fonts(activity).getColorTypeFace(fonts.FLAG_ROJO));
 	    
-	    ((TextView) view.findViewById(R.id.dialogo_paraque_tv_telefonoemer)).setTypeface(new fonts(activity).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
+	    ((TextView) view.findViewById(R.id.dialogo_paraque_tv_telefonoemer)).setTypeface(new fonts(activity).getTypeFace(fonts.FLAG_GRIS_CLARO));
 	    ((TextView) view.findViewById(R.id.dialogo_paraque_tv_telefonoemer)).setTextColor(new fonts(activity).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
 	    
-	    ((TextView) view.findViewById(R.id.dialogo_paraque_tv_foto)).setTypeface(new fonts(activity).getTypeFace(fonts.FLAG_GRIS_OBSCURO));
+	    ((TextView) view.findViewById(R.id.dialogo_paraque_tv_foto)).setTypeface(new fonts(activity).getTypeFace(fonts.FLAG_GRIS_CLARO));
 	    ((TextView) view.findViewById(R.id.dialogo_paraque_tv_foto)).setTextColor(new fonts(activity).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
 	    
 	  //escucha del boton aceptar

@@ -3,8 +3,10 @@ package codigo.labplc.mx.trackxi.registro;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -34,7 +36,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -94,7 +95,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 	 */
 	public void initUI() {
 		// creamos la ruta de la foto con codigo unico
-		foto = Environment.getExternalStorageDirectory() + "/imagen"+ getCode() + ".jpg";
+		//foto = Environment.getExternalStorageDirectory() + "/imagen"+ getCode() + ".jpg";
 
 
 		TextView mitaxiregistermanually_tv_label= (TextView)findViewById(R.id.mitaxiregistermanually_tv_label);
@@ -294,7 +295,9 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	
 		if (requestCode == RESULT_LOAD_FOTO) {
+			foto = Environment.getExternalStorageDirectory() + "/imagen"+ getCode() + ".jpg";
 			File file = new File(foto);
 			if (file.exists()) {
 				Bitmap myBitmap = BitmapFactory.decodeFile(file
@@ -310,12 +313,19 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		}
 		if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK	&& null != data) {
 			Uri imageUri = data.getData();
+			
+			foto = getRealPathFromURI(imageUri);
+			
+			Log.d("*********FOTO", foto+"");
 			Bitmap myBitmap;
 			try {
 				myBitmap = MediaStore.Images.Media.getBitmap(
 						this.getContentResolver(), imageUri);
 				userfoto.setImageBitmap(myBitmap);
 				hasFoto = true;
+				
+			
+				
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -382,6 +392,8 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 				resultado = sb.toString();
 				httpclient = null;
 				response = null;
+				Log.d("resultado**************", resultado+"");
+				
 				if (resultado != null) {
 					String errorJson = "";
 					String successsJson = "";
@@ -465,8 +477,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 					public void onClick(View view) {
 
 						// Camara
-						Intent intent = new Intent(
-								MediaStore.ACTION_IMAGE_CAPTURE);
+						Intent intent = new Intent(	MediaStore.ACTION_IMAGE_CAPTURE);
 						Uri output = Uri.fromFile(new File(foto));
 						intent.putExtra(MediaStore.EXTRA_OUTPUT, output);
 						startActivityForResult(intent, RESULT_LOAD_FOTO); 
@@ -479,7 +490,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 
 					@Override
 					public void onClick(View view) {
-
+	
 						// Galeria
 						Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 						startActivityForResult(i, RESULT_LOAD_IMAGE);
@@ -541,5 +552,22 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 			
 		}
 	}
+	
+	
+	/**
+	 * metodo que te permite obtener la ruta de la imagen de la galeria
+	 * @param contentURI
+	 * @return
+	 */
+	 private String getRealPathFromURI(Uri contentURI) {
+		    Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
+		    if (cursor == null) { // Source is Dropbox or other similar local file path
+		        return contentURI.getPath();
+		    } else { 
+		        cursor.moveToFirst(); 
+		        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA); 
+		        return cursor.getString(idx); 
+		    }
+		}
 	
 }

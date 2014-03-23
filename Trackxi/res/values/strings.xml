@@ -20,13 +20,13 @@
     <string name="mitaxiregister_error_email">Escribe sintaxis de correo válida.</string>
     <string name="mitaxiregister_empty">Los campos no pueden dejarse en blanco.</string>
     <string name="mitaxiregister_tv_title">Registro</string>
-    <string name="mitaxiregister_et_name_hint">Nombre de usuario</string>
-    <string name="mitaxiregister_et_email_hint">Dirección de correo</string>
+    <string name="mitaxiregister_et_name_hint">usuario</string>
+    <string name="mitaxiregister_et_email_hint">ejemplo@mail.com</string>
     <string name="mitaxiregister_et_teluser_hint">Teléfono</string>
-    <string name="mitaxiregister_et_telemergency_hint">Teléfono de emergencia</string>
-    <string name="mitaxiregister_et_mailemergency_hint">Correo de emergencia</string>
+    <string name="mitaxiregister_et_telemergency_hint">celular emergencia</string>
+    <string name="mitaxiregister_et_mailemergency_hint">correo emergencia</string>
     <string name="mitaxiregister_et_paraque">¿Para qué?</string>
-    <string name="mitaxiregister_et_emergencias">Contacto de emergencia</string>
+    <string name="mitaxiregister_et_emergencias">Datos de emergencia</string>
     <string name="mitaxiregister_btn_cancel">Cancelar</string>
     <string name="mitaxiregister_btn_ok">Registrar</string>
 
@@ -43,12 +43,12 @@
     <string name="transaction_wrong">Ops#8230; Ocurrió un error al hacer la conexión con el servidor.</string>
 
     <!-- Para que DIALOGO -->
-    <string name="paraque_subtitulo">Los datos son necesarios.</string>
+    <string name="paraque_subtitulo">DATOS NECESARIOS.</string>
     <string name="paraque_titulo">AVISO</string>
     <string name="paraque_nombre">Nombre: Para saber como te llamaremos.</string>
     <string name="paraque_correo">Correo: Para identificarte.</string>
-    <string name="paraque_telemer">Teléfono de emergencia: Para comunicarnos con un conocido en caso de que te sientas amenazado.</string>
-    <string name="paraque_correoemer">Correo de emergencia: Para hacer el seguimiento de tu camino y estado mientras te sientas amenazado.</string>
+    <string name="paraque_telemer">Celular emergencia: Para comunicarnos con un conocido en caso de que te sientas amenazado.</string>
+    <string name="paraque_correoemer">Correo emergencia: Para hacer el seguimiento de tu camino y estado mientras te sientas amenazado.</string>
     <string name="paraque_foto">Foto: Para personaliar tu perfil.</string>
     <string name="paraque_aceptar">Aceptar</string>
     <string name="title_activity_buscar_chofer">BuscarChofer</string>
