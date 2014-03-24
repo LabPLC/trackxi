@@ -1,4 +1,7 @@
+
+
 package codigo.labplc.mx.trackxi.registro;
+
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -6,7 +9,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -36,6 +38,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -51,8 +54,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import codigo.labplc.mx.trackxi.R;
+import codigo.labplc.mx.trackxi.buscarplaca.paginador.paginas.utlileria.Utils;
 import codigo.labplc.mx.trackxi.dialogos.Dialogos;
 import codigo.labplc.mx.trackxi.expresionesregulares.RegularExpressions;
 import codigo.labplc.mx.trackxi.fonts.fonts;
@@ -185,17 +188,20 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 						try {
 							saveUserInfo();
 						} catch (JSONException e) {
-							Dialogos.Toast(getApplicationContext(),
-									"error fatal :(", Toast.LENGTH_LONG);
+							Log.d("error 301", "error fatal :(");
+							
 						}
 					} else {
-						Dialogos.Toast(getApplicationContext(),getString(R.string.no_internet_connection),Toast.LENGTH_LONG);
+						Log.d("error 302", getString(R.string.no_internet_connection));
+						
 					}
 				} else {
-					Dialogos.Toast(getApplicationContext(),getString(R.string.edittext_wrong_info),Toast.LENGTH_LONG);
+					Log.d("error 303", getString(R.string.edittext_wrong_info));
+
 				}
 			} else {
-				Dialogos.Toast(getApplicationContext(),getString(R.string.edittext_emtpy), Toast.LENGTH_LONG);
+				Log.d("error 304", getString(R.string.edittext_emtpy));
+
 			}
 		}
 	});
@@ -297,7 +303,6 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	
 		if (requestCode == RESULT_LOAD_FOTO) {
-			
 			File file = new File(foto);
 			if (file.exists()) {
 				Bitmap myBitmap = BitmapFactory.decodeFile(file
@@ -312,25 +317,33 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 
 		}
 		if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK	&& null != data) {
-			Uri imageUri = data.getData();
+	 			Uri imageUri = data.getData();
+	 			 		//	foto = data.getData().getPath();//getRealPathFromURI(imageUri);
+	 			 		//	Log.d("*********FOTO", foto+"");
+	 			  			Bitmap myBitmap;
+	 			  			try {
+	 			  				myBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+	 			  				userfoto.setImageBitmap(myBitmap);
+	 			  				BitmapDrawable drawable = (BitmapDrawable) userfoto.getDrawable();
+	 			  				Bitmap bitmap_prev = drawable.getBitmap();
+	 			  				hasFoto = true;
+	 			  			    try{
+	 			  			        File file = new File(foto);
+	 			  			        FileOutputStream fOut = new FileOutputStream(file);
+	 			  			        bitmap_prev.compress(Bitmap.CompressFormat.JPEG, 50, fOut);
+	 			  			        fOut.flush();
+	 			  			        fOut.close();}
+	 			  			    catch (Exception e) {
+	 			  			        e.printStackTrace();
+	 			  			        Log.i(null, "Save file error!");
+	 			  			}
+	 			  				
+	 			  			} catch (FileNotFoundException e) {
+	 			  				e.printStackTrace();
+	 			  			} catch (IOException e) {
+	 			  				e.printStackTrace();
+	 			  			}
 			
-			foto = getRealPathFromURI(imageUri);
-			
-			
-			Bitmap myBitmap;
-			try {
-				myBitmap = MediaStore.Images.Media.getBitmap(
-						this.getContentResolver(), imageUri);
-				userfoto.setImageBitmap(myBitmap);
-				hasFoto = true;
-				
-			
-				
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 		}
 		if (requestCode == RESULT_LOAD_CONTACT) {
 			getContactInfo(data);
@@ -376,7 +389,8 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 
 				File file = new File(miFoto);
 				entity.addPart("foto", new FileBody(file));
-
+				
+				
 				System.setProperty("http.keepAlive", "false");
 				httppost.setEntity(entity);
 				HttpResponse response = httpclient.execute(httppost);
@@ -390,10 +404,9 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 				}
 				in.close();
 				resultado = sb.toString();
+				
 				httpclient = null;
 				response = null;
-			
-				
 				if (resultado != null) {
 					String errorJson = "";
 					String successsJson = "";
@@ -420,13 +433,12 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 						savePreferences(user); // guardamos todo en preferencias
 
 					} else if (errorJson != null) {
-						Dialogos.Toast(getApplicationContext(),
-								"Ya existe el correo", Toast.LENGTH_LONG);
+						Log.d("error 201", resultado+"");
+						
 					}
 				} else {
-					Dialogos.Toast(getApplicationContext(),
-							getString(R.string.transaction_wrong),
-							Toast.LENGTH_LONG);
+					Log.d("error 202", "Null en la respuesta");
+					
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -490,7 +502,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 
 					@Override
 					public void onClick(View view) {
-	
+						foto = Environment.getExternalStorageDirectory() + "/imagen"+ getCode() + ".jpg";
 						// Galeria
 						Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 						startActivityForResult(i, RESULT_LOAD_IMAGE);
@@ -517,7 +529,6 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 			       if ( hasPhone.equalsIgnoreCase("1"))
 			           hasPhone = "true";
 			       else
-			    	   
 			           hasPhone = "false" ;
 			       if (Boolean.parseBoolean(hasPhone)) 
 			       {
@@ -549,21 +560,5 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		}
 	}
 	
-	
-	/**
-	 * metodo que te permite obtener la ruta de la imagen de la galeria
-	 * @param contentURI
-	 * @return (String)ruta de la imagen
-	 */
-	 private String getRealPathFromURI(Uri contentURI) {
-		    Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
-		    if (cursor == null) { // Source is Dropbox or other similar local file path
-		        return contentURI.getPath();
-		    } else { 
-		        cursor.moveToFirst(); 
-		        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA); 
-		        return cursor.getString(idx); 
-		    }
-		}
 	
 }

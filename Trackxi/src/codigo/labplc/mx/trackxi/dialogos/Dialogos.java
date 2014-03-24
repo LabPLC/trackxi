@@ -31,6 +31,8 @@ public class Dialogos {
 		Toast.makeText(context, text, duration).show();
 	}
 	
+	
+	
 	public static void Log(Context context, String text, int type) {
 		if(type == Log.DEBUG) {
 			Log.d(context.getClass().getName().toString(), text);
