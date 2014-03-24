@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -23,8 +24,10 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.ResultReceiver;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
+import codigo.labplc.mx.trackxi.Activity_null;
 import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.buscarplaca.paginador.DatosAuto;
 import codigo.labplc.mx.trackxi.panic.MyReceiver;
@@ -53,7 +56,7 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 	ArrayList<String> pointsLat = new ArrayList<String>();
 	ArrayList<String> pointsLon = new ArrayList<String>();
 	private boolean isFirstTime = true;
-	private Timer timer;
+	private Timer timer,timerParanoico;
 	// panic
 	private BroadcastReceiver mReceiver;
 	private ResultReceiver resultReceiver;
@@ -66,18 +69,34 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 	private String placa;
 	PanicAlert panic;
 	public static boolean countTimer = true;
+	public static boolean panicoActivado = false;
 	public boolean isSendMesagge= false;
-    private int levelBattery;
+    private String timeLocation = "0";
+    private int intervaloLocation =5000;
+    private int intervaloLocationParanoia =0;
+    
+    
+    
 
 	@Override
 	public void onCreate() {
+		Log.i("*********", "CREADO");
 		Toast.makeText(this, "Servicio creado", Toast.LENGTH_SHORT).show();
 		super.onCreate();
 		mLocationListener = new MyLocationListener();
 		mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		
 		timer = new Timer();
+		timerParanoico = new Timer();
 
+		intervaloLocation = getPreferencia("prefSyncFrequency");
+		intervaloLocationParanoia  = getPreferencia("prefSyncFrequencyParanoia");
+		
+		
+		
+		
+		
+		
 		// para le panic
 		IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
 		filter.addAction(Intent.ACTION_SCREEN_OFF);
@@ -85,15 +104,6 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 		registerReceiver(mReceiver, filter);
 	}
 
-/*	@Override
-	public int onStartCommand(Intent intent, int flags, int idArranque) {
-		// Toast.makeText(this,"Servicio arrancado "+
-		// idArranque,Toast.LENGTH_SHORT).show();
-		obtenerSenalGPS();
-
-		return START_STICKY;
-	}
-*/
 	@Override
 	public void onStart(Intent intent, int startId) {
 		//PAnic
@@ -121,12 +131,7 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 				           
 						panic = new PanicAlert(this.getApplicationContext());
 						panic.activate();
-						
-						
-					
 					    String mensajeEmer= "Estoy en peligro!, eres mi contacto de emergencia, revisa tu correo porfavor";
-					 
-					    
 					    panic.sendSMS(telemer,mensajeEmer);
 						isSendMesagge=true;
 						
@@ -160,6 +165,8 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 		super.onDestroy();
 		CancelNotification(this, 0);
 		timer.cancel();
+		CancelNotification(this, 1);
+		timerParanoico.cancel();
 		
 		// panic
 		unregisterReceiver(mReceiver);
@@ -197,6 +204,10 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 				longitud_inicial = longitud;
 				isFirstLocation = false;
 				showNotification();
+				//si es que activo el nivel paranoico
+				if(intervaloLocationParanoia!=5000){
+					mensajeParanoico();
+				}
 			}
 
 			pointsLat.add(latitud + "");
@@ -212,7 +223,7 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 				enviaCorreo();
 				isSendMesagge=false;
 			}
-			
+			 Log.d("***********************", ServicioGeolocalizacion.panicoActivado+"");
 		}
 	}
 
@@ -228,7 +239,7 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 		if (mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 			Looper.prepare();
 			mLocationManager.requestLocationUpdates(
-					LocationManager.GPS_PROVIDER, 4000, 0, mLocationListener);
+					LocationManager.GPS_PROVIDER, intervaloLocation, 0, mLocationListener);
 			Looper.loop();
 			Looper.myLooper().quit();
 		} else {
@@ -358,9 +369,90 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
     	    }
     	},
     	0,
-    	120000);
+    	intervaloLocationParanoia);
 
     }
+    
+    
+   public void mensajeParanoico(){
+    	
+    	timerParanoico.scheduleAtFixedRate(new TimerTask() {
+    	    @Override
+    	    public void run() {
+    	    	Log.d("************PANICOOOOO", "NOTIFICACION");
+    	    	 Log.d("***********************", ServicioGeolocalizacion.panicoActivado+"");
+    	    	showNotificationPanic();
+    	    	
+    	    }
+    	},
+    	intervaloLocationParanoia,
+    	intervaloLocationParanoia);
+
+    }
+    
+   public void showNotificationPanic() {
+		// notification is selected
+		Vibrator v = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
+		v.vibrate(3000);
+		
+		ServicioGeolocalizacion.panicoActivado=true;
+		 Log.d("***********************true", ServicioGeolocalizacion.panicoActivado+"");
+		 
+		String ns = Context.NOTIFICATION_SERVICE;
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
+        
+		 int icon = R.drawable.ic_launcher;
+         CharSequence tickerText = "Traxi";
+         long when = System.currentTimeMillis();
+
+         
+         
+         int requestID = (int) System.currentTimeMillis();
+         Notification notification = new Notification(icon, tickerText, when);
+         Context context = getApplicationContext();
+         Intent notificationIntent = new Intent(this, Activity_null.class);
+
+         PendingIntent contentIntent = PendingIntent.getActivity(this, requestID, notificationIntent, 0);
+         notification.setLatestEventInfo(context, "ÀTodo bien?", "Tocame si es as’", contentIntent);
+                 notification.flags += Notification.FLAG_ONGOING_EVENT;
+                 notification.flags += Notification.FLAG_AUTO_CANCEL;
+                 
+                 AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                 alarmManager.set(AlarmManager.RTC_WAKEUP,0, contentIntent);
+                 
+             mNotificationManager.notify(1, notification);
+            
+	}
+  
+   
+ 
+	   private boolean existAlarm() {
+		   
+		    return panicoActivado;
+		
+	  }
+   
+      
+    /**
+     * obtiene el valor de frecuencia de las preferencia 
+     * @param preferencia
+     * @return (int)intervalo de tiempo
+     */
+    public int getPreferencia(String preferencia){
+    	SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+		timeLocation = sharedPrefs.getString(preferencia, "0");
+		if(timeLocation.equals("0")){
+			return 5000;
+		}else if(timeLocation.equals("2")){
+			return 120000;
+		}else if(timeLocation.equals("5")){
+			return 300000;
+		}else if(timeLocation.equals("10")){
+			return 600000;
+		}else{
+			return 5000;
+		}
+    } 
     
 	
 }

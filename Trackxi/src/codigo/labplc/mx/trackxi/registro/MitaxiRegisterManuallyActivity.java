@@ -297,7 +297,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	
 		if (requestCode == RESULT_LOAD_FOTO) {
-			foto = Environment.getExternalStorageDirectory() + "/imagen"+ getCode() + ".jpg";
+			
 			File file = new File(foto);
 			if (file.exists()) {
 				Bitmap myBitmap = BitmapFactory.decodeFile(file
@@ -316,7 +316,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 			
 			foto = getRealPathFromURI(imageUri);
 			
-			Log.d("*********FOTO", foto+"");
+			
 			Bitmap myBitmap;
 			try {
 				myBitmap = MediaStore.Images.Media.getBitmap(
@@ -392,7 +392,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 				resultado = sb.toString();
 				httpclient = null;
 				response = null;
-				Log.d("resultado**************", resultado+"");
+			
 				
 				if (resultado != null) {
 					String errorJson = "";
@@ -475,7 +475,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 
 					@Override
 					public void onClick(View view) {
-
+						foto = Environment.getExternalStorageDirectory() + "/imagen"+ getCode() + ".jpg";
 						// Camara
 						Intent intent = new Intent(	MediaStore.ACTION_IMAGE_CAPTURE);
 						Uri output = Uri.fromFile(new File(foto));
@@ -525,7 +525,6 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 			        while (phones.moveToNext()) 
 			        {
 			          String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-			          Log.d("**********phoneNumber", phoneNumber);
 			          etInfousertelemergency.setText(phoneNumber.replaceAll(" ", ""));
 			          break;
 			        }
@@ -537,16 +536,13 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 			       while (emails.moveToNext()) 
 			       {
 			        String emailAddress = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
-			        Log.d("**********correo", emailAddress);
 			        etInfousermailemergency.setText(emailAddress);
 			        break;
 			       }
 			       
 			       emails.close();
 			       break;
-			  }  //while (cursor.moveToNext())  
-			//   cursor.close();
-			 //   cursor = null;
+			  }  
 			  }
 		}catch(Exception e){
 			
@@ -557,7 +553,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 	/**
 	 * metodo que te permite obtener la ruta de la imagen de la galeria
 	 * @param contentURI
-	 * @return
+	 * @return (String)ruta de la imagen
 	 */
 	 private String getRealPathFromURI(Uri contentURI) {
 		    Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);

@@ -1,19 +1,23 @@
 package codigo.labplc.mx.trackxi.paginador;
 
 import android.app.ActionBar;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
+import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.TextView;
-import android.widget.Toast;
 import codigo.labplc.mx.trackxi.R;
+import codigo.labplc.mx.trackxi.configuracion.UserSettingActivity;
 import codigo.labplc.mx.trackxi.fonts.fonts;
 
 import com.viewpagerindicator.CirclePageIndicator;
@@ -24,7 +28,7 @@ import com.viewpagerindicator.CirclePageIndicator;
  * 
  */
 public class Paginador extends FragmentActivity {
-
+	private static final int RESULT_SETTINGS = 1;
 	/**
 	 * The pager widget, which handles animation and allows swiping horizontally
 	 * to access previous and next pages.
@@ -97,6 +101,41 @@ public class Paginador extends FragmentActivity {
 		    PopupMenu popup = new PopupMenu(Paginador.this, v);
 		    MenuInflater inflater = popup.getMenuInflater();
 		    inflater.inflate(R.menu.popup, popup.getMenu());
+		    popup.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+				
+				@Override
+				public boolean onMenuItemClick(MenuItem item) {
+					 switch (item.getItemId()) {
+				case R.id.configuracion:
+					Intent i = new Intent(Paginador.this, UserSettingActivity.class);
+					startActivityForResult(i, RESULT_SETTINGS);
+					return true;
+
+				}
+					 return false;
+				}
+			});
+		    
 		    popup.show();
 		}
+	 
+	
+	 @Override
+		protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+			super.onActivityResult(requestCode, resultCode, data);
+			switch (requestCode) {
+			case RESULT_SETTINGS:
+				showUserSettings();
+				break;
+			}
+		}
+	 
+	 private void showUserSettings() {
+			SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+			StringBuilder builder = new StringBuilder();
+			builder.append("\n Send report:"+ sharedPrefs.getBoolean("prefSendReport", true));
+			builder.append("\n Sync Frequency: "+ sharedPrefs.getString("prefSyncFrequency", "NULL"));
+			builder.append("\n Sync FrequencyMensajes: "+ sharedPrefs.getString("prefSyncFrequencyParanoia", "NULL"));
+		}
+		
 }
