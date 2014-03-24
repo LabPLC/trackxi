@@ -69,12 +69,12 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 	private String placa;
 	PanicAlert panic;
 	public static boolean countTimer = true;
-	public static boolean panicoActivado = false;
+	public static  boolean panicoActivado = false;
 	public boolean isSendMesagge= false;
     private String timeLocation = "0";
     private int intervaloLocation =5000;
     private int intervaloLocationParanoia =0;
-    
+    private boolean algoPaso=true;
     
     
 
@@ -103,6 +103,9 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 		mReceiver = new MyReceiver();
 		registerReceiver(mReceiver, filter);
 	}
+	
+	
+	
 
 	@Override
 	public void onStart(Intent intent, int startId) {
@@ -223,7 +226,6 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 				enviaCorreo();
 				isSendMesagge=false;
 			}
-			 Log.d("***********************", ServicioGeolocalizacion.panicoActivado+"");
 		}
 	}
 
@@ -323,10 +325,15 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 		Notification noti = new Notification.Builder(this)
 				.setContentTitle("Traxi").setContentText("¿Qué quieres hacer?")
 				.setSmallIcon(R.drawable.ic_launcher)
+		
 				// .setContentIntent(pIntent)
 				.addAction(R.drawable.ic_launcher_chinche, "viaje", pIntent)
 				.addAction(R.drawable.ic_launcher_fin_viaje, "Finalizar",
 						pIntent_cal).build();
+		
+		
+		noti.flags += Notification.FLAG_ONGOING_EVENT;
+		
 		NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		// noti.flags |= Notification.FLAG_AUTO_CANCEL;
 		
@@ -361,7 +368,6 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 
     	    @Override
     	    public void run() {
-    	    	Log.d("************CORREO", "Enviando");
     	    	panic.sendMail("TRAXI",
 						"Estoy en peligro en taxi placas: "+placa+ " mi ubicacion es https://www.google.com.mx/maps/place/"+latitud+","+longitud+" batería: "+ panic.getLevelBattery()+"%",
 						"mikesaurio@gmail.com", 
@@ -379,8 +385,6 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
     	timerParanoico.scheduleAtFixedRate(new TimerTask() {
     	    @Override
     	    public void run() {
-    	    	Log.d("************PANICOOOOO", "NOTIFICACION");
-    	    	 Log.d("***********************", ServicioGeolocalizacion.panicoActivado+"");
     	    	showNotificationPanic();
     	    	
     	    }
@@ -395,8 +399,30 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 		Vibrator v = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
 		v.vibrate(3000);
 		
-		ServicioGeolocalizacion.panicoActivado=true;
-		 Log.d("***********************true", ServicioGeolocalizacion.panicoActivado+"");
+		
+		  // revise si la alarma esta en true y si se cuentan 2 veces se mande el mensaje de panico
+		if(getPanicoActivado()){
+			//Solo activa la alarma una vez
+			if(algoPaso){
+					v.vibrate(3000);
+					Log.d("*****************ALARMAAAA","Activada");
+					SharedPreferences prefs = getSharedPreferences("MisPreferenciasTrackxi",Context.MODE_PRIVATE);
+		           uuid = prefs.getString("uuid", null);
+		           telemer = prefs.getString("telemer", null);
+		           correoemer = prefs.getString("correoemer", null);
+		           placa = prefs.getString("placa", null); 
+		           panic = new PanicAlert(this.getApplicationContext());
+		           panic.activate();
+		           String mensajeEmer= "Estoy en peligro!, eres mi contacto de emergencia, revisa tu correo porfavor";
+		           panic.sendSMS(telemer,mensajeEmer);
+		           isSendMesagge=true;
+		           algoPaso=false;
+			}
+		}else{
+			 isSendMesagge=false;
+		}
+		
+		ServicioGeolocalizacion.setPanicoActivado(true);
 		 
 		String ns = Context.NOTIFICATION_SERVICE;
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
@@ -421,18 +447,12 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
                  alarmManager.set(AlarmManager.RTC_WAKEUP,0, contentIntent);
                  
              mNotificationManager.notify(1, notification);
+             
+           
             
 	}
   
-   
- 
-	   private boolean existAlarm() {
-		   
-		    return panicoActivado;
-		
-	  }
-   
-      
+
     /**
      * obtiene el valor de frecuencia de las preferencia 
      * @param preferencia
@@ -454,5 +474,13 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 		}
     } 
     
-	
+    public static synchronized void setPanicoActivado(boolean flag)
+	{
+    	ServicioGeolocalizacion.panicoActivado=flag;
+	}
+    
+    public static synchronized boolean getPanicoActivado()
+   	{
+       return	ServicioGeolocalizacion.panicoActivado;
+   	}
 }

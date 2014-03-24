@@ -129,11 +129,6 @@ public class DatosAuto extends FragmentActivity{
 		
 	}
 	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.trackxi_setting, menu);
-		return true;
-	}
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
