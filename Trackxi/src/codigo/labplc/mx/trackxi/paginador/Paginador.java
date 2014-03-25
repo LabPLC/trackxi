@@ -17,8 +17,10 @@ import android.widget.PopupMenu;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.TextView;
 import codigo.labplc.mx.trackxi.R;
+import codigo.labplc.mx.trackxi.Trackxi;
 import codigo.labplc.mx.trackxi.configuracion.UserSettingActivity;
 import codigo.labplc.mx.trackxi.fonts.fonts;
+import codigo.labplc.mx.trackxi.registro.MitaxiRegisterManuallyActivity;
 
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -109,6 +111,13 @@ public class Paginador extends FragmentActivity {
 				case R.id.configuracion:
 					Intent i = new Intent(Paginador.this, UserSettingActivity.class);
 					startActivityForResult(i, RESULT_SETTINGS);
+					return true;
+
+				case R.id.cuenta:
+					Intent intentManually = new Intent(Paginador.this, MitaxiRegisterManuallyActivity.class);
+    				intentManually.putExtra("origen", "menu");
+    				startActivity(intentManually);
+    				overridePendingTransition(0,0);
 					return true;
 
 				}

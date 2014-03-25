@@ -27,7 +27,6 @@ import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
-import codigo.labplc.mx.trackxi.Activity_null;
 import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.buscarplaca.paginador.DatosAuto;
 import codigo.labplc.mx.trackxi.panic.MyReceiver;

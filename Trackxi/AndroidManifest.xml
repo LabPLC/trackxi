@@ -134,7 +134,7 @@
         </receiver>
 
         <activity
-            android:name="codigo.labplc.mx.trackxi.Activity_null"
+            android:name="codigo.labplc.mx.trackxi.tracking.Activity_null"
             android:label="@string/title_activity_activity_null" >
         </activity>
     </application>

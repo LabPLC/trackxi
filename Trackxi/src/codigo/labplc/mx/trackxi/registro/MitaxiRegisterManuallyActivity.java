@@ -54,6 +54,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.buscarplaca.paginador.paginas.utlileria.Utils;
 import codigo.labplc.mx.trackxi.dialogos.Dialogos;
@@ -81,6 +82,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 	private String foto;
 	private UserBean user;
 	private boolean hasFoto = false;
+	String origen;
 
 	private boolean[] listHasErrorEditText = { false, false, false, false };
 
@@ -88,6 +90,13 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_mitaxi_register_manually);
+		
+		Bundle bundle = getIntent().getExtras();
+		if(bundle!=null){
+			origen = bundle.getString("origen");	
+
+		}
+		
 
 		initUI();
 
@@ -196,11 +205,11 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 						
 					}
 				} else {
-					Log.d("error 303", getString(R.string.edittext_wrong_info));
+					Toast.makeText(getApplicationContext(),getString(R.string.edittext_wrong_info),Toast.LENGTH_LONG).show();
 
 				}
 			} else {
-				Log.d("error 304", getString(R.string.edittext_emtpy));
+				Toast.makeText(getApplicationContext(),getString(R.string.edittext_emtpy),Toast.LENGTH_LONG).show();
 
 			}
 		}
@@ -215,9 +224,36 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 			}
 		});
 
+		
+		if(origen.equals("menu")){
+			llenarCampos();
+			mitaxiregistermanually_btn_ok.setText("Actualizar");
+			hasFoto = true;
+		}
+		
 	}
 
-	
+	public void llenarCampos(){
+		SharedPreferences prefs = getSharedPreferences("MisPreferenciasTrackxi",Context.MODE_PRIVATE);
+		etInfousername.setText(prefs.getString("nombre", null));
+		etInfousername.setEnabled(false);
+		etInfouseremail.setText(prefs.getString("correo", null));
+		etInfouseremail.setEnabled(false);
+		etInfousertelemergency.setText(prefs.getString("telemer", null));
+		etInfousermailemergency.setText(prefs.getString("correoemer", null));
+		foto = prefs.getString("foto", null);
+		File file = new File(foto);
+		if (file.exists()) {
+			Bitmap myBitmap = BitmapFactory.decodeFile(file
+					.getAbsolutePath());
+			Matrix mat = new Matrix();
+			Bitmap bMapRotate = Bitmap.createBitmap(myBitmap, 0, 0,
+					myBitmap.getWidth(), myBitmap.getHeight(), mat, true);
+			userfoto.setImageBitmap(bMapRotate);
+			
+		}
+		
+	}
 
 	public boolean hasErrorEditText() {
 		for (boolean hasError : listHasErrorEditText)
@@ -234,7 +270,6 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		user.setTelemergencia(etInfousertelemergency.getText().toString());
 		user.setCorreoemergencia(etInfousermailemergency.getText().toString());
 		user.setFoto(foto);
-
 		Upload nuevaTarea = new Upload();
 		nuevaTarea.execute(foto);
 
@@ -256,6 +291,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		editor.putString("telemer", user.getTelemergencia());
 		editor.putString("correoemer", user.getCorreoemergencia());
 		editor.putString("uuid", user.getUUID());
+		editor.putString("foto", user.getFoto());
 		editor.commit();
 
 		Intent mainIntent = new Intent().setClass(
@@ -379,7 +415,12 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 				HttpConnectionParams.setConnectionTimeout(par, HTTP_TIMEOUT);
 				HttpConnectionParams.setSoTimeout(par, HTTP_TIMEOUT);
 				ConnManagerParams.setTimeout(par, HTTP_TIMEOUT);
-				HttpPost httppost = new HttpPost("http://datos.labplc.mx/~mikesaurio/taxi.php?act=pasajero&type=addpost");
+				HttpPost httppost;
+				if(origen.equals("menu")){
+				 httppost = new HttpPost("http://datos.labplc.mx/~mikesaurio/taxi.php?act=pasajero&type=updatepost");
+				}else{
+				 httppost = new HttpPost("http://datos.labplc.mx/~mikesaurio/taxi.php?act=pasajero&type=addpost");
+				}
 				MultipartEntity entity = new MultipartEntity();
 				entity.addPart("nombre", new StringBody(user.getNombre() + ""));
 				entity.addPart("correo", new StringBody(user.getCorreo() + ""));
@@ -389,8 +430,6 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 
 				File file = new File(miFoto);
 				entity.addPart("foto", new FileBody(file));
-				
-				
 				System.setProperty("http.keepAlive", "false");
 				httppost.setEntity(entity);
 				HttpResponse response = httpclient.execute(httppost);
@@ -404,6 +443,8 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 				}
 				in.close();
 				resultado = sb.toString();
+				Log.d("*******************", resultado+"");
+				
 				
 				httpclient = null;
 				response = null;

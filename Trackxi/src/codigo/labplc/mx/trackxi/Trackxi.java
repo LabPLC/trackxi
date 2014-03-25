@@ -53,6 +53,7 @@ public class Trackxi extends Activity {
 	            		 startActivity(mainIntent);
 	            	}else if(flag==2){
 	    				Intent intentManually = new Intent(Trackxi.this, MitaxiRegisterManuallyActivity.class);
+	    				intentManually.putExtra("origen", "splash");
 	    				startActivity(intentManually);
 	    				overridePendingTransition(0,0);
 	    				

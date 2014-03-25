@@ -65,6 +65,7 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 	public void init(Activity con){
 		
 		this.context=con;
+
 	
 		LayoutInflater inflater = (LayoutInflater)   getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE); 
 		view = inflater.inflate(R.layout.activity_busca_placa, null);
@@ -229,8 +230,9 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
+		if(camera==null){
 		camera = Camera.open();
-
+		}
 		
 	}
 
