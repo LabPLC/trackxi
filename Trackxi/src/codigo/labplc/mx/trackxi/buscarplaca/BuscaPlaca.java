@@ -1,23 +1,51 @@
 package codigo.labplc.mx.trackxi.buscarplaca;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.params.ConnManagerParams;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.HttpContext;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.ImageFormat;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.ShutterCallback;
+import android.media.CamcorderProfile;
+import android.os.AsyncTask;
+import android.os.Environment;
+import android.os.StrictMode;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -31,6 +59,7 @@ import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.buscarplaca.paginador.DatosAuto;
 import codigo.labplc.mx.trackxi.dialogos.Dialogos;
 import codigo.labplc.mx.trackxi.fonts.fonts;
+import codigo.labplc.mx.trackxi.network.NetworkUtils;
 
 public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 
@@ -44,6 +73,9 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 	private String Splaca;
 	private Activity context;
 	private View view;
+	private String foto;
+    private boolean mAutoFocus;
+  //  public boolean fotoGirada=false;
 
 
 	public BuscaPlaca(Activity context) {
@@ -66,7 +98,9 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 		
 		this.context=con;
 
-	
+		foto = Environment.getExternalStorageDirectory() + "/imagen"+ NetworkUtils.getCode() + ".jpg";
+		
+		
 		LayoutInflater inflater = (LayoutInflater)   getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE); 
 		view = inflater.inflate(R.layout.activity_busca_placa, null);
 		
@@ -94,6 +128,7 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 				// TODO Auto-generated method stub
 				try{
 				camera.takePicture(myShutterCallback,myPictureCallback_RAW, myPictureCallback_JPG);
+				
 				}catch(Exception e){
 					e.printStackTrace();
 				}
@@ -138,7 +173,6 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 	            		//cerramos el teclado
 	            		InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
 	            		imm.hideSoftInputFromWindow(placa.getWindowToken(), 0);
-	            		
 	            		Intent intent= new Intent().setClass(context,DatosAuto.class);
 	            		intent.putExtra("placa", Splaca);
 	            		context.startActivityForResult(intent, 0);
@@ -175,7 +209,12 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 		}
 	});
 	}
+
+
 	
+		
+		
+		
 	 ShutterCallback myShutterCallback = new ShutterCallback(){
 
 		 @Override
@@ -198,19 +237,79 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 		 public void onPictureTaken(byte[] arg0, Camera arg1) {
 		  // TODO Auto-generated method stub
 		  Bitmap bitmapPicture  = BitmapFactory.decodeByteArray(arg0, 0, arg0.length);
+		  Matrix matrix = new Matrix();
+		  matrix.postRotate(90);
+		//  Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmapPicture,scaledBitmap.getWidth(),scaledBitmap.getHeight(),true);
+
+		  Bitmap rotatedBitmap = Bitmap.createBitmap(bitmapPicture , 0, 0,bitmapPicture.getWidth(),bitmapPicture.getHeight(), matrix, true);
+	//	Bitmap bMapFiltro = toGrayscale(bMapRotate);
+		  
+			
+		  try{
+			  Log.d("*******************", "TOME LA FOTO");
+			        File file = new File(foto);
+			        FileOutputStream fOut = new FileOutputStream(file);
+			        
+			        rotatedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+			        fOut.flush();
+			        fOut.close();
+			       
+			        Uploaded nuevaTareas = new Uploaded();
+					nuevaTareas.execute(foto);
+			     }
+			    catch (Exception e) {
+			        e.printStackTrace();
+			        Log.i(null, "Save file error!");
+			}
+		
+		 
+		  
+		 
+		 
+		
+		
 		 }};
 
 
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
+		
 		if (previewing) {
 			camera.stopPreview();
 			previewing = false;
 		}
+		try {
+            CamcorderProfile profile ;
 
+            int numCameras = Camera.getNumberOfCameras();
+            if (numCameras > 1) {
+            profile = (CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT,CamcorderProfile.QUALITY_LOW));
+            }
+            else{
+                profile = (CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_BACK,CamcorderProfile.QUALITY_LOW));
+            }
+
+
+            Camera.Parameters parameters = camera.getParameters();
+            parameters.setPreviewSize(profile.videoFrameWidth, profile.videoFrameHeight);
+            parameters.setFlashMode(Camera.Parameters.FLASH_MODE_AUTO);
+            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+            parameters.setSceneMode(Camera.Parameters.SCENE_MODE_AUTO);
+            parameters.setWhiteBalance(Camera.Parameters.WHITE_BALANCE_AUTO);
+            parameters.setExposureCompensation(0);
+            parameters.setPictureFormat(ImageFormat.JPEG);
+            parameters.setJpegQuality(100);
+            camera.setParameters(parameters);
+            camera.setPreviewDisplay(holder);
+            camera.startPreview();
+        }
+        catch (IOException e) {
+            Log.d("****", "Error setting camera preview: " + e.getMessage());
+        }
 		if (camera != null) {
 			try {
+				
 				camera.setPreviewDisplay(surfaceHolder);
 				camera.startPreview();
 				previewing = true;
@@ -221,16 +320,19 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 		if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
         {   
             camera.setDisplayOrientation(90);
+           // fotoGirada=true;
         }
         if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
         {                               
             camera.setDisplayOrientation(180);
+           // fotoGirada=false;
         }
 	}
 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
 		if(camera==null){
+			 
 		camera = Camera.open();
 		}
 		
@@ -248,5 +350,99 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 		return view;
 	}
 	
+	
+	
+	class Uploaded extends AsyncTask<String, Void, Void> {
 
+		private ProgressDialog pDialog;
+		private String miFoto = "";
+		private String resultado;
+		public static final int HTTP_TIMEOUT = 60 * 1000;
+		@Override
+		protected Void doInBackground(String... params) {
+			miFoto = (String) params[0];
+			try
+
+			{
+				   HttpContext localContext = new BasicHttpContext();
+				
+				   HttpClient httpclient = new DefaultHttpClient();
+			
+				 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+				StrictMode.setThreadPolicy(policy);
+				final HttpParams par = httpclient.getParams();
+				HttpConnectionParams.setConnectionTimeout(par, HTTP_TIMEOUT);
+				HttpConnectionParams.setSoTimeout(par, HTTP_TIMEOUT);
+				ConnManagerParams.setTimeout(par, HTTP_TIMEOUT);
+				HttpPost  httppost = new HttpPost("http://codigo.labplc.mx/~mikesaurio/taxi.php?act=pasajero&type=identificaplaca");		
+				MultipartEntity entity = new MultipartEntity();
+			
+
+				File file = new File(miFoto);
+				entity.addPart("foto", new FileBody(file));
+				System.setProperty("http.keepAlive", "false");
+				httppost.setEntity(entity);
+				HttpResponse response = null;
+
+				 response = httpclient.execute(httppost, localContext);
+
+				BufferedReader in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+				StringBuffer sb = new StringBuffer("");
+				String linea = "";
+				String NL = System.getProperty("line.separator");
+
+				while ((linea = in.readLine()) != null) {
+					sb.append(linea + NL);
+				}
+				in.close();
+				resultado = sb.toString();
+				httpclient = null;
+				response = null;
+				if (resultado != null) {
+					Log.d("*******************zaza", resultado+"");
+				} else {
+					Log.d("error 202", "Null en la respuesta");
+					
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		protected void onPreExecute() {
+			super.onPreExecute();
+			pDialog = new ProgressDialog(context);
+			pDialog.setCanceledOnTouchOutside(false);
+			pDialog.setMessage("Procesando la foto, espere....");
+			pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			pDialog.setCancelable(true);
+			pDialog.show();
+		}
+
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+			pDialog.dismiss();
+		}
+	}
+	
+	
+	public Bitmap toGrayscale(Bitmap bmpOriginal)
+    {        
+        int width, height;
+        height = bmpOriginal.getHeight();
+        width = bmpOriginal.getWidth();    
+        Bitmap bmpGrayscale = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+        Canvas c = new Canvas(bmpGrayscale);
+        Paint paint = new Paint();
+        ColorMatrix cm = new ColorMatrix();
+        cm.setSaturation(0);
+        ColorMatrixColorFilter f = new ColorMatrixColorFilter(cm);
+        paint.setColorFilter(f);
+        c.drawBitmap(bmpOriginal, 0, 0, paint);
+        return bmpGrayscale;
+    }
+	
+	
+	
 }

@@ -321,19 +321,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		return empty;
 	}
 
-	/**
-	 * Metodo privado que genera un codigo unico segun la hora y fecha del
-	 * sistema
-	 * 
-	 * @return photoCode
-	 * */
-	@SuppressLint("SimpleDateFormat")
-	private String getCode() {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
-		String date = dateFormat.format(new Date());
-		String photoCode = "pic_" + date;
-		return photoCode;
-	}
+	
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -354,8 +342,6 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		}
 		if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK	&& null != data) {
 	 			Uri imageUri = data.getData();
-	 			 		//	foto = data.getData().getPath();//getRealPathFromURI(imageUri);
-	 			 		//	Log.d("*********FOTO", foto+"");
 	 			  			Bitmap myBitmap;
 	 			  			try {
 	 			  				myBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
@@ -399,7 +385,6 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		private String resultado;
 		public static final int HTTP_TIMEOUT = 30 * 1000;
 
-		@SuppressWarnings("deprecation")
 		@Override
 		protected Void doInBackground(String... params) {
 			miFoto = (String) params[0];
@@ -418,6 +403,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 				HttpPost httppost;
 				if(origen.equals("menu")){
 				 httppost = new HttpPost("http://datos.labplc.mx/~mikesaurio/taxi.php?act=pasajero&type=updatepost");
+				//	 httppost = new HttpPost("http://datos.labplc.mx/~mikesaurio/taxi.php?act=pasajero&type=identificaplaca");
 				}else{
 				 httppost = new HttpPost("http://datos.labplc.mx/~mikesaurio/taxi.php?act=pasajero&type=addpost");
 				}
@@ -499,6 +485,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
 			pDialog.dismiss();
+			this.cancel(true);
 		}
 
 	}
@@ -528,7 +515,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 
 					@Override
 					public void onClick(View view) {
-						foto = Environment.getExternalStorageDirectory() + "/imagen"+ getCode() + ".jpg";
+						foto = Environment.getExternalStorageDirectory() + "/imagen"+ NetworkUtils.getCode() + ".jpg";
 						// Camara
 						Intent intent = new Intent(	MediaStore.ACTION_IMAGE_CAPTURE);
 						Uri output = Uri.fromFile(new File(foto));
@@ -543,7 +530,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 
 					@Override
 					public void onClick(View view) {
-						foto = Environment.getExternalStorageDirectory() + "/imagen"+ getCode() + ".jpg";
+						foto = Environment.getExternalStorageDirectory() + "/imagen"+ NetworkUtils.getCode() + ".jpg";
 						// Galeria
 						Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 						startActivityForResult(i, RESULT_LOAD_IMAGE);

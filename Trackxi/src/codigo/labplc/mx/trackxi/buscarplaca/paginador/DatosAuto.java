@@ -141,19 +141,7 @@ public class DatosAuto extends FragmentActivity{
 		}
 	}
 	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-
-		case R.id.action_settings:
-			Intent i = new Intent(this, UserSettingActivity.class);
-			startActivityForResult(i, RESULT_SETTINGS);
-			break;
-
-		}
-
-		return true;
-	}
+	
 	private void showUserSettings() {
 		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -408,13 +396,7 @@ public class DatosAuto extends FragmentActivity{
 					autoBean.setDescripcion_calificacion_app(getResources().getString(R.string.texto_calificacion_100));
 				}
 				autoBean.setCalificacion_final(PUNTOS);
-				autoBean.setCalificaion_app(PUNTOS_APP);
-				
-				
-				
-				
-			
-				
+				autoBean.setCalificaion_app(PUNTOS_APP);	
 				
 			} catch (Exception e) {
 				e.printStackTrace();

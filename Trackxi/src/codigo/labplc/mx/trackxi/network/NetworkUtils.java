@@ -1,6 +1,8 @@
 package codigo.labplc.mx.trackxi.network;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -10,6 +12,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -49,6 +52,18 @@ public class NetworkUtils {
 			return null;
 		}
 	}
-
+	/**
+	 * Metodo privado que genera un codigo unico segun la hora y fecha del
+	 * sistema
+	 * 
+	 * @return photoCode
+	 * */
+	@SuppressLint("SimpleDateFormat")
+	public static String getCode() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
+		String date = dateFormat.format(new Date());
+		String photoCode = "pic_" + date;
+		return photoCode;
+	}
 	
 }
