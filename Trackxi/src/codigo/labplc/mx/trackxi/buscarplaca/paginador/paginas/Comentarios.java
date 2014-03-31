@@ -8,6 +8,7 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.RatingBar;
@@ -75,12 +76,111 @@ public class Comentarios extends View {
 	final	TextView comentarios_row_tv_descripcion = (TextView)view_row.findViewById(R.id.comentarios_row_tv_descripcion);
 	comentarios_row_tv_descripcion.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_MAMEY));
 	comentarios_row_tv_descripcion.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
-		comentarios_row_tv_descripcion.setText(concepto);
+	comentarios_row_tv_descripcion.setText(concepto);
 
-	final	RatingBar comentarios_row_rating=(RatingBar)view_row.findViewById(R.id.comentarios_row_rating);
+		
+	final ImageView rating1_comentarios = (ImageView)view_row.findViewById(R.id.rating1_comentarios);
+	rating1_comentarios.setTag(i+"img1");
+	final ImageView rating2_comentarios = (ImageView)view_row.findViewById(R.id.rating2_comentarios);
+	rating1_comentarios.setTag(i+"img2");
+	final ImageView rating3_comentarios = (ImageView)view_row.findViewById(R.id.rating3_comentarios);
+	rating1_comentarios.setTag(i+"img3");
+	final ImageView rating4_comentarios = (ImageView)view_row.findViewById(R.id.rating4_comentarios);
+	rating1_comentarios.setTag(i+"img4");
+	final ImageView rating5_comentarios = (ImageView)view_row.findViewById(R.id.rating5_comentarios);
+	rating1_comentarios.setTag(i+"img5");
+		
+		
+		if(valor==0.5){
+		
+		rating1_comentarios.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_star3));
+		}
+		if(valor==1.0){
+			
+			rating1_comentarios.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_star2));
+		}
+		if(valor==1.5){
+			
+			rating1_comentarios.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_star2));
+			
+			rating2_comentarios.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_star3));
+			}
+		if(valor==2.0){
+			
+			rating1_comentarios.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_star2));
+		
+			rating2_comentarios.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_star2));
+			}
+		if(valor==2.5){
+		
+			rating1_comentarios.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_star2));
+		
+			rating2_comentarios.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_star2));
+			
+			rating3_comentarios.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_star3));
+			}
+		if(valor==3.0){
+			
+			rating1_comentarios.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_star2));
+			
+			rating2_comentarios.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_star2));
+
+			rating3_comentarios.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_star2));
+			}
+		if(valor==3.5){
+		
+			rating1_comentarios.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_star2));
+			
+			rating2_comentarios.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_star2));
+			
+			rating3_comentarios.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_star2));
+		
+			rating4_comentarios.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_star3));
+			}
+		if(valor==4.0){
+		
+			rating1_comentarios.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_star2));
+			
+			rating2_comentarios.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_star2));
+			
+			rating3_comentarios.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_star2));
+		
+			rating4_comentarios.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_star2));
+			}
+		if(valor==4.5){
+		
+			rating1_comentarios.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_star2));
+		
+			rating2_comentarios.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_star2));
+		
+			rating3_comentarios.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_star2));
+		
+			rating4_comentarios.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_star2));
+		
+			rating5_comentarios.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_star3));
+			}
+		if(valor==5.0){
+			
+			rating1_comentarios.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_star2));
+			
+			rating2_comentarios.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_star2));
+			
+			rating3_comentarios.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_star2));
+		
+			rating4_comentarios.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_star2));
+			
+			rating5_comentarios.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_star2));
+			}
+	
+		
+		
+		
+		
+		/*final	RatingBar comentarios_row_rating=(RatingBar)view_row.findViewById(R.id.comentarios_row_rating);
 			comentarios_row_rating.setTag(i);
 			comentarios_row_rating.setId(i);
 			comentarios_row_rating.setRating(valor);
+			comentarios_row_rating.setEnabled(false);*/
 		
 		container.addView(view_row,i);
 		

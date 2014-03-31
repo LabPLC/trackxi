@@ -40,7 +40,8 @@
             <RatingBar
                 android:id="@+id/dialogo_califica_servicio_ratingBarServicio"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                style="@style/StarRatingBar" />
 
             <View
                 android:layout_width="30dp"

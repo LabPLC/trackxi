@@ -1,12 +1,21 @@
 package codigo.labplc.mx.trackxi.tracking.map;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -98,4 +107,111 @@ public class DirectionsJSONParser {
 
         return poly;
     }
+	/** A method to download json data from url */
+    public String downloadUrl(String strUrl) throws IOException{
+        String data = "";
+        InputStream iStream = null;
+        HttpURLConnection urlConnection = null;
+        try{
+                URL url = new URL(strUrl);
+
+                // Creating an http connection to communicate with url 
+                urlConnection = (HttpURLConnection) url.openConnection();
+
+                // Connecting to url 
+                urlConnection.connect();
+
+                // Reading data from url 
+                iStream = urlConnection.getInputStream();
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
+
+                StringBuffer sb  = new StringBuffer();
+
+                String line = "";
+                while( ( line = br.readLine())  != null){
+                        sb.append(line);
+                }
+                
+                data = sb.toString();
+
+                br.close();
+
+        }catch(Exception e){
+                Log.d("Exception while downloading url", e.toString());
+        }finally{
+                iStream.close();
+                urlConnection.disconnect();
+        }
+        return data;
+     }
+    
+    public String getDirectionsUrl(LatLng origin,LatLng dest){
+		
+		// Origin of route
+		String str_origin = "origin="+origin.latitude+","+origin.longitude;
+		
+		// Destination of route
+		String str_dest = "destination="+dest.latitude+","+dest.longitude;		
+		// Sensor enabled
+		String sensor = "sensor=false";			
+					
+		// Building the parameters to the web service
+		String parameters = str_origin+"&"+str_dest+"&"+sensor;
+					
+		// Output format
+		String output = "json";
+		
+		// Building the url to the web service
+		String url = "https://maps.googleapis.com/maps/api/directions/"+output+"?"+parameters;
+		
+		
+		return url;
+	}
+    
+    
+    
+	 public ArrayList<InfoPoint> parsePoints(String strResponse) {
+	        ArrayList<InfoPoint> result=new ArrayList<InfoPoint>();
+	        try {
+	            JSONObject obj=new JSONObject(strResponse);
+	            JSONArray array=obj.getJSONArray("results");
+	            for(int i=0;i<array.length();i++)
+	            {
+	                InfoPoint point=new InfoPoint();
+	                JSONObject item=array.getJSONObject(i);
+	                ArrayList<HashMap<String, Object>> tblPoints=new ArrayList<HashMap<String,Object>>();
+	                JSONArray jsonTblPoints=item.getJSONArray("address_components");
+	                for(int j=0;j<jsonTblPoints.length();j++)
+	                {
+	                    JSONObject jsonTblPoint=jsonTblPoints.getJSONObject(j);
+	                    HashMap<String, Object> tblPoint=new HashMap<String, Object>();
+	                    Iterator<String> keys=jsonTblPoint.keys();
+	                    while(keys.hasNext())
+	                    {
+	                        String key=(String) keys.next();
+	                        if(tblPoint.get(key) instanceof JSONArray)
+	                        {
+	                            tblPoint.put(key, jsonTblPoint.getJSONArray(key));
+	                        }
+	                        tblPoint.put(key, jsonTblPoint.getString(key));
+	                    }
+	                    tblPoints.add(tblPoint);
+	                }
+	                point.setAddressFields(tblPoints);
+	                point.setStrFormattedAddress(item.getString("formatted_address"));
+	                JSONObject geoJson=item.getJSONObject("geometry");
+	                JSONObject locJson=geoJson.getJSONObject("location");
+	                point.setDblLatitude(Double.parseDouble(locJson.getString("lat")));
+	                point.setDblLongitude(Double.parseDouble(locJson.getString("lng")));
+	                result.add(point);
+	            }
+	        } catch (JSONException e) {
+	            e.printStackTrace();
+	        }
+
+	        return result;
+	    }
+		
+
 }
