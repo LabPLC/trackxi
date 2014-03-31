@@ -107,5 +107,8 @@
     <string name="titulo_tres_comentarios">COMENTARIOS</string>
     <string name="title_activity_activity_null">Activity_null</string>
     <string name="title_activity_send_foto">SendFoto</string>
+    
+        <!-- Latitude, longitude format -->
+    <string name="latitude_longitude">%1$.8f, %2$.8f</string>
 
 </resources>

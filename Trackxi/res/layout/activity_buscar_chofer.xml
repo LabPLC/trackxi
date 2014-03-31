@@ -27,7 +27,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="20dp"
                 android:contentDescription="@string/app_name"
-                android:src="@drawable/mi_taxi_assets_chofer" />
+                 />
 
             <TextView
                 android:id="@+id/inicio_de_trabajo_tv_nombre"

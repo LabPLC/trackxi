@@ -293,13 +293,13 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 
             Camera.Parameters parameters = camera.getParameters();
             parameters.setPreviewSize(profile.videoFrameWidth, profile.videoFrameHeight);
-            parameters.setFlashMode(Camera.Parameters.FLASH_MODE_AUTO);
+         /*parameters.setFlashMode(Camera.Parameters.FLASH_MODE_AUTO);
             parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
             parameters.setSceneMode(Camera.Parameters.SCENE_MODE_AUTO);
             parameters.setWhiteBalance(Camera.Parameters.WHITE_BALANCE_AUTO);
             parameters.setExposureCompensation(0);
             parameters.setPictureFormat(ImageFormat.JPEG);
-            parameters.setJpegQuality(100);
+            parameters.setJpegQuality(100);*/
             camera.setParameters(parameters);
             camera.setPreviewDisplay(holder);
             camera.startPreview();

@@ -8,24 +8,79 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Mapa_tracking" >
 
-       <fragment
-           android:id="@+id/mitaxi_trip_map"
-           android:layout_width="match_parent"
-           android:layout_height="50dp"
-           android:layout_above="@+id/mapa_tracking_terminoviaje"
-           android:layout_alignParentLeft="true"
-           android:layout_alignParentRight="true"
-           android:layout_alignParentTop="true"
-           class="com.google.android.gms.maps.MapFragment" />
+    <LinearLayout
+        android:id="@+id/mitaxi_googlemaps_ll_layoutcontainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/marco"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" >
 
-       <Button
-           android:id="@+id/mapa_tracking_terminoviaje"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_alignLeft="@+id/mitaxi_trip_map"
-           android:layout_alignParentBottom="true"
-           android:background="@drawable/selector_btn_generic"
-           android:textColor="@drawable/selector_txt_boton_redondo"
-           android:text="Terminó viaje..." />
+        <LinearLayout
+            android:id="@+id/mitaxi_googlemaps_ll_etcontainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/mitaxi_googlemaps_tv_destination"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".8"
+                    android:text="Destino del viaje"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/mitaxi_googlemaps_btn_destino"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".2"
+                    android:background="@drawable/selector_btn_generic"
+                    android:text="Ir"
+                    android:textColor="@drawable/selector_txt_boton_redondo" />
+            </LinearLayout>
+
+            <AutoCompleteTextView
+                android:id="@+id/mitaxi_googlemaps_actv_destination"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:maxLines="1"
+                android:hint="Colonia Ejemplo calle 37"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <fragment
+        android:id="@+id/mitaxi_trip_map"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_above="@+id/mapa_tracking_terminoviaje"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/mitaxi_googlemaps_ll_layoutcontainer"
+        class="com.google.android.gms.maps.MapFragment" />
+
+    <Button
+        android:id="@+id/mapa_tracking_terminoviaje"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/mitaxi_trip_map"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/selector_btn_generic"
+        android:text="Terminó viaje..."
+        android:textColor="@drawable/selector_txt_boton_redondo" />
 
 </RelativeLayout>
