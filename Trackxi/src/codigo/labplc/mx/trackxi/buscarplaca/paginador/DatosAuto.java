@@ -69,6 +69,13 @@ public class DatosAuto extends FragmentActivity{
 	
 	
 	@Override
+	protected void onDestroy() {
+		pager=null;
+		super.onDestroy();
+	}
+
+
+	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 		this.setContentView(R.layout.dialogo_datos_correctos);
@@ -345,6 +352,8 @@ public class DatosAuto extends FragmentActivity{
 	public void onBackPressed() {
 		Intent mainIntent = new Intent().setClass(DatosAuto.this, Paginador.class);
 		startActivity(mainIntent);
+		pager=null;
+		DatosAuto.this.finish();
 		super.onBackPressed();
 	}
 	
@@ -369,6 +378,7 @@ public class DatosAuto extends FragmentActivity{
 				mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 				titleIndicator = (CirclePageIndicator) findViewById(R.id.indicator_dialg);
 				DatosAuto.this.pager = (ViewPager) DatosAuto.this.findViewById(R.id.pager_dialog);
+				DatosAuto.this.pager.setOffscreenPageLimit(4);
 				autoBean= new AutoBean();
 
 				if(!estaEnRevista()){

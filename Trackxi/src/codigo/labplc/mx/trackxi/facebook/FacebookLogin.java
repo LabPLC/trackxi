@@ -49,7 +49,7 @@ public class FacebookLogin {
 	private Facebook facebook;
 	private AsyncFacebookRunner asyncRunner;
 	private static final String[] PERMS = new String[] { "read_stream" };
-	private static  final String APP_ID = "657945677617490";
+	private static  final String APP_ID = "622752297805514";
 	private OnLoginFacebookListener onLoginFacebookListener;
 	private OnGetFriendsFacebookListener onGetFriendsFacebookListener;
 	

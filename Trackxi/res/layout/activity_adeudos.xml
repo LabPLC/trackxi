@@ -14,22 +14,60 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="3dp"
-                android:gravity="center"
-        android:text="@string/titulo_dos_detalles"  />
+        android:gravity="center"
+        android:text="@string/titulo_dos_detalles" />
 
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
         android:layout_alignLeft="@+id/adeudos_titulo_main"
-        android:layout_below="@+id/adeudos_titulo_main" >
+        android:layout_below="@+id/adeudos_titulo_main"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical" >
 
-        <LinearLayout
-            android:id="@+id/adeudos_ll_contenedor"
+        <ScrollView
+            android:id="@+id/adeudos_sv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
-        </LinearLayout>
-    </ScrollView>
+            android:layout_height="0dp"
+            android:layout_weight=".7" >
+
+            <LinearLayout
+                android:id="@+id/adeudos_ll_contenedor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+            </LinearLayout>
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/adeudos_titulo_tv_amigos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Amigos que han tomado este taxi..." />
+
+        <HorizontalScrollView
+            android:id="@+id/adeudos_svh"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:overScrollMode="never"
+            android:layout_weight=".3" >
+
+            <LinearLayout
+                android:id="@+id/adeudos_ll_contenedor_fotos"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/adeudos_tv_ningun_amigos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Ningùn amigo encontrado" />
+                
+            </LinearLayout>
+        </HorizontalScrollView>
+    </LinearLayout>
 
 </RelativeLayout>

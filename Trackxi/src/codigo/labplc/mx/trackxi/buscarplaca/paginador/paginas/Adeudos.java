@@ -5,8 +5,10 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.buscarplaca.bean.AutoBean;
@@ -57,7 +59,13 @@ public class Adeudos extends View {
 		
 		container=(LinearLayout)view.findViewById(R.id.adeudos_ll_contenedor);
 		
-
+		HorizontalScrollView adeudos_svh = (HorizontalScrollView)view.findViewById(R.id.adeudos_svh);
+		adeudos_svh.setVisibility(LinearLayout.GONE);
+		
+		TextView adeudos_titulo_tv_amigos=(TextView)view.findViewById(R.id.adeudos_titulo_tv_amigos);
+		adeudos_titulo_tv_amigos.setVisibility(TextView.GONE);
+		
+		
 
 		
 		llenarAdeudo("Revista vehicular",autoBean.getDescripcion_revista(),autoBean.getImagen_revista());

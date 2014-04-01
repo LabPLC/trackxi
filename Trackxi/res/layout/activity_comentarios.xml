@@ -16,14 +16,6 @@
         android:layout_alignParentTop="true"
         android:text="TextView" />
 
-    <TextView
-        android:id="@+id/adeudos_titulo_main"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
-        android:text="sss"
-        android:textColor="@color/generic_amarillo" />
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -37,5 +29,14 @@
             android:orientation="vertical" >
         </LinearLayout>
     </ScrollView>
+
+    <TextView
+        android:id="@+id/adeudos_titulo_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/textView1"
+        android:text="sss"
+        android:textColor="@color/generic_amarillo" />
 
 </RelativeLayout>
