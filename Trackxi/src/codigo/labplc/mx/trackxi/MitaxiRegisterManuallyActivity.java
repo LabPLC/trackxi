@@ -1,6 +1,6 @@
 
 
-package codigo.labplc.mx.trackxi.registro;
+package codigo.labplc.mx.trackxi;
 
 
 import java.io.BufferedReader;
@@ -9,8 +9,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -26,7 +24,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -56,9 +53,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import codigo.labplc.mx.trackxi.R;
-import codigo.labplc.mx.trackxi.buscarplaca.paginador.paginas.utlileria.Utils;
+import codigo.labplc.mx.trackxi.R.id;
+import codigo.labplc.mx.trackxi.R.layout;
+import codigo.labplc.mx.trackxi.R.string;
 import codigo.labplc.mx.trackxi.dialogos.Dialogos;
 import codigo.labplc.mx.trackxi.expresionesregulares.RegularExpressions;
+import codigo.labplc.mx.trackxi.facebook.FacebookLogin;
+import codigo.labplc.mx.trackxi.facebook.FacebookLogin.OnLoginFacebookListener;
 import codigo.labplc.mx.trackxi.fonts.fonts;
 import codigo.labplc.mx.trackxi.network.NetworkUtils;
 import codigo.labplc.mx.trackxi.paginador.Paginador;
@@ -83,6 +84,9 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 	private UserBean user;
 	private boolean hasFoto = false;
 	String origen;
+	
+	private FacebookLogin facebookLogin;
+	private Button btnLogin;
 
 	private boolean[] listHasErrorEditText = { false, false, false, false };
 
@@ -139,6 +143,25 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		etInfousermailemergency.setTextColor(new fonts(this).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
 
 
+		facebookLogin = new FacebookLogin(MitaxiRegisterManuallyActivity.this);
+		//btnLogin.setPublishPermissions(Arrays.asList("publish_stream","read_stream"));
+		btnLogin =(Button)findViewById(R.id.mitaxiregistermanually_btn_facebook);
+		btnLogin.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+			
+				facebookLogin.loginFacebook();
+				facebookLogin.setOnLoginFacebookListener(new OnLoginFacebookListener() {
+					@Override
+					public void onLoginFacebook(boolean status) {
+						loginFacebook(status);
+					}
+				});
+			}
+		});
+		
+		
+		
 		Button contacto_emer = (Button) findViewById(R.id.mitaxiregistermanually_btn_contactos);
 		contacto_emer.setOnClickListener(new View.OnClickListener() {
 
@@ -587,6 +610,32 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 			
 		}
 	}
-	
+	/**
+	 * Login in to Facebook
+	 * 
+	 * @param status
+	 */
+	public void loginFacebook(boolean status) {
+		Toast.makeText(getApplicationContext(), "..."+status, Toast.LENGTH_SHORT).show();
+		if(status) {
+			Toast.makeText(getApplicationContext(), "Welcome!! :D", Toast.LENGTH_SHORT).show();
+			
+		//	ImageView ivUserImageProfile = (ImageView) findViewById(R.id.iv_UserImageProfile);
+		//	facebookLogin.loadImageProfileToImageView(facebookLogin.getUserId(), ivUserImageProfile);
+			
+	//		TextView tvUserName = (TextView) findViewById(R.id.tv_UserName);
+		//	TextView tvUserId = (TextView) findViewById(R.id.tv_UserId);
+			
+	//		tvUserName.setText(facebookLogin.getUserName());
+	//		tvUserId.setText("ID: " + facebookLogin.getUserId());
+			btnLogin.setText(facebookLogin.getUserName()+"");
+			btnLogin.setEnabled(false);
+			
+		//	getListOfFriends(facebookLogin.getUserId());
+			
+		} else {
+			Toast.makeText(getApplicationContext(), "Algo falló al conectar con facebook", Toast.LENGTH_SHORT).show();
+		}
+	}
 	
 }

@@ -4,16 +4,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.Window;
 import codigo.labplc.mx.trackxi.paginador.Paginador;
-import codigo.labplc.mx.trackxi.registro.MitaxiRegisterManuallyActivity;
 
 public class Trackxi extends Activity {
 

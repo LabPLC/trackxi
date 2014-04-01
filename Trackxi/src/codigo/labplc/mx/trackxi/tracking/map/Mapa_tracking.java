@@ -175,7 +175,6 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 			marker = new MarkerOptions().position(new LatLng(latitud, longitud)).title("Inicio del viaje");
 			marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher_chinche_llena));
 			
-			
 			CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(latitud, longitud)).zoom(21).build();
 			map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 			 
@@ -223,16 +222,19 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 			 	marker_taxi.position(new LatLng(latfin,lonfin));
 					
 				 if(InfoPoint!=null){//
+					 try{
 					 String consulta2 = "http://datos.labplc.mx/~mikesaurio/taxi.php?act=chofer&type=getGoogleData&lato="
 								+latfin+"&lngo="+lonfin
 								+"&latd="+InfoPoint.get(0).getDblLatitude()+"&lngd="+InfoPoint.get(0).getDblLongitude()+"&filtro=velocidad";
 						String querty2 = NetworkUtils.doHttpConnection(consulta2);
-						querty2= querty2.replaceAll("\"","");
 						String[] Squerty2 = querty2.split(",");
 						tiempo = Squerty2[0];
 						distancia =Squerty2[1];
-
 						marker_taxi.title("Estas a "+distancia+", "+tiempo+" de tu destino");
+					 }catch(Exception e){
+						 Log.d("falla en Mapa_tracking", "falla obtener velocidad");
+					 }
+					
 						map.addMarker(marker_taxi);
 						
 						//.zoom(21);map.getCameraPosition().zoom

@@ -1,7 +1,6 @@
 package codigo.labplc.mx.trackxi.paginador;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.buscarchofer.BuscarChofer;
 import codigo.labplc.mx.trackxi.buscarplaca.BuscaPlaca;
-import codigo.labplc.mx.trackxi.fonts.fonts;
 
 /**
  * 

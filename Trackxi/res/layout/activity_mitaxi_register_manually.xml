@@ -195,13 +195,26 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textStyle="bold" />
 
+    <Button
+        android:id="@+id/mitaxiregistermanually_btn_facebook"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/mitaxiregistermanually_sv_container_infouser_emer"
+        android:layout_marginRight="5dp"
+           android:layout_marginLeft="5dp"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/selector_btn_generic"
+        android:text="Facebook"
+        android:textColor="@drawable/selector_txt_boton_redondo" />
+
     <ImageView
         android:id="@+id/mitaxiregistermanually_im_info"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_marginTop="10dp"
         android:layout_alignRight="@+id/mitaxiregistermanually_sv_container_infouser_emer"
-        android:layout_below="@+id/mitaxiregistermanually_sv_container_infouser_emer"
+        android:layout_below="@+id/button1"
+        android:layout_marginTop="14dp"
         android:contentDescription="@string/app_name"
         android:src="@drawable/ic_help" />
 
