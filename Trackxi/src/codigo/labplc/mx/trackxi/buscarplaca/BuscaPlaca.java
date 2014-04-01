@@ -25,12 +25,8 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
-import android.graphics.ImageFormat;
+import android.graphics.Color;
 import android.graphics.Matrix;
-import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
@@ -179,7 +175,6 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 	            		placa.setText("");
 	            		context.finish();
 	            		placa.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
-	            		
 					} catch (Exception e) {
 						new Dialogos().Toast(context.getBaseContext(), "Taxi no valido", Toast.LENGTH_LONG);
 	          	    	  placa.setText("");
@@ -236,24 +231,20 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 		 @Override
 		 public void onPictureTaken(byte[] arg0, Camera arg1) {
 		  // TODO Auto-generated method stub
+			 System.gc();
 		  Bitmap bitmapPicture  = BitmapFactory.decodeByteArray(arg0, 0, arg0.length);
-		  Matrix matrix = new Matrix();
-		  matrix.postRotate(90);
-		//  Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmapPicture,scaledBitmap.getWidth(),scaledBitmap.getHeight(),true);
-
-		  Bitmap rotatedBitmap = Bitmap.createBitmap(bitmapPicture , 0, 0,bitmapPicture.getWidth(),bitmapPicture.getHeight(), matrix, true);
-	//	Bitmap bMapFiltro = toGrayscale(bMapRotate);
 		  
-			
+		//  Matrix matrix = new Matrix();
+		 // matrix.postRotate(-90);
+		 // Bitmap rotatedBitmap = Bitmap.createBitmap(bitmapPicture , 0, 0,bitmapPicture.getWidth(),bitmapPicture.getHeight(), matrix, true);
+	//	Bitmap bMapFiltro = toGrayscale(bMapRotate);	
 		  try{
 			  Log.d("*******************", "TOME LA FOTO");
 			        File file = new File(foto);
 			        FileOutputStream fOut = new FileOutputStream(file);
-			        
-			        rotatedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+			        bitmapPicture.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
 			        fOut.flush();
 			        fOut.close();
-			       
 			        Uploaded nuevaTareas = new Uploaded();
 					nuevaTareas.execute(foto);
 			     }
@@ -261,15 +252,7 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 			        e.printStackTrace();
 			        Log.i(null, "Save file error!");
 			}
-		
-		 
-		  
-		 
-		 
-		
-		
 		 }};
-
 
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
@@ -361,13 +344,14 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 		@Override
 		protected Void doInBackground(String... params) {
 			miFoto = (String) params[0];
+			
+			
+			
 			try
 
 			{
-				   HttpContext localContext = new BasicHttpContext();
-				
+				HttpContext localContext = new BasicHttpContext();
 				   HttpClient httpclient = new DefaultHttpClient();
-			
 				 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 				StrictMode.setThreadPolicy(policy);
 				final HttpParams par = httpclient.getParams();
@@ -379,13 +363,22 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 			
 
 				File file = new File(miFoto);
+				Log.d("FILE*****SIZE", file.length()+"");
+				Bitmap myBitmap =BitmapFactory.decodeFile(file.getAbsolutePath());
+				Matrix mat = new Matrix();
+				mat.postRotate(90);
+				Bitmap bMapRotate = Bitmap.createBitmap(myBitmap, 0, 0,myBitmap.getWidth(), myBitmap.getHeight(), mat, true);
+		        FileOutputStream fOut = new FileOutputStream(file);
+		        bMapRotate.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+		        Log.d("FILE*****SIZE2", file.length()+"");
+		        fOut.flush();
+		        fOut.close();
+				
 				entity.addPart("foto", new FileBody(file));
 				System.setProperty("http.keepAlive", "false");
 				httppost.setEntity(entity);
 				HttpResponse response = null;
-
 				 response = httpclient.execute(httppost, localContext);
-
 				BufferedReader in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 				StringBuffer sb = new StringBuffer("");
 				String linea = "";
@@ -417,17 +410,51 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 			pDialog.setMessage("Procesando la foto, espere....");
 			pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 			pDialog.setCancelable(true);
+		
 			pDialog.show();
 		}
 
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
+			placa.setText(resultado+"");
+		//	Dialogos.Toast(context, resultado+"...", Toast.LENGTH_LONG);
 			pDialog.dismiss();
 		}
 	}
 	
-	
-	public Bitmap toGrayscale(Bitmap bmpOriginal)
+	/*public static Bitmap createBlackAndWhite(Bitmap src) {
+	    int width = src.getWidth();
+	    int height = src.getHeight();
+	    // create output bitmap
+	    Bitmap bmOut = Bitmap.createBitmap(width, height, src.getConfig());
+	    // color information
+	    int A, R, G, B;
+	    int pixel;
+
+	    // scan through all pixels
+	    for (int x = 0; x < width; ++x) {
+	        for (int y = 0; y < height; ++y) {
+	            // get pixel color
+	            pixel = src.getPixel(x, y);
+	            A = Color.alpha(pixel);
+	            R = Color.red(pixel);
+	            G = Color.green(pixel);
+	            B = Color.blue(pixel);
+	            int gray = (int) (0.2989 * R + 0.5870 * G + 0.1140 * B);
+
+	            // use 128 as threshold, above -> white, below -> black
+	            if (gray > 128) 
+	                gray = 255;
+	            else
+	                gray = 0;
+	            // set new pixel color to output bitmap
+	            bmOut.setPixel(x, y, Color.argb(A, gray, gray, gray));
+	        }
+	    }
+	    return bmOut;
+	}
+*/
+/*public Bitmap toGrayscale(Bitmap bmpOriginal)
     {        
         int width, height;
         height = bmpOriginal.getHeight();
@@ -442,7 +469,7 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
         c.drawBitmap(bmpOriginal, 0, 0, paint);
         return bmpGrayscale;
     }
-	
+*/	
 	
 	
 }

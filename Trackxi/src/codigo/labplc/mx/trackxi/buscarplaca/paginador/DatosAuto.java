@@ -29,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.PopupMenu.OnMenuItemClickListener;
 import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.buscarplaca.bean.AutoBean;
 import codigo.labplc.mx.trackxi.buscarplaca.bean.ComentarioBean;
@@ -38,6 +39,7 @@ import codigo.labplc.mx.trackxi.dialogos.Dialogos;
 import codigo.labplc.mx.trackxi.fonts.fonts;
 import codigo.labplc.mx.trackxi.network.NetworkUtils;
 import codigo.labplc.mx.trackxi.paginador.Paginador;
+import codigo.labplc.mx.trackxi.registro.MitaxiRegisterManuallyActivity;
 import codigo.labplc.mx.trackxi.tracking.ServicioGeolocalizacion;
 
 import com.viewpagerindicator.CirclePageIndicator;
@@ -442,7 +444,31 @@ public class DatosAuto extends FragmentActivity{
 		    PopupMenu popup = new PopupMenu(DatosAuto.this, v);
 		    MenuInflater inflater = popup.getMenuInflater();
 		    inflater.inflate(R.menu.popup, popup.getMenu());
+		    popup.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+				
+				@Override
+				public boolean onMenuItemClick(MenuItem item) {
+					 switch (item.getItemId()) {
+				case R.id.configuracion:
+					Intent i = new Intent(DatosAuto.this, UserSettingActivity.class);
+					startActivityForResult(i, RESULT_SETTINGS);
+					return true;
+
+				case R.id.cuenta:
+				Intent intentManually = new Intent(DatosAuto.this, MitaxiRegisterManuallyActivity.class);
+ 				intentManually.putExtra("origen", "menu");
+ 				startActivity(intentManually);
+ 				overridePendingTransition(0,0);
+					return true;
+
+				}
+					 return false;
+				}
+			});
+		    
 		    popup.show();
 		}
+	 
+		
 	
 }

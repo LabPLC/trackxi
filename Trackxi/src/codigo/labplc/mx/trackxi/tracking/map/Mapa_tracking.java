@@ -310,7 +310,7 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 		 public void showPopup(View v) {
 			    PopupMenu popup = new PopupMenu(Mapa_tracking.this, v);
 			    MenuInflater inflater = popup.getMenuInflater();
-			    inflater.inflate(R.menu.popup, popup.getMenu());
+			    inflater.inflate(R.menu.popup_ayuda, popup.getMenu());
 			    popup.show();
 			}
 		
