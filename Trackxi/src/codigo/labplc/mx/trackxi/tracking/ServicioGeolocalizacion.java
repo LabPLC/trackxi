@@ -45,8 +45,8 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 	public static DatosAuto taxiActivity;
 	private LocationManager mLocationManager;
 	private MyLocationListener mLocationListener;
-	private double latitud_inicial = 19.0f;
-	private double longitud_inicial = -99.0f;
+	public static double latitud_inicial = 19.0f;
+	public static double longitud_inicial = -99.0f;
 	private double latitud;
 	private double longitud;
 	private Location currentLocation = null;
@@ -56,7 +56,7 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 	ArrayList<String> pointsLon = new ArrayList<String>();
 	private boolean isFirstTime = true;
 	private Timer timer,timerParanoico;
-	// panic
+	public static boolean serviceIsIniciado = false;
 	private BroadcastReceiver mReceiver;
 	private ResultReceiver resultReceiver;
 	private static int countStart = -1;
@@ -80,7 +80,7 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 	@Override
 	public void onCreate() {
 		Log.i("*********", "CREADO");
-		Toast.makeText(this, "Servicio creado", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(this, "Servicio creado", Toast.LENGTH_SHORT).show();
 		super.onCreate();
 		mLocationListener = new MyLocationListener();
 		mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -92,6 +92,7 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 		intervaloLocationParanoia  = getPreferencia("prefSyncFrequencyParanoia");
 		
 		
+	
 		
 		
 		
@@ -112,6 +113,7 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 		if(isFirstTime){
 			obtenerSenalGPS();
 			isFirstTime=false;
+			serviceIsIniciado= true;
 		}
 			try{
 					resultReceiver = intent.getParcelableExtra("receiver");
@@ -163,13 +165,14 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 			if (mLocationListener != null)
 				mLocationManager.removeUpdates(mLocationListener);
 
-		Toast.makeText(this, "Servicio detenido ", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(this, "Servicio detenido ", Toast.LENGTH_SHORT).show();
 		super.onDestroy();
 		CancelNotification(this, 0);
 		timer.cancel();
 		CancelNotification(this, 1);
 		timerParanoico.cancel();
 		
+		serviceIsIniciado= false;
 		// panic
 		unregisterReceiver(mReceiver);
 	}

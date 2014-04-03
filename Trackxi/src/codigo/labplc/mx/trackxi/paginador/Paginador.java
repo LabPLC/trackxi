@@ -16,10 +16,10 @@ import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.TextView;
-import codigo.labplc.mx.trackxi.MitaxiRegisterManuallyActivity;
 import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.configuracion.UserSettingActivity;
 import codigo.labplc.mx.trackxi.fonts.fonts;
+import codigo.labplc.mx.trackxi.registro.MitaxiRegisterManuallyActivity;
 
 import com.viewpagerindicator.CirclePageIndicator;
 

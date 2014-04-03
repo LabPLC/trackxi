@@ -2,15 +2,13 @@ package codigo.labplc.mx.trackxi.buscarplaca.paginador.paginas;
 
 import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,7 +20,6 @@ import codigo.labplc.mx.trackxi.facebook.FacebookLogin;
 import codigo.labplc.mx.trackxi.facebook.FacebookLogin.OnGetFriendsFacebookListener;
 import codigo.labplc.mx.trackxi.facebook.FacebookLogin.OnLoginFacebookListener;
 import codigo.labplc.mx.trackxi.fonts.fonts;
-import codigo.labplc.mx.trackxi.network.NetworkUtils;
 
 import com.facebook.Response;
 import com.facebook.model.GraphUser;
@@ -35,7 +32,9 @@ public class Comentarios extends View {
 	private LinearLayout container;
 	private AutoBean autoBean;
 	LinearLayout adeudos_ll_contenedor_fotos;
-private FacebookLogin facebookLogin;
+	private FacebookLogin facebookLogin;
+	private TextView adeudos_tv_ningun_amigos;
+	private Button btnLogin;
 	
 	
 	public Comentarios(Activity context) {
@@ -53,14 +52,15 @@ private FacebookLogin facebookLogin;
 		this.context = context;
 	}
 	
-	public void init(AutoBean autoBean){
+	public void init(AutoBean autoBean,FacebookLogin facebookLogin){
 		this.autoBean=autoBean;
+		this.facebookLogin=facebookLogin;
 		init();
 	}
 	
 
 	public void init() {
-		facebookLogin = new FacebookLogin(context);
+		
 
 		LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		view = inflater.inflate(R.layout.activity_adeudos, null);
@@ -72,7 +72,7 @@ private FacebookLogin facebookLogin;
 		container=(LinearLayout)view.findViewById(R.id.adeudos_ll_contenedor);
 		
 		adeudos_ll_contenedor_fotos = (LinearLayout)view.findViewById(R.id.adeudos_ll_contenedor_fotos);
-		TextView adeudos_tv_ningun_amigos = (TextView)view.findViewById(R.id.adeudos_tv_ningun_amigos);
+		adeudos_tv_ningun_amigos = (TextView)view.findViewById(R.id.adeudos_tv_ningun_amigos);
 		adeudos_tv_ningun_amigos.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_MAMEY));
 		adeudos_tv_ningun_amigos.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
 		
@@ -81,6 +81,21 @@ private FacebookLogin facebookLogin;
 		TextView adeudos_titulo_tv_amigos=(TextView)view.findViewById(R.id.adeudos_titulo_tv_amigos);
 		adeudos_titulo_tv_amigos.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_MAMEY));
 		adeudos_titulo_tv_amigos.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
+		
+		 btnLogin = (Button)view.findViewById(R.id.mitaxiregistermanually_btn_facebook);
+		btnLogin.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+			
+				facebookLogin.loginFacebook();
+				facebookLogin.setOnLoginFacebookListener(new OnLoginFacebookListener() {
+					@Override
+					public void onLoginFacebook(boolean status) {
+						loginFacebook(status);
+					}
+				});
+			}
+		});
 		
 		for(int i = 0;i< autoBean.getArrayComentarioBean().size();i++){
 		llenarComentario(autoBean.getArrayComentarioBean().get(i).getComentario(),autoBean.getArrayComentarioBean().get(i).getCalificacion(),i);
@@ -209,18 +224,21 @@ private FacebookLogin facebookLogin;
 						adeudos_ll_contenedor_fotos.removeAllViews();
 					}
 					for(int j = 0;j< autoBean.getArrayComentarioBean().size();j++){
-						Log.d("******face", user.getId()+"");
-						Log.d("******guardados", autoBean.getArrayComentarioBean().get(j).getId_facebook()+"");
-						Log.d("*************", "**********");
+					//	Log.d("******face", user.getId()+"");
+					//	Log.d("******guardados", autoBean.getArrayComentarioBean().get(j).getId_facebook()+"");
+					//	Log.d("*************", "**********");
 						if(autoBean.getArrayComentarioBean().get(j).getId_facebook().equals(user.getId())){
-						
-							
-							View viewFriend = addUserFriend(user,i);
+					
+							View viewFriend = addUserFriend(user,i,autoBean.getArrayComentarioBean().get(j).getCalificacion());
 								if(viewFriend != null) {
 									adeudos_ll_contenedor_fotos.addView(viewFriend);
 						}
 				}
 					}
+				}
+				if(i==-1){
+					adeudos_tv_ningun_amigos.setVisibility(TextView.VISIBLE);
+					btnLogin.setVisibility(Button.GONE);
 				}
 				//JSONObject jsonObjRecv = NetworkUtils.SendHttpPost(URL, json);
 			}
@@ -231,9 +249,10 @@ private FacebookLogin facebookLogin;
 	 * Add a user friend view to the layout
 	 * 
 	 * @param user
+	 * @param calif 
 	 * @return a view
 	 */
-	public View addUserFriend(final GraphUser user, int id) {
+	public View addUserFriend(final GraphUser user, int id, final float calif) {
 		View viewFriend = context.getLayoutInflater().inflate(R.layout.listitem, null);
 
 		ImageView ivFriendImageProfile = (ImageView) viewFriend.findViewById(R.id.iv_FriendImageProfile);
@@ -243,7 +262,7 @@ private FacebookLogin facebookLogin;
 			
 			@Override
 			public void onClick(View v) {
-				Dialogos.Toast(context, user.getName(), Toast.LENGTH_LONG);
+				Dialogos.Toast(context, user.getName()+" le pus— "+calif +" estrellas" , Toast.LENGTH_LONG);
 			}
 		});
 		facebookLogin.loadImageProfileToImageView(user.getId(), ivFriendImageProfile);
@@ -251,12 +270,12 @@ private FacebookLogin facebookLogin;
 		
 		return viewFriend;
 	}
-	
-	
-	
-	
+
 	public View getView() {
 		return view;
 	}
+	
+	
+	
 
 }

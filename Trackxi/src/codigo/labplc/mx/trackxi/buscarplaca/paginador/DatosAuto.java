@@ -9,7 +9,6 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import android.app.ActionBar;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -20,7 +19,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -30,21 +28,24 @@ import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.TextView;
-import codigo.labplc.mx.trackxi.MitaxiRegisterManuallyActivity;
 import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.buscarplaca.bean.AutoBean;
 import codigo.labplc.mx.trackxi.buscarplaca.bean.ComentarioBean;
 import codigo.labplc.mx.trackxi.configuracion.UserSettingActivity;
 import codigo.labplc.mx.trackxi.dialogos.Dialogos;
+import codigo.labplc.mx.trackxi.facebook.FacebookLogin;
 import codigo.labplc.mx.trackxi.fonts.fonts;
 import codigo.labplc.mx.trackxi.network.NetworkUtils;
 import codigo.labplc.mx.trackxi.paginador.Paginador;
+import codigo.labplc.mx.trackxi.registro.MitaxiRegisterManuallyActivity;
 import codigo.labplc.mx.trackxi.tracking.ServicioGeolocalizacion;
 
 import com.viewpagerindicator.CirclePageIndicator;
 
 public class DatosAuto extends FragmentActivity{
 	
+	
+
 	private int PUNTOS=0;
 	private int PUNTOS_APP =100;
 	private int PUNTOS_USUARIO =0;
@@ -65,6 +66,7 @@ public class DatosAuto extends FragmentActivity{
 	private LocationManager mLocationManager;
 	private CirclePageIndicator titleIndicator;
 	private 	ViewPager pager = null;
+	private FacebookLogin facebookLogin;
 	
 	
 	@Override
@@ -72,7 +74,9 @@ public class DatosAuto extends FragmentActivity{
 		pager=null;
 		super.onDestroy();
 	}
-
+	
+	
+	
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -93,7 +97,7 @@ public class DatosAuto extends FragmentActivity{
 		     ab.setCustomView(view);
 		
 		
-		
+		     facebookLogin = new FacebookLogin(DatosAuto.this);
 		
 		
 		Bundle bundle = getIntent().getExtras();
@@ -141,7 +145,12 @@ public class DatosAuto extends FragmentActivity{
 		case RESULT_SETTINGS:
 			showUserSettings();
 			break;
+		default:
+		facebookLogin.getFacebook().authorizeCallback(requestCode, resultCode, data);
+		break;
+		
 		}
+		
 	}
 	
 	
@@ -162,7 +171,7 @@ public class DatosAuto extends FragmentActivity{
 	private void cargaComentarios() {
 		try{
 			  String Sjson=  NetworkUtils.doHttpConnection("http://datos.labplc.mx/~mikesaurio/taxi.php?act=pasajero&type=getcomentario&placa="+placa);
-			  Log.d("**************sdasd", Sjson+"");
+			 // Log.d("**************sdasd", Sjson+"");
 		      JSONObject json= (JSONObject) new JSONTokener(Sjson).nextValue();
 		      JSONObject json2 = json.getJSONObject("message");
 		      JSONObject jsonResponse = new JSONObject(json2.toString());
@@ -418,7 +427,7 @@ public class DatosAuto extends FragmentActivity{
 			pDialog = new ProgressDialog(DatosAuto.this);
 			pDialog.setMessage("Cargando la informaci—n, espere....");
 			pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-			pDialog.setCancelable(true);
+			pDialog.setCancelable(false);
 			pDialog.show();
 		}
 
@@ -430,7 +439,7 @@ public class DatosAuto extends FragmentActivity{
 			FragmentPagerAdapterDialog adapter = new FragmentPagerAdapterDialog(getSupportFragmentManager());
 			adapter.addFragment(ScreenSlidePageFragmentDialog.newInstance(getResources().getColor(R.color.android_blue), 1,DatosAuto.this,autoBean));
 			adapter.addFragment(ScreenSlidePageFragmentDialog.newInstance(getResources().getColor(R.color.android_red), 2,DatosAuto.this,autoBean));
-			adapter.addFragment(ScreenSlidePageFragmentDialog.newInstance(getResources().getColor(R.color.android_darkpink), 3,DatosAuto.this,autoBean));
+			adapter.addFragment(ScreenSlidePageFragmentDialog.newInstance(getResources().getColor(R.color.android_darkpink), 3,DatosAuto.this,autoBean,facebookLogin));
 
 			
 			DatosAuto.this.pager.setAdapter(adapter);

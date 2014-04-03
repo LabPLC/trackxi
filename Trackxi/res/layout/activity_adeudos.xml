@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     tools:context=".Adeudos" >
@@ -30,7 +29,9 @@
             android:id="@+id/adeudos_sv"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight=".7" >
+            android:layout_weight=".75" 
+            android:layout_marginBottom="3dp"
+            android:overScrollMode="never">
 
             <LinearLayout
                 android:id="@+id/adeudos_ll_contenedor"
@@ -50,22 +51,34 @@
             android:id="@+id/adeudos_svh"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:overScrollMode="never"
-            android:layout_weight=".3" >
-
+            android:layout_weight=".25"
+            android:overScrollMode="never" >
             <LinearLayout
                 android:id="@+id/adeudos_ll_contenedor_fotos"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal" >
 
-                <TextView
+                 <TextView
                     android:id="@+id/adeudos_tv_ningun_amigos"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="Ningùn amigo encontrado" />
-                
+                    android:text="Ningùn amigo encontrado"
+                    android:visibility="gone" />
+                <Button
+                    android:id="@+id/mitaxiregistermanually_btn_facebook"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_btn_generic"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:text="Acceder a Facebook"
+                    android:textColor="@drawable/selector_txt_boton_redondo" />
+
+               
             </LinearLayout>
         </HorizontalScrollView>
     </LinearLayout>

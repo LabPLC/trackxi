@@ -13,6 +13,7 @@ import codigo.labplc.mx.trackxi.buscarplaca.bean.AutoBean;
 import codigo.labplc.mx.trackxi.buscarplaca.paginador.paginas.Adeudos;
 import codigo.labplc.mx.trackxi.buscarplaca.paginador.paginas.Comentarios;
 import codigo.labplc.mx.trackxi.buscarplaca.paginador.paginas.Datos;
+import codigo.labplc.mx.trackxi.facebook.FacebookLogin;
 
 /**
  * 
@@ -35,6 +36,7 @@ public class ScreenSlidePageFragmentDialog extends Fragment {
 	private int index;
 	static Activity actividad;
 	private static AutoBean autoBean;
+	static FacebookLogin facebookLogin;
 
 	/**
 	 * Instances a new fragment with a background color and an index page.
@@ -62,6 +64,31 @@ public class ScreenSlidePageFragmentDialog extends Fragment {
 
 	}
 
+	/**
+	 * Instances a new fragment with a background color and an index page.
+	 * 
+	 * @param color
+	 *            background color
+	 * @param index
+	 *            index page
+	 * @return a new page
+	 */
+	public static ScreenSlidePageFragmentDialog newInstance(int color, int index,Activity act,AutoBean pl,FacebookLogin fl) {
+
+		// Instantiate a new fragment
+		ScreenSlidePageFragmentDialog fragment = new ScreenSlidePageFragmentDialog();
+		actividad=act;
+		autoBean=pl;
+		// Save the parameters
+		Bundle bundle = new Bundle();
+		bundle.putInt(BACKGROUND_COLOR, color);
+		bundle.putInt(INDEX, index);
+		fragment.setArguments(bundle);
+		fragment.setRetainInstance(true);
+		facebookLogin=fl;
+		return fragment;
+
+	}
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -86,7 +113,7 @@ public class ScreenSlidePageFragmentDialog extends Fragment {
 			
 		}else if(index==3){
 			Comentarios comentarios = new Comentarios(actividad);
-			comentarios.init(autoBean);
+			comentarios.init(autoBean,facebookLogin);
 			return comentarios.getView();
 		}else{
 		

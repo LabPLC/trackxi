@@ -1,6 +1,6 @@
 
 
-package codigo.labplc.mx.trackxi;
+package codigo.labplc.mx.trackxi.registro;
 
 
 import java.io.BufferedReader;
@@ -54,6 +54,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import codigo.labplc.mx.trackxi.R;
+import codigo.labplc.mx.trackxi.R.id;
+import codigo.labplc.mx.trackxi.R.layout;
+import codigo.labplc.mx.trackxi.R.string;
 import codigo.labplc.mx.trackxi.dialogos.Dialogos;
 import codigo.labplc.mx.trackxi.expresionesregulares.RegularExpressions;
 import codigo.labplc.mx.trackxi.facebook.FacebookLogin;
@@ -88,7 +92,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 	private boolean hasFoto = false;
 	String origen;
 	
-	private FacebookLogin facebookLogin;
+//	private FacebookLogin facebookLogin;
 	private Button btnLogin;
 
 	private boolean[] listHasErrorEditText = { false, false, false, false };
@@ -146,7 +150,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		etInfousermailemergency.setTextColor(new fonts(this).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
 
 
-		facebookLogin = new FacebookLogin(MitaxiRegisterManuallyActivity.this);
+	/*	facebookLogin = new FacebookLogin(MitaxiRegisterManuallyActivity.this);
 		//btnLogin.setPublishPermissions(Arrays.asList("publish_stream","read_stream"));
 		btnLogin =(Button)findViewById(R.id.mitaxiregistermanually_btn_facebook);
 		btnLogin.setOnClickListener(new OnClickListener() {
@@ -162,7 +166,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 				});
 			}
 		});
-		
+		*/
 		
 		
 		Button contacto_emer = (Button) findViewById(R.id.mitaxiregistermanually_btn_contactos);
@@ -259,7 +263,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		
 		
 		
-		if(facebookLogin.isSession()){
+	/*	if(facebookLogin.isSession()){
 			facebookLogin.loginFacebook();
 			facebookLogin.setOnLoginFacebookListener(new OnLoginFacebookListener() {
 				@Override
@@ -268,7 +272,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 				}
 			});
 		}
-		
+		*/
 		
 		
 	}
@@ -409,7 +413,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		}else if (requestCode == RESULT_LOAD_CONTACT) {
 			getContactInfo(data);
 		}else{
-			facebookLogin.getFacebook().authorizeCallback(requestCode, resultCode, data);
+			//facebookLogin.getFacebook().authorizeCallback(requestCode, resultCode, data);
 		}
 	}
 
@@ -633,7 +637,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 	 * 
 	 * @param status
 	 */
-	public void loginFacebook(boolean status) {
+/*	public void loginFacebook(boolean status) {
 		if(status) {
 		//	Toast.makeText(getApplicationContext(), "Welcome!! :D", Toast.LENGTH_SHORT).show();
 			
@@ -662,7 +666,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		} else {
 			Toast.makeText(getApplicationContext(), "Algo falló al conectar con facebook", Toast.LENGTH_SHORT).show();
 		}
-	}
+	}*/
 	
 	
 	

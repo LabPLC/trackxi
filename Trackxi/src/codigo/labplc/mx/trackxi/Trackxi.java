@@ -11,6 +11,9 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.Window;
 import codigo.labplc.mx.trackxi.paginador.Paginador;
+import codigo.labplc.mx.trackxi.registro.MitaxiRegisterManuallyActivity;
+import codigo.labplc.mx.trackxi.tracking.ServicioGeolocalizacion;
+import codigo.labplc.mx.trackxi.tracking.map.Mapa_tracking;
 
 public class Trackxi extends Activity {
 
@@ -27,7 +30,12 @@ public class Trackxi extends Activity {
 		if(uuid == null){
 			iniciarSplash(2);
 		}else{ //si ya se registro de muestra splash y luego la activity para buscar placas
-			iniciarSplash(1);
+			if(ServicioGeolocalizacion.serviceIsIniciado==true){
+				iniciarSplash(3);
+			}else{
+				iniciarSplash(1);
+			}
+			
 		}
 	}
 	
@@ -53,7 +61,11 @@ public class Trackxi extends Activity {
 	    				intentManually.putExtra("origen", "splash");
 	    				startActivity(intentManually);
 	    				overridePendingTransition(0,0);
-	    				
+	            	}else if(flag==3){
+	            		Intent intent_mapa = new Intent(Trackxi.this, Mapa_tracking.class);
+	            		intent_mapa.putExtra("latitud_inicial", ServicioGeolocalizacion.latitud_inicial);
+	            		intent_mapa.putExtra("longitud_inicial", ServicioGeolocalizacion.longitud_inicial);
+	            		startActivity(intent_mapa);
 	            	}
 	                finish();
 	            }
