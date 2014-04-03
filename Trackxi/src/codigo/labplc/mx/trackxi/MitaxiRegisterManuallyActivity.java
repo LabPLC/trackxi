@@ -643,8 +643,17 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 	//		TextView tvUserName = (TextView) findViewById(R.id.tv_UserName);
 		//	TextView tvUserId = (TextView) findViewById(R.id.tv_UserId);
 			
+			
+			
 	//		tvUserName.setText(facebookLogin.getUserName());
 	//		tvUserId.setText("ID: " + facebookLogin.getUserId());
+			
+			SharedPreferences prefs = getSharedPreferences("MisPreferenciasTrackxi", Context.MODE_PRIVATE);
+			SharedPreferences.Editor editor = prefs.edit();
+			editor.putString("facebook",facebookLogin.getUserId());
+			editor.commit();
+			
+			
 			btnLogin.setText(facebookLogin.getUserName()+" en Facebook");
 			btnLogin.setEnabled(false);
 			

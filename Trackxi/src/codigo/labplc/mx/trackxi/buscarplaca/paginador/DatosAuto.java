@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -53,8 +54,6 @@ public class DatosAuto extends FragmentActivity{
 	private int PUNTOS_VERIFICACION = 5;
 	private int PUNTOS_ANIO_VEHICULO = 20;
 	private AutoBean autoBean;
-	private AlertDialog customDialog= null;	//Creamos el dialogo generico
-	private FragmentPagerAdapterDialog pagerAdapter;
 	private  String placa;
 	private int imagen_verde = 1;
 	private int imagen_rojo = 2;
@@ -99,9 +98,6 @@ public class DatosAuto extends FragmentActivity{
 		
 		Bundle bundle = getIntent().getExtras();
 		placa = bundle.getString("placa");	
-		
-//		((TextView) findViewById(R.id.dialogo_datos_correctos_tv_titulo)).setTypeface(new fonts(this).getTypeFace(fonts.FLAG_ROJO));
-	//	((TextView) findViewById(R.id.dialogo_datos_correctos_tv_titulo)).setTextColor(new fonts(this).getColorTypeFace(fonts.FLAG_ROJO));
 		
 
 		SharedPreferences prefs = getSharedPreferences("MisPreferenciasTrackxi", Context.MODE_PRIVATE);
@@ -166,31 +162,30 @@ public class DatosAuto extends FragmentActivity{
 	private void cargaComentarios() {
 		try{
 			  String Sjson=  NetworkUtils.doHttpConnection("http://datos.labplc.mx/~mikesaurio/taxi.php?act=pasajero&type=getcomentario&placa="+placa);
-			  	JSONObject json= (JSONObject) new JSONTokener(Sjson).nextValue();
-			      JSONObject json2 = json.getJSONObject("message");
-			      JSONObject jsonResponse = new JSONObject(json2.toString());
-			      JSONArray cast = jsonResponse.getJSONArray("calificacion");
+			  Log.d("**************sdasd", Sjson+"");
+		      JSONObject json= (JSONObject) new JSONTokener(Sjson).nextValue();
+		      JSONObject json2 = json.getJSONObject("message");
+		      JSONObject jsonResponse = new JSONObject(json2.toString());
+		      JSONArray cast2 = jsonResponse.getJSONArray("calificacion");
 			      ArrayList<ComentarioBean> arrayComenario= new ArrayList<ComentarioBean>();
-			      for (int i=0; i<cast.length(); i++) {
-			          	JSONObject oneObject = cast.getJSONObject(i);
+			      for (int i=0; i<cast2.length(); i++) {
+			          	JSONObject oneObject = cast2.getJSONObject(i);
 						 try {
 							 ComentarioBean	  comentarioBean = new ComentarioBean();
 							 comentarioBean.setComentario((String) oneObject.getString("comentario"));
-							 Float calif =Float.parseFloat((String)oneObject.getString("calificacion"));
+							 Float calif =Float.parseFloat((String) oneObject.getString("calificacion"));
 							 comentarioBean.setCalificacion(calif);
+							 comentarioBean.setId_facebook((String) oneObject.getString("id_face"));
 							 arrayComenario.add(comentarioBean);
-							 
 							 sumaCalificacion+=calif;
 							 entreComentarios=true;
-							 
 						 } catch (JSONException e) {  
 							 e.printStackTrace();
 						 }
-						 
 			      }
 			      autoBean.setArrayComentarioBean(arrayComenario);
 			      if(entreComentarios){
-			    	  float califParcial = (sumaCalificacion/cast.length());
+			    	  float califParcial = (sumaCalificacion/cast2.length());
 			    	  PUNTOS_USUARIO = (int) (califParcial * 100 /5);
 			    	  autoBean.setCalificacion_usuarios(PUNTOS_USUARIO);
 			      }else{
@@ -244,7 +239,6 @@ public class DatosAuto extends FragmentActivity{
 			    	  autoBean.setDescripcion_infracciones(getResources().getString(R.string.no_tiene_infraccion));
 				    	autoBean.setImagen_infraccones(imagen_verde);
 			      }
-			      
 			      JSONArray cast2 = jsonResponse.getJSONArray("verificaciones");
 			      if(cast2.length()==0){
 			    	  autoBean.setDescripcion_verificacion(getResources().getString(R.string.no_tiene_verificaciones));
@@ -256,8 +250,6 @@ public class DatosAuto extends FragmentActivity{
 							 try {
 								 autoBean.setDescripcion_verificacion(getResources().getString(R.string.tiene_verificaciones)+oneObject.getString("resultado").toString());
 								 autoBean.setImagen_verificacion(imagen_verde);
-								 
-								 
 								if(!esta_en_revista){
 									 autoBean.setMarca((String) oneObject.getString("marca"));
 									 autoBean.setSubmarca((String)  oneObject.getString("submarca"));
@@ -273,7 +265,7 @@ public class DatosAuto extends FragmentActivity{
 										 autoBean.setDescripcion_vehiculo(getResources().getString(R.string.carro_nuevo)+" A–o "+autoBean.getAnio());
 										 autoBean.setImagen_vehiculo(imagen_verde);
 									 }else{
-										 autoBean.setDescripcion_vehiculo(getResources().getString(R.string.carro_viejo));
+										 autoBean.setDescripcion_vehiculo(getResources().getString(R.string.carro_viejo)+" A–o "+autoBean.getAnio());
 										 autoBean.setImagen_vehiculo(imagen_rojo);
 										 PUNTOS_APP-=PUNTOS_ANIO_VEHICULO;
 									 }
@@ -308,18 +300,20 @@ public class DatosAuto extends FragmentActivity{
 		try{
 		  String Sjson=  NetworkUtils.doHttpConnection("http://mikesaurio.dev.datos.labplc.mx/movilidad/taxis/"+placa+".json");
 		    String marca="",submarca="",anio="";
-		      JSONObject json= (JSONObject) new JSONTokener(Sjson).nextValue();
+		    
+		    JSONObject json= (JSONObject) new JSONTokener(Sjson).nextValue();
 		      JSONObject json2 = json.getJSONObject("Taxi");
 		      JSONObject jsonResponse = new JSONObject(json2.toString());
-		      JSONArray cast = jsonResponse.getJSONArray("concesion");
-		      for (int i=0; i<cast.length(); i++) {
-		          	JSONObject oneObject = cast.getJSONObject(i);
+		      JSONObject sys  = jsonResponse.getJSONObject("concesion");
+		      
+		      if(sys.length()>0){
+		      
 					 try {
-						 marca = (String) oneObject.getString("marca").replaceAll(" ","");
+						 marca = (String) sys.getString("marca");
 						 autoBean.setMarca(marca);
-						 submarca = (String)  oneObject.getString("submarca").replaceAll(" ","");
+						 submarca = (String)  sys.getString("submarca");
 						 autoBean.setSubmarca(submarca);
-						 anio = (String)  oneObject.getString("anio").replaceAll(" ","");
+						 anio = (String)  sys.getString("anio");
 						 autoBean.setAnio(anio);
 						 
 						 autoBean.setDescripcion_revista(getResources().getString(R.string.con_revista));
@@ -332,17 +326,22 @@ public class DatosAuto extends FragmentActivity{
 							 autoBean.setDescripcion_vehiculo(getResources().getString(R.string.carro_nuevo)+" A–o "+anio);
 							 autoBean.setImagen_vehiculo(imagen_verde);
 						 }else{
-							 autoBean.setDescripcion_vehiculo(getResources().getString(R.string.carro_viejo));
+							 autoBean.setDescripcion_vehiculo(getResources().getString(R.string.carro_viejo)+" A–o "+anio);
 							 autoBean.setImagen_vehiculo(imagen_rojo);
 							 PUNTOS_APP-=PUNTOS_ANIO_VEHICULO;
 						 }
 						 return true;
+					 
 					 } catch (JSONException e) { return false;}
+		      }else{
+		    	  return false;
 		      }
+		      
 		}catch(JSONException e){
+			  e.printStackTrace();
 			return false;
 		}
-		return false;
+		
 	}
 
 	

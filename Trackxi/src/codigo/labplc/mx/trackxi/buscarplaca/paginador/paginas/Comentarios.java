@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -34,7 +35,7 @@ public class Comentarios extends View {
 	private LinearLayout container;
 	private AutoBean autoBean;
 	LinearLayout adeudos_ll_contenedor_fotos;
-	private FacebookLogin facebookLogin;
+private FacebookLogin facebookLogin;
 	
 	
 	public Comentarios(Activity context) {
@@ -182,18 +183,6 @@ public class Comentarios extends View {
 	 */
 	public void loginFacebook(boolean status) {
 		if(status) {
-		Toast.makeText(context, "Welcome!! :D", Toast.LENGTH_SHORT).show();
-			
-		//	ImageView ivUserImageProfile = (ImageView) findViewById(R.id.iv_UserImageProfile);
-		//	facebookLogin.loadImageProfileToImageView(facebookLogin.getUserId(), ivUserImageProfile);
-			
-	//		TextView tvUserName = (TextView) findViewById(R.id.tv_UserName);
-		//	TextView tvUserId = (TextView) findViewById(R.id.tv_UserId);
-			
-	//		tvUserName.setText(facebookLogin.getUserName());
-	//		tvUserId.setText("ID: " + facebookLogin.getUserId());
-
-			
 			getListOfFriends(facebookLogin.getUserId());
 			
 		} else {
@@ -212,20 +201,25 @@ public class Comentarios extends View {
 			@Override
 			public void onGetFriendsFacebook(List<GraphUser> users, Response response) {
 				int i=-1;
-				JSONObject json = new JSONObject();
+			//	JSONObject json = new JSONObject();
+				String usuarios=null;
 				for (GraphUser user : users) {
-					try {
-						json.put("id",user.getId());
-					} catch (JSONException e) {
-						e.printStackTrace();
+					i+=1;
+					if(i==0){
+						adeudos_ll_contenedor_fotos.removeAllViews();
 					}
-						i+=1;
-						if(i==0){
-							adeudos_ll_contenedor_fotos.removeAllViews();
+					for(int j = 0;j< autoBean.getArrayComentarioBean().size();j++){
+						Log.d("******face", user.getId()+"");
+						Log.d("******guardados", autoBean.getArrayComentarioBean().get(j).getId_facebook()+"");
+						Log.d("*************", "**********");
+						if(autoBean.getArrayComentarioBean().get(j).getId_facebook().equals(user.getId())){
+						
+							
+							View viewFriend = addUserFriend(user,i);
+								if(viewFriend != null) {
+									adeudos_ll_contenedor_fotos.addView(viewFriend);
 						}
-						View viewFriend = addUserFriend(user,i);
-						if(viewFriend != null) {
-							adeudos_ll_contenedor_fotos.addView(viewFriend);
+				}
 					}
 				}
 				//JSONObject jsonObjRecv = NetworkUtils.SendHttpPost(URL, json);
@@ -241,13 +235,7 @@ public class Comentarios extends View {
 	 */
 	public View addUserFriend(final GraphUser user, int id) {
 		View viewFriend = context.getLayoutInflater().inflate(R.layout.listitem, null);
-		
-	//	TextView tvFriendName = (TextView) viewFriend.findViewById(R.id.tv_FriendName);
-	//	tvFriendName.setText("User: " + user.getName());
-		
-	//	TextView tvFriendId = (TextView) viewFriend.findViewById(R.id.tv_FriendId);
-	//	tvFriendId.setText("Id: " + user.getId());
-		
+
 		ImageView ivFriendImageProfile = (ImageView) viewFriend.findViewById(R.id.iv_FriendImageProfile);
 		ivFriendImageProfile.setTag(id);
 		ivFriendImageProfile.setId(id);

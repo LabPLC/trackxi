@@ -69,16 +69,16 @@ public class Califica_taxi extends Activity {
 			public void onClick(View v) {
 				SharedPreferences prefs = getSharedPreferences("MisPreferenciasTrackxi",Context.MODE_PRIVATE);
 				String placa = prefs.getString("placa", null);
+				String face = prefs.getString("facebook","0");
 				String id_usuario = prefs.getString("uuid", null);
-				
-		
 				Scomentario=comentario.getText().toString().replaceAll(" ", "+");
 				if(!Scomentario.equals("")){
 					String url= "http://datos.labplc.mx/~mikesaurio/taxi.php?act=pasajero&type=addcomentario"
 							+"&id_usuario="+id_usuario
 							+"&calificacion="+Scalificacion
 							+"&comentario="+Scomentario
-							+"&placa="+placa;
+							+"&placa="+placa
+							+"&id_face="+face;
 					NetworkUtils.doHttpConnection(url);	
 				}
 
