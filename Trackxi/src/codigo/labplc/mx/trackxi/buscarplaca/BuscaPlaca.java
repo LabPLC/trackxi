@@ -25,8 +25,11 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
+import android.graphics.Canvas;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
@@ -230,19 +233,24 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 
 		 @Override
 		 public void onPictureTaken(byte[] arg0, Camera arg1) {
-		  // TODO Auto-generated method stub
+			 Bitmap bitmapPicture  = toGrayscale(BitmapFactory.decodeByteArray(arg0, 0, arg0.length));	
 			 System.gc();
-		  Bitmap bitmapPicture  = BitmapFactory.decodeByteArray(arg0, 0, arg0.length);
-		  
-		//  Matrix matrix = new Matrix();
-		 // matrix.postRotate(-90);
-		 // Bitmap rotatedBitmap = Bitmap.createBitmap(bitmapPicture , 0, 0,bitmapPicture.getWidth(),bitmapPicture.getHeight(), matrix, true);
-	//	Bitmap bMapFiltro = toGrayscale(bMapRotate);	
+		Matrix mat = new Matrix();
+		mat.postRotate(90);
+		Bitmap bMapRotate = Bitmap.createBitmap(bitmapPicture, 0, 0,bitmapPicture.getWidth(), bitmapPicture.getHeight(), mat, true);
+
+			int alto = bMapRotate.getHeight()/3;
+			Log.d( "***bMapRotateancho", bMapRotate.getWidth()+"");
+			Log.d( "***bMapRotatealto", bMapRotate.getHeight()+"");
+			Log.d( "***esizedbitmap1inicio", 0+","+alto);
+			Log.d( "***esizedbitmap1fin", bMapRotate.getWidth()+","+alto*2);
+			Bitmap esizedbitmap1 = Bitmap.createBitmap(bMapRotate,0,alto,bMapRotate.getWidth(),alto*2);
+		 
 		  try{
 			  Log.d("*******************", "TOME LA FOTO");
 			        File file = new File(foto);
 			        FileOutputStream fOut = new FileOutputStream(file);
-			        bitmapPicture.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+			        esizedbitmap1.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
 			        fOut.flush();
 			        fOut.close();
 			        Uploaded nuevaTareas = new Uploaded();
@@ -329,6 +337,8 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 		previewing = false;
 	}
 	
+	
+	
 	public View getView(){
 		return view;
 	}
@@ -365,11 +375,20 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 				File file = new File(miFoto);
 				Log.d("FILE*****SIZE", file.length()+"");
 				Bitmap myBitmap =BitmapFactory.decodeFile(file.getAbsolutePath());
-				Matrix mat = new Matrix();
+			/*mike	Matrix mat = new Matrix();
 				mat.postRotate(90);
+				
 				Bitmap bMapRotate = Bitmap.createBitmap(myBitmap, 0, 0,myBitmap.getWidth(), myBitmap.getHeight(), mat, true);
+				
+				int alto = bMapRotate.getHeight()/3;
+				
+				Log.d( "***bMapRotateancho", bMapRotate.getWidth()+"");
+				Log.d( "***bMapRotatealto", bMapRotate.getHeight()+"");
+				Log.d( "***esizedbitmap1inicio", 0+","+alto);
+				Log.d( "***esizedbitmap1fin", bMapRotate.getWidth()+","+alto*2);
+				Bitmap esizedbitmap1 = Bitmap.createBitmap(bMapRotate,0,alto,bMapRotate.getWidth(),alto*2);*/
 		        FileOutputStream fOut = new FileOutputStream(file);
-		        bMapRotate.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+		        myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
 		        Log.d("FILE*****SIZE2", file.length()+"");
 		        fOut.flush();
 		        fOut.close();
@@ -454,7 +473,7 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 	    return bmOut;
 	}
 */
-/*public Bitmap toGrayscale(Bitmap bmpOriginal)
+public Bitmap toGrayscale(Bitmap bmpOriginal)
     {        
         int width, height;
         height = bmpOriginal.getHeight();
@@ -469,7 +488,7 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
         c.drawBitmap(bmpOriginal, 0, 0, paint);
         return bmpGrayscale;
     }
-*/	
+	
 	
 	
 }
