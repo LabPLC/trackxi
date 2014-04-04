@@ -233,18 +233,19 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 
 		 @Override
 		 public void onPictureTaken(byte[] arg0, Camera arg1) {
-			 Bitmap bitmapPicture  = toGrayscale(BitmapFactory.decodeByteArray(arg0, 0, arg0.length));	
+			 Bitmap bitmapPicture  = BitmapFactory.decodeByteArray(arg0, 0, arg0.length);	
 			 System.gc();
 		Matrix mat = new Matrix();
 		mat.postRotate(90);
 		Bitmap bMapRotate = Bitmap.createBitmap(bitmapPicture, 0, 0,bitmapPicture.getWidth(), bitmapPicture.getHeight(), mat, true);
 
-			int alto = bMapRotate.getHeight()/3;
+			//int alto = bMapRotate.getHeight()/3;
+			int alto_num = bMapRotate.getHeight()/12;
 			Log.d( "***bMapRotateancho", bMapRotate.getWidth()+"");
 			Log.d( "***bMapRotatealto", bMapRotate.getHeight()+"");
-			Log.d( "***esizedbitmap1inicio", 0+","+alto);
-			Log.d( "***esizedbitmap1fin", bMapRotate.getWidth()+","+alto*2);
-			Bitmap esizedbitmap1 = Bitmap.createBitmap(bMapRotate,0,alto,bMapRotate.getWidth(),alto*2);
+			Log.d( "***esizedbitmap1inicio", 0+","+alto_num*5);
+			Log.d( "***esizedbitmap1fin", bMapRotate.getWidth()+","+alto_num*6);
+			Bitmap esizedbitmap1 = Bitmap.createBitmap(bMapRotate,0,(alto_num*5),bMapRotate.getWidth(),(alto_num*2));
 		 
 		  try{
 			  Log.d("*******************", "TOME LA FOTO");
@@ -273,17 +274,17 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 		try {
             CamcorderProfile profile ;
 
-            int numCameras = Camera.getNumberOfCameras();
+      /*      int numCameras = Camera.getNumberOfCameras();
             if (numCameras > 1) {
             profile = (CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT,CamcorderProfile.QUALITY_LOW));
             }
             else{
                 profile = (CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_BACK,CamcorderProfile.QUALITY_LOW));
             }
-
+*/
 
             Camera.Parameters parameters = camera.getParameters();
-            parameters.setPreviewSize(profile.videoFrameWidth, profile.videoFrameHeight);
+       //     parameters.setPreviewSize(profile.videoFrameWidth, profile.videoFrameHeight);
          /*parameters.setFlashMode(Camera.Parameters.FLASH_MODE_AUTO);
             parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
             parameters.setSceneMode(Camera.Parameters.SCENE_MODE_AUTO);
@@ -473,6 +474,7 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 	    return bmOut;
 	}
 */
+	/*
 public Bitmap toGrayscale(Bitmap bmpOriginal)
     {        
         int width, height;
@@ -489,6 +491,6 @@ public Bitmap toGrayscale(Bitmap bmpOriginal)
         return bmpGrayscale;
     }
 	
-	
+	*/
 	
 }
