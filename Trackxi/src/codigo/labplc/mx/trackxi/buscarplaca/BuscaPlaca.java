@@ -301,7 +301,6 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
 		if(camera==null){
-			 
 		camera = Camera.open();
 		}
 		
@@ -385,9 +384,8 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 				} else {
 					Log.d("error 202", "resultado: "+resultado);
 					resultado="falla";
-					
-					
 				}
+				file.delete();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -410,10 +408,11 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 			if(resultado.equals("falla")){
 				Dialogos.Toast(context, "ÁLa foto a fallado!, intenta de nuevo", Toast.LENGTH_LONG);
 			}else{
-				Dialogos.Toast(context, resultado, Toast.LENGTH_LONG);
+			Dialogos.Toast(context, resultado, Toast.LENGTH_LONG);
 			Intent intent= new Intent().setClass(context,DatosAuto.class);
     		intent.putExtra("placa", resultado);
     		context.startActivityForResult(intent, 0);
+    		context.finish();
 			}
 			pDialog.dismiss();
 		}
