@@ -73,7 +73,7 @@ public class NetworkUtils {
 	 * */
 	@SuppressLint("SimpleDateFormat")
 	public static String getCode() {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 		String date = dateFormat.format(new Date());
 		String photoCode = "pic_" + date;
 		return photoCode;
