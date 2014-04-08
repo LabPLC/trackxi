@@ -11,12 +11,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingBottom="10dp"
-        android:paddingTop="10dp" >
+        android:paddingTop="5dp" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:layout_weight=".6"
             android:background="@drawable/marco"
             android:orientation="vertical"
@@ -32,19 +32,15 @@
                     android:id="@+id/indicator_dialg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                     />
+                    android:paddingTop="5dp" />
 
-              	<android.support.v4.view.ViewPager
+                <android.support.v4.view.ViewPager
                     android:id="@+id/pager_dialog"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:overScrollMode="never"  />
-                   
+                    android:overScrollMode="never" />
             </LinearLayout>
-
-         
         </LinearLayout>
 
         <LinearLayout
@@ -83,7 +79,6 @@
                 android:textColor="@color/generic_amarillo" />
             -->
         </LinearLayout>
-
     </LinearLayout>
 
 </FrameLayout>

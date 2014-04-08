@@ -226,7 +226,7 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 					 String consulta2 = "http://datos.labplc.mx/~mikesaurio/taxi.php?act=chofer&type=getGoogleData&lato="
 								+latfin+"&lngo="+lonfin
 								+"&latd="+InfoPoint.get(0).getDblLatitude()+"&lngd="+InfoPoint.get(0).getDblLongitude()+"&filtro=velocidad";
-						String querty2 = NetworkUtils.doHttpConnection(consulta2);
+						String querty2 = NetworkUtils.doHttpConnection(consulta2).replaceAll("\"", "");
 						String[] Squerty2 = querty2.split(",");
 						tiempo = Squerty2[0];
 						distancia =Squerty2[1];

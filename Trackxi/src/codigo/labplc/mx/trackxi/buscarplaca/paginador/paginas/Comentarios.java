@@ -35,7 +35,7 @@ public class Comentarios extends View {
 	private AutoBean autoBean;
 	LinearLayout adeudos_ll_contenedor_fotos;
 	private FacebookLogin facebookLogin;
-	private TextView adeudos_tv_ningun_amigos;
+//	private TextView adeudos_tv_ningun_amigos;
 	private Button btnLogin;
 	
 	
@@ -74,10 +74,10 @@ public class Comentarios extends View {
 		container=(LinearLayout)view.findViewById(R.id.adeudos_ll_contenedor);
 		
 		adeudos_ll_contenedor_fotos = (LinearLayout)view.findViewById(R.id.adeudos_ll_contenedor_fotos);
-		adeudos_tv_ningun_amigos = (TextView)view.findViewById(R.id.adeudos_tv_ningun_amigos);
+	/*	adeudos_tv_ningun_amigos = (TextView)view.findViewById(R.id.adeudos_tv_ningun_amigos);
 		adeudos_tv_ningun_amigos.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_MAMEY));
 		adeudos_tv_ningun_amigos.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
-		
+		*/
 		
 		
 		TextView adeudos_titulo_tv_amigos=(TextView)view.findViewById(R.id.adeudos_titulo_tv_amigos);
@@ -222,7 +222,6 @@ public class Comentarios extends View {
 			@Override
 			public void onGetFriendsFacebook(List<GraphUser> users, Response response) {
 				int i=-1;
-			//	JSONObject json = new JSONObject();
 				String usuarios=null;
 				for (GraphUser user : users) {
 					i+=1;
@@ -231,7 +230,6 @@ public class Comentarios extends View {
 					}
 					for(int j = 0;j< autoBean.getArrayComentarioBean().size();j++){
 						if(autoBean.getArrayComentarioBean().get(j).getId_facebook().equals(user.getId())){
-					
 							View viewFriend = addUserFriend(user,i,autoBean.getArrayComentarioBean().get(j).getCalificacion());
 								if(viewFriend != null) {
 									adeudos_ll_contenedor_fotos.addView(viewFriend);
@@ -240,10 +238,9 @@ public class Comentarios extends View {
 					}
 				}
 				if(i==-1){
-					adeudos_tv_ningun_amigos.setVisibility(TextView.VISIBLE);
+				//	adeudos_tv_ningun_amigos.setVisibility(TextView.VISIBLE);
 					btnLogin.setVisibility(Button.GONE);
 				}
-				//JSONObject jsonObjRecv = NetworkUtils.SendHttpPost(URL, json);
 			}
 		});
 	}

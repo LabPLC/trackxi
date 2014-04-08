@@ -2,8 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     tools:context=".Adeudos" >
 
     <TextView
@@ -12,7 +10,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="3dp"
         android:gravity="center"
         android:text="@string/titulo_dos_detalles" />
 
@@ -22,16 +19,16 @@
         android:layout_height="match_parent"
         android:layout_alignLeft="@+id/adeudos_titulo_main"
         android:layout_below="@+id/adeudos_titulo_main"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:orientation="vertical" >
 
         <ScrollView
             android:id="@+id/adeudos_sv"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight=".75" 
             android:layout_marginBottom="3dp"
-            android:overScrollMode="never">
+            android:layout_weight=".75"
+            android:overScrollMode="never" >
 
             <LinearLayout
                 android:id="@+id/adeudos_ll_contenedor"
@@ -45,40 +42,31 @@
             android:id="@+id/adeudos_titulo_tv_amigos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Amigos que han tomado este taxi..." />
+            android:text="Mis amigos en este taxi" />
 
         <HorizontalScrollView
             android:id="@+id/adeudos_svh"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:padding="1dp"
             android:layout_weight=".25"
             android:overScrollMode="never" >
+
             <LinearLayout
                 android:id="@+id/adeudos_ll_contenedor_fotos"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal" >
 
-                 <TextView
-                    android:id="@+id/adeudos_tv_ningun_amigos"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="Ningùn amigo encontrado"
-                    android:visibility="gone" />
                 <Button
                     android:id="@+id/mitaxiregistermanually_btn_facebook"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:background="@drawable/selector_btn_generic"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
                     android:text="Acceder a Facebook"
                     android:textColor="@drawable/selector_txt_boton_redondo" />
-
-               
             </LinearLayout>
         </HorizontalScrollView>
     </LinearLayout>
