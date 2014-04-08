@@ -5,7 +5,9 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -82,7 +84,7 @@ public class Comentarios extends View {
 		adeudos_titulo_tv_amigos.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_MAMEY));
 		adeudos_titulo_tv_amigos.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
 		
-		 btnLogin = (Button)view.findViewById(R.id.mitaxiregistermanually_btn_facebook);
+		btnLogin = (Button)view.findViewById(R.id.mitaxiregistermanually_btn_facebook);
 		btnLogin.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -198,6 +200,11 @@ public class Comentarios extends View {
 	 */
 	public void loginFacebook(boolean status) {
 		if(status) {
+			SharedPreferences prefs = context.getSharedPreferences("MisPreferenciasTrackxi", Context.MODE_PRIVATE);
+			SharedPreferences.Editor editor = prefs.edit();
+			editor.putString("facebook", facebookLogin.getUserId().toString());
+			Log.d("FACEEEEEEEEEE", facebookLogin.getUserId()+"");
+			editor.commit();
 			getListOfFriends(facebookLogin.getUserId());
 			
 		} else {
@@ -254,7 +261,6 @@ public class Comentarios extends View {
 	 */
 	public View addUserFriend(final GraphUser user, int id, final float calif) {
 		View viewFriend = context.getLayoutInflater().inflate(R.layout.listitem, null);
-
 		ImageView ivFriendImageProfile = (ImageView) viewFriend.findViewById(R.id.iv_FriendImageProfile);
 		ivFriendImageProfile.setTag(id);
 		ivFriendImageProfile.setId(id);
@@ -266,11 +272,13 @@ public class Comentarios extends View {
 			}
 		});
 		facebookLogin.loadImageProfileToImageView(user.getId(), ivFriendImageProfile);
-		
-		
 		return viewFriend;
 	}
 
+	
+	/*
+	 * Regresa la vista ya inflada 
+	 */
 	public View getView() {
 		return view;
 	}

@@ -9,7 +9,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -51,27 +50,16 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import codigo.labplc.mx.trackxi.R;
-import codigo.labplc.mx.trackxi.R.id;
-import codigo.labplc.mx.trackxi.R.layout;
-import codigo.labplc.mx.trackxi.R.string;
 import codigo.labplc.mx.trackxi.dialogos.Dialogos;
 import codigo.labplc.mx.trackxi.expresionesregulares.RegularExpressions;
-import codigo.labplc.mx.trackxi.facebook.FacebookLogin;
-import codigo.labplc.mx.trackxi.facebook.FacebookLogin.OnGetFriendsFacebookListener;
-import codigo.labplc.mx.trackxi.facebook.FacebookLogin.OnLoginFacebookListener;
 import codigo.labplc.mx.trackxi.fonts.fonts;
 import codigo.labplc.mx.trackxi.network.NetworkUtils;
 import codigo.labplc.mx.trackxi.paginador.Paginador;
 import codigo.labplc.mx.trackxi.registro.bean.UserBean;
 import codigo.labplc.mx.trackxi.registro.validador.EditTextValidator;
-
-import com.facebook.Response;
-import com.facebook.android.Facebook;
-import com.facebook.model.GraphUser;
 
 public class MitaxiRegisterManuallyActivity extends Activity {
 
@@ -385,7 +373,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 			}
 
 		}else if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK	&& null != data) {
-	 			Uri imageUri = data.getData();
+	 						Uri imageUri = data.getData();
 	 			  			Bitmap myBitmap;
 	 			  			try {
 	 			  				myBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
@@ -403,12 +391,12 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 	 			  			        e.printStackTrace();
 	 			  			        Log.i(null, "Save file error!");
 	 			  			}
-	 			  				
 	 			  			} catch (FileNotFoundException e) {
 	 			  				e.printStackTrace();
 	 			  			} catch (IOException e) {
 	 			  				e.printStackTrace();
 	 			  			}
+
 			
 		}else if (requestCode == RESULT_LOAD_CONTACT) {
 			getContactInfo(data);
@@ -632,42 +620,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 			
 		}
 	}
-	/**
-	 * Login in to Facebook
-	 * 
-	 * @param status
-	 */
-/*	public void loginFacebook(boolean status) {
-		if(status) {
-		//	Toast.makeText(getApplicationContext(), "Welcome!! :D", Toast.LENGTH_SHORT).show();
-			
-		//	ImageView ivUserImageProfile = (ImageView) findViewById(R.id.iv_UserImageProfile);
-		//	facebookLogin.loadImageProfileToImageView(facebookLogin.getUserId(), ivUserImageProfile);
-			
-	//		TextView tvUserName = (TextView) findViewById(R.id.tv_UserName);
-		//	TextView tvUserId = (TextView) findViewById(R.id.tv_UserId);
-			
-			
-			
-	//		tvUserName.setText(facebookLogin.getUserName());
-	//		tvUserId.setText("ID: " + facebookLogin.getUserId());
-			
-			SharedPreferences prefs = getSharedPreferences("MisPreferenciasTrackxi", Context.MODE_PRIVATE);
-			SharedPreferences.Editor editor = prefs.edit();
-			editor.putString("facebook",facebookLogin.getUserId());
-			editor.commit();
-			
-			
-			btnLogin.setText(facebookLogin.getUserName()+" en Facebook");
-			btnLogin.setEnabled(false);
-			
-		//	getListOfFriends(facebookLogin.getUserId());
-			
-		} else {
-			Toast.makeText(getApplicationContext(), "Algo falló al conectar con facebook", Toast.LENGTH_SHORT).show();
-		}
-	}*/
-	
-	
+
+  
 	
 }

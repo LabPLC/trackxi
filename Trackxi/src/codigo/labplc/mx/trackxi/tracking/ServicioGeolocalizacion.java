@@ -90,13 +90,7 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 
 		intervaloLocation = getPreferencia("prefSyncFrequency");
 		intervaloLocationParanoia  = getPreferencia("prefSyncFrequencyParanoia");
-		
-		
-	
-		
-		
-		
-		
+
 		// para le panic
 		IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
 		filter.addAction(Intent.ACTION_SCREEN_OFF);

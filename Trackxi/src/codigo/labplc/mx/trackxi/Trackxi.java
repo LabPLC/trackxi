@@ -39,8 +39,6 @@ public class Trackxi extends Activity {
 		}
 	}
 	
-
-
 	/**
 	 * Muestra la pantalla splash e inicia la actividad principal
 	 * 
