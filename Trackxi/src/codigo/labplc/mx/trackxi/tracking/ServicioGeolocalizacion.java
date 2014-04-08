@@ -204,7 +204,7 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 				isFirstLocation = false;
 				showNotification();
 				//si es que activo el nivel paranoico
-				if(intervaloLocationParanoia!=5000){
+				if(intervaloLocationParanoia!=10000){
 					mensajeParanoico();
 				}
 			}
@@ -458,15 +458,15 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
     	SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 		timeLocation = sharedPrefs.getString(preferencia, "0");
 		if(timeLocation.equals("0")){
-			return 5000;
+			return 10000;
+		}else if(timeLocation.equals("1")){
+			return 60000;
 		}else if(timeLocation.equals("2")){
 			return 120000;
 		}else if(timeLocation.equals("5")){
 			return 300000;
-		}else if(timeLocation.equals("10")){
-			return 600000;
 		}else{
-			return 5000;
+			return 10000;
 		}
     } 
     

@@ -36,6 +36,7 @@
     <string name="edittext_wrong_info">Corrige campos de texto incorrectos.</string>
     <string name="edittext_error_string">Escribe cadena válida [a-z A-Z].</string>
     <string name="edittext_error_number">Escribe número válido [0&#8211;9].</string>
+     <string name="edittext_error_nickname">Escribe sólo [a-z A-Z 0&#8211;9 .-_ ].</string>
     <string name="edittext_error_email">Escribe sintaxis de correo válida.</string>
     <string name="edittext_error_telephone_repeated">Teléfono de usuario y emergencia no debe ser el mismo</string>
 

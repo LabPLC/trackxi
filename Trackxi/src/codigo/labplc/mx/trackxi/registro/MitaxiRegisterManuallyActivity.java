@@ -34,7 +34,10 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapShader;
 import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -189,7 +192,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 			}
 		});
 
-		etInfousername.setTag(RegularExpressions.KEY_IS_STRING);
+		etInfousername.setTag(RegularExpressions.KEY_IS_NICKNAME);
 		etInfouseremail.setTag(RegularExpressions.KEY_IS_EMAIL);
 		etInfousertelemergency.setTag(RegularExpressions.KEY_IS_NUMBER);
 		etInfousermailemergency.setTag(RegularExpressions.KEY_IS_EMAIL);
@@ -215,8 +218,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 						try {
 							saveUserInfo();
 						} catch (JSONException e) {
-							Log.d("error 301", "error fatal :(");
-							
+							Log.d("error 301", "error fatal :(");	
 						}
 					} else {
 						Log.d("error 302", getString(R.string.no_internet_connection));
@@ -248,20 +250,6 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 			mitaxiregistermanually_btn_ok.setText("Actualizar");
 			hasFoto = true;
 		}
-		
-		
-		
-	/*	if(facebookLogin.isSession()){
-			facebookLogin.loginFacebook();
-			facebookLogin.setOnLoginFacebookListener(new OnLoginFacebookListener() {
-				@Override
-				public void onLoginFacebook(boolean status) {
-					loginFacebook(status);
-				}
-			});
-		}
-		*/
-		
 		
 	}
 
@@ -462,7 +450,6 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 				}
 				in.close();
 				resultado = sb.toString();
-				Log.d("*******************", resultado+"");
 				
 				
 				httpclient = null;
@@ -621,6 +608,5 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		}
 	}
 
-  
 	
 }

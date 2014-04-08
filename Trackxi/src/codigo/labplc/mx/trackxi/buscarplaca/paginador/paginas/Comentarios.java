@@ -203,7 +203,6 @@ public class Comentarios extends View {
 			SharedPreferences prefs = context.getSharedPreferences("MisPreferenciasTrackxi", Context.MODE_PRIVATE);
 			SharedPreferences.Editor editor = prefs.edit();
 			editor.putString("facebook", facebookLogin.getUserId().toString());
-			Log.d("FACEEEEEEEEEE", facebookLogin.getUserId()+"");
 			editor.commit();
 			getListOfFriends(facebookLogin.getUserId());
 			
@@ -231,9 +230,6 @@ public class Comentarios extends View {
 						adeudos_ll_contenedor_fotos.removeAllViews();
 					}
 					for(int j = 0;j< autoBean.getArrayComentarioBean().size();j++){
-					//	Log.d("******face", user.getId()+"");
-					//	Log.d("******guardados", autoBean.getArrayComentarioBean().get(j).getId_facebook()+"");
-					//	Log.d("*************", "**********");
 						if(autoBean.getArrayComentarioBean().get(j).getId_facebook().equals(user.getId())){
 					
 							View viewFriend = addUserFriend(user,i,autoBean.getArrayComentarioBean().get(j).getCalificacion());

@@ -98,6 +98,18 @@ public class EditTextValidator {
 							
 							et_aux.setError(null);
 						}
+					}else if (etType == RegularExpressions.KEY_IS_NICKNAME) {
+						if (!RegularExpressions.isNickName(expression)) {
+							listHasErrorEditText[index] = true;
+							setErrorMessage(
+									context,
+									context.getString(R.string.edittext_error_nickname),
+									et_aux);
+						} else {
+							listHasErrorEditText[index] = false;
+							
+							et_aux.setError(null);
+						}
 					}
 				}
 
