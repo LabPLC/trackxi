@@ -59,13 +59,17 @@ import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.dialogos.Dialogos;
 import codigo.labplc.mx.trackxi.expresionesregulares.RegularExpressions;
 import codigo.labplc.mx.trackxi.fonts.fonts;
+import codigo.labplc.mx.trackxi.log.BeanDatosLog;
 import codigo.labplc.mx.trackxi.network.NetworkUtils;
 import codigo.labplc.mx.trackxi.paginador.Paginador;
 import codigo.labplc.mx.trackxi.registro.bean.UserBean;
 import codigo.labplc.mx.trackxi.registro.validador.EditTextValidator;
 
 public class MitaxiRegisterManuallyActivity extends Activity {
-
+	
+	
+	public final String TAG = this.getClass().getSimpleName();
+	
 	private int RESULT_LOAD_IMAGE = 100;
 	private int RESULT_LOAD_FOTO = 200;
 	private int RESULT_LOAD_CONTACT = 300;
@@ -92,6 +96,8 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_mitaxi_register_manually);
+		
+		BeanDatosLog.setTagLog(TAG);
 		
 		Bundle bundle = getIntent().getExtras();
 		if(bundle!=null){
@@ -141,24 +147,6 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		etInfousermailemergency.setTextColor(new fonts(this).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
 
 
-	/*	facebookLogin = new FacebookLogin(MitaxiRegisterManuallyActivity.this);
-		//btnLogin.setPublishPermissions(Arrays.asList("publish_stream","read_stream"));
-		btnLogin =(Button)findViewById(R.id.mitaxiregistermanually_btn_facebook);
-		btnLogin.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-			
-				facebookLogin.loginFacebook();
-				facebookLogin.setOnLoginFacebookListener(new OnLoginFacebookListener() {
-					@Override
-					public void onLoginFacebook(boolean status) {
-						loginFacebook(status);
-					}
-				});
-			}
-		});
-		*/
-		
 		
 		Button contacto_emer = (Button) findViewById(R.id.mitaxiregistermanually_btn_contactos);
 		contacto_emer.setOnClickListener(new View.OnClickListener() {
@@ -376,13 +364,12 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 	 			  			        fOut.flush();
 	 			  			        fOut.close();}
 	 			  			    catch (Exception e) {
-	 			  			        e.printStackTrace();
-	 			  			        Log.i(null, "Save file error!");
+	 			  			    	BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
 	 			  			}
 	 			  			} catch (FileNotFoundException e) {
-	 			  				e.printStackTrace();
+	 			  				BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
 	 			  			} catch (IOException e) {
-	 			  				e.printStackTrace();
+	 			  				BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
 	 			  			}
 
 			
@@ -488,7 +475,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 					
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
 			}
 			return null;
 		}
@@ -604,7 +591,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 			  }  
 			  }
 		}catch(Exception e){
-			
+			BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
 		}
 	}
 

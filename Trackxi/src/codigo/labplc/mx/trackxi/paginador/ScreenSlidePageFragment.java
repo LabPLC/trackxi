@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import codigo.labplc.mx.trackxi.R;
-import codigo.labplc.mx.trackxi.buscarchofer.BuscarChofer;
 import codigo.labplc.mx.trackxi.buscarplaca.BuscaPlaca;
 
 /**
@@ -73,8 +72,8 @@ public class ScreenSlidePageFragment extends Fragment {
 			BuscaPlaca pag = new BuscaPlaca(actividad);
 			return pag.getView();
 		}else if(index==2){
-			BuscarChofer cho = new BuscarChofer(actividad);
-			return cho.getView();
+			//BuscarChofer cho = new BuscarChofer(actividad);
+			return null;//cho.getView();
 		}else{
 			ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_screen_slide_page, container, false);
 			TextView tvIndex = (TextView) rootView.findViewById(R.id.tvIndex);

@@ -2,15 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MitaxiActivity" 
     android:background="@color/rojo_logo"
->
+    tools:context=".MitaxiActivity" >
 
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-		android:contentDescription="@string/app_name"
+        android:contentDescription="@string/app_name"
         android:src="@drawable/splash" />
-    
+
 </RelativeLayout>

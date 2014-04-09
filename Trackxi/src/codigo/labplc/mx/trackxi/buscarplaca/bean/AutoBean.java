@@ -2,8 +2,6 @@ package codigo.labplc.mx.trackxi.buscarplaca.bean;
 
 import java.util.ArrayList;
 
-import android.R;
-
 public class AutoBean {
 	private String marca="";
 	private String submarca="";

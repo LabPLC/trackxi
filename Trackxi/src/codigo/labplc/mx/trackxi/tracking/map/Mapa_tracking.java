@@ -37,6 +37,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.fonts.fonts;
+import codigo.labplc.mx.trackxi.log.BeanDatosLog;
 import codigo.labplc.mx.trackxi.network.NetworkUtils;
 import codigo.labplc.mx.trackxi.tracking.Califica_taxi;
 
@@ -51,6 +52,9 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 public class Mapa_tracking extends Activity implements OnItemClickListener {
+	
+	public final String TAG = this.getClass().getSimpleName();
+	
 	 private GoogleMap map;
 	private double latitud=0;
 	private double longitud=0;
@@ -77,6 +81,8 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_mapa_tracking);
 		
+		
+		BeanDatosLog.setTagLog(TAG);
 		//propiedades del action bar
 		 final ActionBar ab = getActionBar();
 	     ab.setDisplayShowHomeEnabled(false);
@@ -232,7 +238,7 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 						distancia =Squerty2[1];
 						marker_taxi.title("Estas a "+distancia+", "+tiempo+" de tu destino");
 					 }catch(Exception e){
-						 Log.d("falla en Mapa_tracking", "falla obtener velocidad");
+						 BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
 					 }
 					
 						map.addMarker(marker_taxi);
@@ -338,7 +344,7 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 						// Fetching the data from web service
 						data = new DirectionsJSONParser().downloadUrl(url[0]);
 					}catch(Exception e){
-						Log.d("Background Task",e.toString());
+						 BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
 					}
 					return data;		
 				}
@@ -408,7 +414,7 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 		            	// Starts parsing data
 		            	routes = parser.parse(jObject);    
 		            }catch(Exception e){
-		            	e.printStackTrace();
+		            	 BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
 		            }
 		            return routes;
 				}

@@ -35,7 +35,6 @@ public class Comentarios extends View {
 	private AutoBean autoBean;
 	LinearLayout adeudos_ll_contenedor_fotos;
 	private FacebookLogin facebookLogin;
-//	private TextView adeudos_tv_ningun_amigos;
 	private Button btnLogin;
 	
 	
@@ -74,10 +73,6 @@ public class Comentarios extends View {
 		container=(LinearLayout)view.findViewById(R.id.adeudos_ll_contenedor);
 		
 		adeudos_ll_contenedor_fotos = (LinearLayout)view.findViewById(R.id.adeudos_ll_contenedor_fotos);
-	/*	adeudos_tv_ningun_amigos = (TextView)view.findViewById(R.id.adeudos_tv_ningun_amigos);
-		adeudos_tv_ningun_amigos.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_MAMEY));
-		adeudos_tv_ningun_amigos.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
-		*/
 		
 		
 		TextView adeudos_titulo_tv_amigos=(TextView)view.findViewById(R.id.adeudos_titulo_tv_amigos);

@@ -35,6 +35,7 @@ import codigo.labplc.mx.trackxi.configuracion.UserSettingActivity;
 import codigo.labplc.mx.trackxi.dialogos.Dialogos;
 import codigo.labplc.mx.trackxi.facebook.FacebookLogin;
 import codigo.labplc.mx.trackxi.fonts.fonts;
+import codigo.labplc.mx.trackxi.log.BeanDatosLog;
 import codigo.labplc.mx.trackxi.network.NetworkUtils;
 import codigo.labplc.mx.trackxi.paginador.Paginador;
 import codigo.labplc.mx.trackxi.registro.MitaxiRegisterManuallyActivity;
@@ -44,16 +45,16 @@ import com.viewpagerindicator.CirclePageIndicator;
 
 public class DatosAuto extends FragmentActivity{
 	
-	
+	public final String TAG = this.getClass().getSimpleName();
 
 	private int PUNTOS=0;
-	private int PUNTOS_APP =100;
+	private int PUNTOS_APP = 80;
 	private int PUNTOS_USUARIO =0;
 	private int PUNTOS_REVISTA = 50;
-	private int PUNTOS_INFRACCIONES = 30;
+	private int PUNTOS_INFRACCIONES = 15;
 	private int PUNTOS_TENENCIA = 5;
 	private int PUNTOS_VERIFICACION = 5;
-	private int PUNTOS_ANIO_VEHICULO = 20;
+	private int PUNTOS_ANIO_VEHICULO = 5;
 	private AutoBean autoBean;
 	private  String placa;
 	private int imagen_verde = 1;
@@ -61,11 +62,10 @@ public class DatosAuto extends FragmentActivity{
 	private boolean hasRevista=true;
 	private float sumaCalificacion =0.0f;
 	private boolean entreComentarios=false;
-
 	private static final int RESULT_SETTINGS = 1;
 	private LocationManager mLocationManager;
 	private CirclePageIndicator titleIndicator;
-	private 	ViewPager pager = null;
+	private ViewPager pager = null;
 	private FacebookLogin facebookLogin;
 	
 	
@@ -82,22 +82,23 @@ public class DatosAuto extends FragmentActivity{
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 		this.setContentView(R.layout.dialogo_datos_correctos);
-	
 		
-		  final ActionBar ab = getActionBar();
-		     ab.setDisplayShowHomeEnabled(false);
-		     ab.setDisplayShowTitleEnabled(false);     
-		     final LayoutInflater inflater = (LayoutInflater)getSystemService("layout_inflater");
-		     View view = inflater.inflate(R.layout.abs_layout,null);   
-		     ((TextView) view.findViewById(R.id.abs_layout_tv_titulo)).setTypeface(new fonts(DatosAuto.this).getTypeFace(fonts.FLAG_MAMEY));
-		     ((TextView) view.findViewById(R.id.abs_layout_tv_titulo)).setText("DATOS DEL TAXI");
-		     ab.setDisplayShowCustomEnabled(true);
-		     
-		     ab.setCustomView(view,new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
-		     ab.setCustomView(view);
+		BeanDatosLog.setTagLog(TAG);
+		
+		final ActionBar ab = getActionBar();
+		ab.setDisplayShowHomeEnabled(false);
+	    ab.setDisplayShowTitleEnabled(false);     
+		final LayoutInflater inflater = (LayoutInflater)getSystemService("layout_inflater");
+		
+		View view = inflater.inflate(R.layout.abs_layout,null);   
+		((TextView) view.findViewById(R.id.abs_layout_tv_titulo)).setTypeface(new fonts(DatosAuto.this).getTypeFace(fonts.FLAG_MAMEY));
+		((TextView) view.findViewById(R.id.abs_layout_tv_titulo)).setText("DATOS DEL TAXI");
+		ab.setDisplayShowCustomEnabled(true);     
+		ab.setCustomView(view,new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
+		ab.setCustomView(view);
 		
 		
-		     facebookLogin = new FacebookLogin(DatosAuto.this);
+		facebookLogin = new FacebookLogin(DatosAuto.this);
 		
 		
 		Bundle bundle = getIntent().getExtras();
@@ -107,15 +108,11 @@ public class DatosAuto extends FragmentActivity{
 		SharedPreferences prefs = getSharedPreferences("MisPreferenciasTrackxi", Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = prefs.edit();
 		editor.putString("placa", placa);
-		editor.commit();
-		
-		
+		editor.commit();		
 		
 		Upload nuevaTarea = new Upload();
 		nuevaTarea.execute();
-		
-		
-		
+
 		Button dialogo_datos_correctos_btn_iniciar = (Button) findViewById(R.id.dialogo_datos_correctos_btn_iniciar);
 		dialogo_datos_correctos_btn_iniciar.setTypeface(new fonts(this).getTypeFace(fonts.FLAG_AMARILLO));
 		dialogo_datos_correctos_btn_iniciar.setOnClickListener(new View.OnClickListener() {
@@ -171,7 +168,6 @@ public class DatosAuto extends FragmentActivity{
 	private void cargaComentarios() {
 		try{
 			  String Sjson=  NetworkUtils.doHttpConnection("http://datos.labplc.mx/~mikesaurio/taxi.php?act=pasajero&type=getcomentario&placa="+placa);
-			 // Log.d("**************sdasd", Sjson+"");
 		      JSONObject json= (JSONObject) new JSONTokener(Sjson).nextValue();
 		      JSONObject json2 = json.getJSONObject("message");
 		      JSONObject jsonResponse = new JSONObject(json2.toString());
@@ -189,19 +185,19 @@ public class DatosAuto extends FragmentActivity{
 							 sumaCalificacion+=calif;
 							 entreComentarios=true;
 						 } catch (JSONException e) {  
-							 e.printStackTrace();
+							 BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
 						 }
 			      }
 			      autoBean.setArrayComentarioBean(arrayComenario);
 			      if(entreComentarios){
 			    	  float califParcial = (sumaCalificacion/cast2.length());
-			    	  PUNTOS_USUARIO = (int) (califParcial * 100 /5);
+			    	  PUNTOS_USUARIO = (int) (califParcial * 20 /5);
 			    	  autoBean.setCalificacion_usuarios(PUNTOS_USUARIO);
 			      }else{
 			    	  autoBean.setCalificacion_usuarios(0);
 			      }
 			}catch(JSONException e){
-				e.printStackTrace();
+				BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
 			}
 	}
 
@@ -237,7 +233,7 @@ public class DatosAuto extends FragmentActivity{
 							 }
 							
 						 } catch (JSONException e) { 
-							 e.printStackTrace();
+							 BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
 						 }
 			      }
 			      if(hasInfraccion){
@@ -246,7 +242,7 @@ public class DatosAuto extends FragmentActivity{
 				    	PUNTOS_APP-=PUNTOS_INFRACCIONES;
 			      }else{
 			    	  autoBean.setDescripcion_infracciones(getResources().getString(R.string.no_tiene_infraccion));
-				    	autoBean.setImagen_infraccones(imagen_verde);
+				      autoBean.setImagen_infraccones(imagen_verde);
 			      }
 			      JSONArray cast2 = jsonResponse.getJSONArray("verificaciones");
 			      if(cast2.length()==0){
@@ -281,19 +277,13 @@ public class DatosAuto extends FragmentActivity{
 								}
 								
 							 } catch (JSONException e) { 
-								 e.printStackTrace();
+								 BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
 							 }
 				      }
-				      if(hasInfraccion){
-				    	  autoBean.setDescripcion_infracciones(getResources().getString(R.string.tiene_infraccion));
-					    	autoBean.setImagen_infraccones(imagen_rojo);
-				      }else{
-				    	  autoBean.setDescripcion_infracciones(getResources().getString(R.string.no_tiene_infraccion));
-					    	autoBean.setImagen_infraccones(imagen_verde);
-				      }
+				
 			    
 			}catch(JSONException e){
-				e.printStackTrace();
+				BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
 			}
 		
 	}
@@ -347,7 +337,7 @@ public class DatosAuto extends FragmentActivity{
 		      }
 		      
 		}catch(JSONException e){
-			  e.printStackTrace();
+			BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
 			return false;
 		}
 		
@@ -399,7 +389,7 @@ public class DatosAuto extends FragmentActivity{
 				datosVehiculo(hasRevista);
 				cargaComentarios();
 				
-				PUNTOS = ((PUNTOS_APP+PUNTOS_USUARIO)/2);
+				PUNTOS = (PUNTOS_APP+PUNTOS_USUARIO);
 				if(PUNTOS<=25){
 					autoBean.setDescripcion_calificacion_app(getResources().getString(R.string.texto_calificacion_25));
 				}else if(PUNTOS<=49 && PUNTOS>25){
@@ -417,7 +407,7 @@ public class DatosAuto extends FragmentActivity{
 				autoBean.setCalificaion_app(PUNTOS_APP);	
 				
 			} catch (Exception e) {
-				e.printStackTrace();
+				BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
 			}
 			return null;
 		}

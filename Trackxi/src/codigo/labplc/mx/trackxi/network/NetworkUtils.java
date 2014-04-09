@@ -18,11 +18,15 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.StrictMode;
 import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.zip.GZIPInputStream;
+
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -30,6 +34,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
+
+import codigo.labplc.mx.trackxi.log.BeanDatosLog;
 import android.util.Log;
 
 public class NetworkUtils {
@@ -58,10 +64,10 @@ public class NetworkUtils {
 			//Log.d("RETURN HTTPCLIENT", EntityUtils.toString(httpentiti));
 			return EntityUtils.toString(httpentiti);
 		} catch (ParseException e) {
-			Log.d("Error ParseEception", e.getMessage() + "");
+			BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
 			return null;
 		} catch (IOException e) {
-			Log.d("Error IOException", e.getMessage() + "");
+			BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
 			return null;
 		}
 	}
@@ -96,7 +102,7 @@ public class NetworkUtils {
 
 			long t = System.currentTimeMillis();
 			HttpResponse response = (HttpResponse) httpclient.execute(httpPostRequest);
-			Log.i("***********", "HTTPResponse received in [" + (System.currentTimeMillis()-t) + "ms]");
+			
 
 			// Get hold of the response entity (-> the data):
 			HttpEntity entity = response.getEntity();
@@ -117,7 +123,7 @@ public class NetworkUtils {
 				// Transform the String into a JSONObject
 				JSONObject jsonObjRecv = new JSONObject(resultString);
 				// Raw DEBUG output of our received JSON object:
-				Log.i("************","<JSONObject>\n"+jsonObjRecv.toString()+"\n</JSONObject>");
+				
 
 				return jsonObjRecv;
 			} 
@@ -127,7 +133,7 @@ public class NetworkUtils {
 		{
 			// More about HTTP exception handling in another tutorial.
 			// For now we just print the stack trace.
-			e.printStackTrace();
+			BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
 		}
 		return null;
 	}
@@ -151,16 +157,24 @@ public class NetworkUtils {
 				sb.append(line + "\n");
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
 		} finally {
 			try {
 				is.close();
 			} catch (IOException e) {
-				e.printStackTrace();
+				BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
 			}
 		}
 		return sb.toString();
 	}
-
+	
+	
+	public static String getStackTrace(final Throwable throwable) {
+	    final StringWriter sw = new StringWriter();
+	    final PrintWriter pw = new PrintWriter(sw, true);
+	    throwable.printStackTrace(pw);
+	    return sw.getBuffer().toString();
+	}
+		
 	
 }

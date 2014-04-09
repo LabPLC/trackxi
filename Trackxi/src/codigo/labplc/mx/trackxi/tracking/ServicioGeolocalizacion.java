@@ -79,8 +79,6 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 
 	@Override
 	public void onCreate() {
-		Log.i("*********", "CREADO");
-		//Toast.makeText(this, "Servicio creado", Toast.LENGTH_SHORT).show();
 		super.onCreate();
 		mLocationListener = new MyLocationListener();
 		mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -401,7 +399,6 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 			//Solo activa la alarma una vez
 			if(algoPaso){
 					v.vibrate(3000);
-					Log.d("*****************ALARMAAAA","Activada");
 					SharedPreferences prefs = getSharedPreferences("MisPreferenciasTrackxi",Context.MODE_PRIVATE);
 		           uuid = prefs.getString("uuid", null);
 		           telemer = prefs.getString("telemer", null);

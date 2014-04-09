@@ -1,14 +1,11 @@
 package codigo.labplc.mx.trackxi.tracking;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
@@ -16,10 +13,13 @@ import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
 import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.fonts.fonts;
+import codigo.labplc.mx.trackxi.log.BeanDatosLog;
 import codigo.labplc.mx.trackxi.network.NetworkUtils;
 
 public class Califica_taxi extends Activity {
 
+	public final String TAG = this.getClass().getSimpleName();
+	
 	Button calificar_aceptar;
 	Button calificar_cancelar;
 	EditText comentario;
@@ -32,7 +32,7 @@ public class Califica_taxi extends Activity {
 	
 		setContentView(R.layout.activity_califica_taxi);
 
-		
+		BeanDatosLog.setTagLog(TAG);
 		
 	    ((TextView) findViewById(R.id.califica_taxi_tv_titulo)).setTypeface(new fonts(Califica_taxi.this).getTypeFace(fonts.FLAG_MAMEY));	
 		((TextView) findViewById(R.id.califica_taxi_tv_titulo)).setTextColor(new fonts(Califica_taxi.this).getColorTypeFace(fonts.FLAG_ROJO));

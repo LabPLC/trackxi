@@ -12,7 +12,6 @@ public class Activity_null extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.d("********************nueva Actividad", "Create"+cuenta);
 		ServicioGeolocalizacion.setPanicoActivado(true);
 	this.finish();
 		
@@ -21,7 +20,6 @@ public class Activity_null extends Activity {
 @Override
 	protected void onDestroy() {
 	if(cuenta>0){
-	Log.d("********************nueva Actividad", "adios"+cuenta);
 	ServicioGeolocalizacion.setPanicoActivado(false);
 	cuenta = 0;
 	}else{

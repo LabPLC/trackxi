@@ -13,9 +13,11 @@ import android.widget.TextView;
 import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.buscarplaca.bean.AutoBean;
 import codigo.labplc.mx.trackxi.fonts.fonts;
+import codigo.labplc.mx.trackxi.log.BeanDatosLog;
 
 public class Adeudos extends View {
 
+	
 	private View view;
 	private View view_row;
 	private Activity context;
@@ -47,7 +49,6 @@ public class Adeudos extends View {
 	
 	public void init() {
 
-	
 
 		LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		view = inflater.inflate(R.layout.activity_adeudos, null);

@@ -19,6 +19,7 @@ import android.widget.TextView;
 import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.configuracion.UserSettingActivity;
 import codigo.labplc.mx.trackxi.fonts.fonts;
+import codigo.labplc.mx.trackxi.log.BeanDatosLog;
 import codigo.labplc.mx.trackxi.registro.MitaxiRegisterManuallyActivity;
 
 import com.viewpagerindicator.CirclePageIndicator;
@@ -30,6 +31,7 @@ import com.viewpagerindicator.CirclePageIndicator;
  */
 public class Paginador extends FragmentActivity {
 	private static final int RESULT_SETTINGS = 1;
+	 public final String TAG = this.getClass().getSimpleName();
 	/**
 	 * The pager widget, which handles animation and allows swiping horizontally
 	 * to access previous and next pages.
@@ -46,7 +48,7 @@ public class Paginador extends FragmentActivity {
 		super.onCreate(arg0);
 		this.setContentView(R.layout.main);
 
-		
+		BeanDatosLog.setTagLog(TAG);	
 	
 	     final ActionBar ab = getActionBar();
 	     ab.setDisplayShowHomeEnabled(false);
