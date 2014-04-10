@@ -25,6 +25,7 @@ public  class HockeySender implements ReportSender {
 
 @Override
   public void send(CrashReportData report) throws ReportSenderException {
+	
     try {
     	System.setProperty("http.keepAlive", "false");
 		HttpClient httpclient = new DefaultHttpClient();
@@ -47,6 +48,7 @@ public  class HockeySender implements ReportSender {
 		
 		httpclient.execute(httppost);
 
+		
     }
     catch (Exception e) {
       e.printStackTrace();

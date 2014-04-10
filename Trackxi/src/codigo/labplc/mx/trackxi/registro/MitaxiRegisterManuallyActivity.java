@@ -5,10 +5,12 @@ package codigo.labplc.mx.trackxi.registro;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -34,11 +36,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.BitmapShader;
 import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.graphics.Shader;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -73,6 +71,8 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 	private int RESULT_LOAD_IMAGE = 100;
 	private int RESULT_LOAD_FOTO = 200;
 	private int RESULT_LOAD_CONTACT = 300;
+	  private String selectedImagePath;
+	  private String filemanagerstring;
 
 	private AlertDialog customDialog = null; // Creamos el dialogo generico
 
@@ -331,7 +331,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 
 	
 
-	@Override
+	/*@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		
 		
@@ -378,6 +378,61 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		}else{
 			//facebookLogin.getFacebook().authorizeCallback(requestCode, resultCode, data);
 		}
+	}*/
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == RESULT_LOAD_FOTO) {
+			File file = new File(foto);
+			 try{
+					Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+					Matrix mat = new Matrix();
+					mat.postRotate(-90);
+					Bitmap bMapRotate = Bitmap.createBitmap(myBitmap, 0, 0,
+					myBitmap.getWidth(), myBitmap.getHeight(), mat, true);
+			        File file2 = new File(foto);
+			        FileOutputStream fOut = new FileOutputStream(file2);
+			        bMapRotate.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+			        fOut.flush();
+			        fOut.close();
+			        userfoto.setImageBitmap(bMapRotate);
+					hasFoto = true;      
+			 }catch (Exception e) {
+				 BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+			}
+			
+
+		}else if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK	&& null != data) {
+			 Uri selectedImageUri = data.getData();
+			 try{
+				 Bitmap	myBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
+				 userfoto.setImageBitmap(myBitmap);
+				 hasFoto = true; 
+	             filemanagerstring = selectedImageUri.getPath();
+	             selectedImagePath = getPath(selectedImageUri);
+	            /* if(selectedImagePath!=null){
+	                 System.out.println(selectedImagePath+"  1");
+	             }else{ 
+	            	 System.out.println("selectedImagePath is null");
+	            }*/
+	             /*if(filemanagerstring!=null){
+	                 System.out.println(filemanagerstring+"  2");
+	             }else{ 
+	            	 System.out.println("filemanagerstring is null");
+	            }*/
+	             if(selectedImagePath!=null){
+	                // System.out.println("selectedImagePath is the right one for you!");
+	                
+	              copyFile(selectedImagePath,foto);
+					
+	             }/*else{
+	                 System.out.println("filemanagerstring is the right one for you!");
+	             }*/
+				 }catch(Exception e){
+					 BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e)); 
+				 }
+         }else if (requestCode == RESULT_LOAD_CONTACT) {
+ 			getContactInfo(data);
+ 		}
 	}
 
 	/**
@@ -522,7 +577,13 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 
 					@Override
 					public void onClick(View view) {
-						foto = Environment.getExternalStorageDirectory() + "/imagen"+ NetworkUtils.getCode() + ".jpg";
+						foto = Environment.getExternalStorageDirectory() + "/Traxi/perfil/imagen"+NetworkUtils.getCode()+".jpg";
+						//foto = Environment.getExternalStorageDirectory() + "/imagen"+ NetworkUtils.getCode() + ".jpg";
+						File dir = new File (Environment.getExternalStorageDirectory() + "/Traxi/perfil"); 
+			    	       if (!dir.exists())
+			    	       {
+			    	           dir.mkdirs();
+			    	       }
 						// Camara
 						Intent intent = new Intent(	MediaStore.ACTION_IMAGE_CAPTURE);
 						Uri output = Uri.fromFile(new File(foto));
@@ -537,7 +598,9 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 
 					@Override
 					public void onClick(View view) {
-						foto = Environment.getExternalStorageDirectory() + "/imagen"+ NetworkUtils.getCode() + ".jpg";
+						foto = Environment.getExternalStorageDirectory() + "/Traxi/perfil";
+					//	foto = Environment.getExternalStorageDirectory() + "/hancel";
+						//foto = Environment.getExternalStorageDirectory() + "/imagen"+ NetworkUtils.getCode() + ".jpg";
 						// Galeria
 						Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 						startActivityForResult(i, RESULT_LOAD_IMAGE);
@@ -594,6 +657,57 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 			BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
 		}
 	}
+	
+	/*
+	 * 
+	 */
+	  public String getPath(Uri uri) {
+	        String[] projection = { MediaStore.Images.Media.DATA };
+	        Cursor cursor = managedQuery(uri, projection, null, null, null);
+	        if(cursor!=null)
+	        {
+	            int column_index = cursor
+	            .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+	            cursor.moveToFirst();
+	            return cursor.getString(column_index);
+	        }
+	        else return null;
+	    }
+	    
+	  
+	  /*
+	   * 
+	   */
+	    private void copyFile(String inputPath, String outputPath) {
+	    	   InputStream in = null;
+	    	   OutputStream out = null;
+	    	   try {
+	    	       File dir = new File (outputPath); 
+	    	       if (!dir.exists())
+	    	       {
+	    	           dir.mkdirs();
+	    	       }
+	    	       in = new FileInputStream(inputPath);        
+	    	       out = new FileOutputStream(outputPath + "/imagen"+NetworkUtils.getCode()+".jpg");
+	    	       byte[] buffer = new byte[1024];
+	    	       int read;
+	    	       while ((read = in.read(buffer)) != -1) {
+	    	           out.write(buffer, 0, read);
+	    	       }
+	    	       in.close();
+	    	       in = null;
+	    	       out.flush();
+	    	       out.close();
+	    	       out = null;        
+
+	    	   }  catch (FileNotFoundException fnfe1) {
+	    	       Log.e("tag", fnfe1.getMessage());
+	    	   }
+	    	           catch (Exception e) {
+	    	       Log.e("tag", e.getMessage());
+	    	   }
+
+	    	}
 
 	
 }

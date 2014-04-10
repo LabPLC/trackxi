@@ -36,10 +36,10 @@ import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import codigo.labplc.mx.trackxi.R;
+import codigo.labplc.mx.trackxi.califica.Califica_taxi;
 import codigo.labplc.mx.trackxi.fonts.fonts;
 import codigo.labplc.mx.trackxi.log.BeanDatosLog;
 import codigo.labplc.mx.trackxi.network.NetworkUtils;
-import codigo.labplc.mx.trackxi.tracking.Califica_taxi;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;

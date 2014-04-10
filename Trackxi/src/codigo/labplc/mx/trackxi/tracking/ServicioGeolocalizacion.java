@@ -29,6 +29,9 @@ import android.util.Log;
 import android.widget.Toast;
 import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.buscarplaca.paginador.DatosAuto;
+import codigo.labplc.mx.trackxi.califica.Califica_taxi;
+import codigo.labplc.mx.trackxi.log.BeanDatosLog;
+import codigo.labplc.mx.trackxi.network.NetworkUtils;
 import codigo.labplc.mx.trackxi.panic.MyReceiver;
 import codigo.labplc.mx.trackxi.panic.PanicAlert;
 import codigo.labplc.mx.trackxi.tracking.map.Mapa_tracking;
@@ -145,7 +148,7 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 						}
 					}
 			}catch(Exception e){
-				Log.d("*****onStart", "vino null");
+				BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
 			}
 				
 		super.onStart(intent, startId);
