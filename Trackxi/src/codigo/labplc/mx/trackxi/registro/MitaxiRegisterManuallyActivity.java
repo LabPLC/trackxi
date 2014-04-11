@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -37,6 +38,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -66,6 +68,9 @@ import codigo.labplc.mx.trackxi.registro.validador.EditTextValidator;
 public class MitaxiRegisterManuallyActivity extends Activity {
 	
 	
+	
+	
+	
 	public final String TAG = this.getClass().getSimpleName();
 	
 	private int RESULT_LOAD_IMAGE = 100;
@@ -86,6 +91,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 	private UserBean user;
 	private boolean hasFoto = false;
 	String origen;
+	 String fotoNotFull;
 	
 //	private FacebookLogin facebookLogin;
 	private Button btnLogin;
@@ -95,6 +101,9 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		
+		    
 		setContentView(R.layout.activity_mitaxi_register_manually);
 		
 		BeanDatosLog.setTagLog(TAG);
@@ -302,10 +311,14 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		editor.putString("foto", user.getFoto());
 		editor.commit();
 
-		Intent mainIntent = new Intent().setClass(
-				MitaxiRegisterManuallyActivity.this, Paginador.class);
-		startActivity(mainIntent);
-
+		if(origen.equals("menu")){
+			
+		}else{
+			Intent mainIntent = new Intent().setClass(
+			MitaxiRegisterManuallyActivity.this, Paginador.class);
+			startActivity(mainIntent);
+		}
+		
 		MitaxiRegisterManuallyActivity.this.finish();
 
 	}
@@ -329,9 +342,9 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		return empty;
 	}
 
-	
+	/*
 
-	/*@Override
+	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		
 		
@@ -383,24 +396,17 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == RESULT_LOAD_FOTO) {
 			File file = new File(foto);
-			 try{
-					Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-					Matrix mat = new Matrix();
-					mat.postRotate(-90);
-					Bitmap bMapRotate = Bitmap.createBitmap(myBitmap, 0, 0,
-					myBitmap.getWidth(), myBitmap.getHeight(), mat, true);
-			        File file2 = new File(foto);
-			        FileOutputStream fOut = new FileOutputStream(file2);
-			        bMapRotate.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
-			        fOut.flush();
-			        fOut.close();
-			        userfoto.setImageBitmap(bMapRotate);
-					hasFoto = true;      
-			 }catch (Exception e) {
-				 BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+			if (file.exists()) {
+				Bitmap myBitmap = BitmapFactory.decodeFile(file
+						.getAbsolutePath());
+				Matrix mat = new Matrix();
+				mat.postRotate(-90);
+				Bitmap bMapRotate = Bitmap.createBitmap(myBitmap, 0, 0,
+						myBitmap.getWidth(), myBitmap.getHeight(), mat, true);
+				userfoto.setImageBitmap(bMapRotate);
+				hasFoto = true;
 			}
-			
-
+			          
 		}else if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK	&& null != data) {
 			 Uri selectedImageUri = data.getData();
 			 try{
@@ -409,24 +415,9 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 				 hasFoto = true; 
 	             filemanagerstring = selectedImageUri.getPath();
 	             selectedImagePath = getPath(selectedImageUri);
-	            /* if(selectedImagePath!=null){
-	                 System.out.println(selectedImagePath+"  1");
-	             }else{ 
-	            	 System.out.println("selectedImagePath is null");
-	            }*/
-	             /*if(filemanagerstring!=null){
-	                 System.out.println(filemanagerstring+"  2");
-	             }else{ 
-	            	 System.out.println("filemanagerstring is null");
-	            }*/
 	             if(selectedImagePath!=null){
-	                // System.out.println("selectedImagePath is the right one for you!");
-	                
-	              copyFile(selectedImagePath,foto);
-					
-	             }/*else{
-	                 System.out.println("filemanagerstring is the right one for you!");
-	             }*/
+	              copyFile(selectedImagePath,fotoNotFull,foto);
+	             }
 				 }catch(Exception e){
 					 BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e)); 
 				 }
@@ -596,9 +587,12 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		// escucha del boton cancelar
 		((Button) view.findViewById(R.id.dialogo_tipo_de_imagen_btnAceptar)).setOnClickListener(new OnClickListener() {
 
+					
+
 					@Override
 					public void onClick(View view) {
-						foto = Environment.getExternalStorageDirectory() + "/Traxi/perfil";
+						foto = Environment.getExternalStorageDirectory() + "/Traxi/perfil/imagen"+NetworkUtils.getCode()+".jpg";
+						fotoNotFull = Environment.getExternalStorageDirectory() + "/Traxi/perfil";
 					//	foto = Environment.getExternalStorageDirectory() + "/hancel";
 						//foto = Environment.getExternalStorageDirectory() + "/imagen"+ NetworkUtils.getCode() + ".jpg";
 						// Galeria
@@ -659,7 +653,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 	}
 	
 	/*
-	 * 
+	 * obtiene la uri de la imagen de la galeria
 	 */
 	  public String getPath(Uri uri) {
 	        String[] projection = { MediaStore.Images.Media.DATA };
@@ -676,9 +670,9 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 	    
 	  
 	  /*
-	   * 
+	   * copia el archivo de la galeria y lo copia en un file de traxi
 	   */
-	    private void copyFile(String inputPath, String outputPath) {
+	    private void copyFile(String inputPath, String outputPath,String fileFull) {
 	    	   InputStream in = null;
 	    	   OutputStream out = null;
 	    	   try {
@@ -688,7 +682,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 	    	           dir.mkdirs();
 	    	       }
 	    	       in = new FileInputStream(inputPath);        
-	    	       out = new FileOutputStream(outputPath + "/imagen"+NetworkUtils.getCode()+".jpg");
+	    	       out = new FileOutputStream(fileFull);
 	    	       byte[] buffer = new byte[1024];
 	    	       int read;
 	    	       while ((read = in.read(buffer)) != -1) {
@@ -708,6 +702,6 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 	    	   }
 
 	    	}
-
+	   
 	
 }
