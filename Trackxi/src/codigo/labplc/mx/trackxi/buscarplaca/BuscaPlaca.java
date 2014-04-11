@@ -241,6 +241,13 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 						fOut.close();
 						Uploaded nuevaTareas = new Uploaded();
 						nuevaTareas.execute(foto);
+					
+						if (camera != null) {
+							camera.setPreviewDisplay(surfaceHolder);
+							camera.startPreview();
+							previewing = true;
+						}
+						
 					}
 					catch (Exception e) {
 						BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
@@ -256,11 +263,13 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 						previewing = false;
 					}
 					try {
+						if (camera != null) {
 						CamcorderProfile profile ;
 						Camera.Parameters parameters = camera.getParameters();
 						camera.setParameters(parameters);
 						camera.setPreviewDisplay(holder);
 						camera.startPreview();
+						}
 					}
 					catch (IOException e) {
 						BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
@@ -277,11 +286,15 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 					}
 					if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
 					{   
+						if (camera != null) {
 						camera.setDisplayOrientation(90);
+						}
 					}
 					if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
-					{                               
+					{        
+						if (camera != null) {
 						camera.setDisplayOrientation(180);
+						}
 					}
 				}
 
@@ -304,8 +317,6 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 					camera = null;
 					previewing = false;
 				}
-
-
 
 				public View getView(){
 					return view;
