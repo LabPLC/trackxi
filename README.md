@@ -43,7 +43,7 @@ AYUDA PARA AGREGAR google_play_services_lib
     seleccionar New-> Project -> Android Application Project from Existing Code
     dar doble click en la ruta - "android-sdk\extras\google\google_play_services"
     
-AYUDA PARA AGREGAR library_datepicker
+AYUDA PARA AGREGAR FacebookSDK
     se encuentra en https://github.com/facebook/facebook-android-sdk
 
 
