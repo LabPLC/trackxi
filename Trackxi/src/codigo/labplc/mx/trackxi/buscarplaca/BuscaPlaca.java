@@ -241,6 +241,13 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 						fOut.close();
 						Uploaded nuevaTareas = new Uploaded();
 						nuevaTareas.execute(foto);
+					
+						if (camera != null) {
+							camera.setPreviewDisplay(surfaceHolder);
+							camera.startPreview();
+							previewing = true;
+						}
+						
 					}
 					catch (Exception e) {
 						BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));

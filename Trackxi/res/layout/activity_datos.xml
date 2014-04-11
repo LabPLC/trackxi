@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".Datos" >
 
     <TextView
@@ -12,119 +13,83 @@
         android:gravity="center"
         android:text="@string/titulo_uno_general" />
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/datos_general_tv_titulo_principal"
-        android:overScrollMode="never" >
+        android:orientation="vertical" >
 
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/datos_general_auto_ll"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_background"
             android:orientation="vertical" >
 
-            <LinearLayout
-                android:id="@+id/datos_general_auto_ll"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/rounded_background"
-                android:orientation="vertical" >
-
-                <TextView
-                    android:id="@+id/datos_tv_titulo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Datos del vehículo" />
-
-                <TextView
-                    android:id="@+id/datos_tv_marca"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/datos_tv_titulo"
-                    android:layout_below="@+id/datos_tv_titulo"
-                    android:layout_marginTop="3dp"
-                    android:text="Marca: "
-                    android:textColor="@color/generic_amarillo" />
-            </LinearLayout>
-
             <TextView
-                android:id="@+id/datos_tv_niveles_confianza"
+                android:id="@+id/datos_tv_titulo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/datos_general_auto_ll"
-                android:layout_below="@+id/datos_general_auto_ll"
-                android:paddingTop="10dp"
-                android:text="Nivel de confianza"
-                android:textColor="@color/generic_amarillo" />
-
-            <LinearLayout
-                android:id="@+id/Thermometer_Container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/datos_tv_niveles_confianza"
-                android:layout_below="@+id/datos_tv_niveles_confianza"
-                android:gravity="center"
-                android:orientation="horizontal" >
-            </LinearLayout>
+                android:text="Datos del vehículo" />
 
             <TextView
-                android:id="@+id/datos_tv_calif_usuario"
+                android:id="@+id/datos_tv_marca"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/Thermometer_Container"
-                android:layout_below="@+id/Thermometer_Container"
-                android:layout_marginTop="20dp"
-                android:text="Calificación usuarios"
+                android:layout_marginTop="3dp"
+                android:text="Marca: "
                 android:textColor="@color/generic_amarillo" />
+        </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/Thermometer_Container_usuarios"
+        <TextView
+            android:id="@+id/datos_tv_niveles_confianza"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nivel de confianza"
+            android:textColor="@color/generic_amarillo" />
+
+        <LinearLayout
+            android:id="@+id/Thermometer_Container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".50"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="3dp"
+            android:layout_weight=".30"
+            android:background="@drawable/rounded_background"
+            android:orientation="vertical"
+            android:paddingTop="2dp" >
+
+            <TextView
+                android:id="@+id/datos_tv_titulo_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/texto_significado_calif" />
+
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/datos_tv_calif_usuario"
-                android:layout_below="@+id/datos_tv_calif_usuario"
-                android:orientation="vertical" >
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignLeft="@+id/Thermometer_Container_usuarios"
-                android:layout_below="@+id/Thermometer_Container_usuarios"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:background="@drawable/rounded_background"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/activity_horizontal_margin" >
-
-                <TextView
-                    android:id="@+id/datos_tv_titulo_desc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="10dp"
-                    android:text="@string/texto_significado_calif" />
+                android:overScrollMode="never" >
 
                 <TextView
                     android:id="@+id/datos_tv_descripcion"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignLeft="@+id/datos_tv_titulo_desc"
-                    android:layout_below="@+id/datos_tv_titulo_desc"
+                    android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:text="blablablabla"
                     android:textColor="@color/rojo_logo" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/datos_general_auto_ll"
-                android:layout_alignTop="@+id/datos_general_auto_ll"
-                android:orientation="vertical" >
-            </LinearLayout>
-        </RelativeLayout>
-    </ScrollView>
+            </ScrollView>
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

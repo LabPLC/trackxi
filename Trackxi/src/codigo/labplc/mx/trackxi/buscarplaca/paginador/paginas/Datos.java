@@ -2,25 +2,24 @@ package codigo.labplc.mx.trackxi.buscarplaca.paginador.paginas;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.buscarplaca.bean.AutoBean;
+import codigo.labplc.mx.trackxi.buscarplaca.paginador.paginas.termometro.ShieldView;
 import codigo.labplc.mx.trackxi.buscarplaca.paginador.paginas.termometro.ThermometerView;
 import codigo.labplc.mx.trackxi.fonts.fonts;
-import codigo.labplc.mx.trackxi.paginador.Paginador;
 
 public class Datos extends View {
 
 	private TextView marca,submarca,modelo,descripcion;
-	private LinearLayout container,container_usuario;
+	private LinearLayout container;
 	private View view;
 	private Activity context;
 	private AutoBean autoBean;
@@ -54,8 +53,8 @@ public class Datos extends View {
 		((TextView) view.findViewById(R.id.datos_tv_niveles_confianza)).setTypeface(new fonts(context).getTypeFace(fonts.FLAG_MAMEY));	
 		((TextView) view.findViewById(R.id.datos_tv_niveles_confianza)).setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_AMARILLO));
 		
-		((TextView) view.findViewById(R.id.datos_tv_calif_usuario)).setTypeface(new fonts(context).getTypeFace(fonts.FLAG_MAMEY));	
-		((TextView) view.findViewById(R.id.datos_tv_calif_usuario)).setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_AMARILLO));
+	//	((TextView) view.findViewById(R.id.datos_tv_calif_usuario)).setTypeface(new fonts(context).getTypeFace(fonts.FLAG_MAMEY));	
+	//	((TextView) view.findViewById(R.id.datos_tv_calif_usuario)).setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_AMARILLO));
 		
 		((TextView) view.findViewById(R.id.datos_tv_titulo_desc)).setTypeface(new fonts(context).getTypeFace(fonts.FLAG_GRIS_CLARO));	
 		((TextView) view.findViewById(R.id.datos_tv_titulo_desc)).setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
@@ -79,7 +78,7 @@ public class Datos extends View {
 		descripcion.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
 		
 		container = (LinearLayout)view.findViewById(R.id.Thermometer_Container);
-		container_usuario = (LinearLayout)view.findViewById(R.id.Thermometer_Container_usuarios);
+	//	container_usuario = (LinearLayout)view.findViewById(R.id.Thermometer_Container_usuarios);
 	
 		marca.setText(autoBean.getMarca()+", ");
 		marca.append(autoBean.getSubmarca()+", ");
@@ -94,14 +93,26 @@ public class Datos extends View {
 
 	
 	public void crearTermometro(){
-
-			final ThermometerView thermometer = new ThermometerView(context);
-			thermometer.setThermometerProgress(autoBean.getCalificaion_app());
-	        container.addView(thermometer);
-	        final ThermometerView thermometer_usuario = new ThermometerView(context);
-	        thermometer_usuario.setThermometerProgress(autoBean.getCalificacion_usuarios());
-	        container_usuario.addView(thermometer_usuario);
-	        
+		
+		LinearLayout verticalLayout = new LinearLayout(context);
+		verticalLayout.setOrientation(LinearLayout.VERTICAL);
+		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT,1);
+		params.gravity=Gravity.CENTER;
+		verticalLayout.setLayoutParams(params);
+		 
+		final ShieldView shield = new ShieldView(context);
+		Display display = context.getWindowManager().getDefaultDisplay(); 
+		int actionBarHeight = context.getActionBar().getHeight();
+	
+		int size= display.getHeight()-actionBarHeight-actionBarHeight;
+		
+		shield.initUI(size/3,size/3);
+		int newProgress = shield.getProgressWithJump(autoBean.getCalificacion_final(), ThermometerView.JUMP_PROGRESS_ANIMATION); // Progress with jump
+		shield.setProgress(newProgress);
+		
+		verticalLayout.addView(shield);
+		container.addView(verticalLayout);
+		
 		
 	}
 	

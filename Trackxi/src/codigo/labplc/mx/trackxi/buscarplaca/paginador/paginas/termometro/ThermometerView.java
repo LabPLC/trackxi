@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.View.MeasureSpec;
 import android.view.animation.Animation;
 import android.widget.LinearLayout.LayoutParams;
 import codigo.labplc.mx.trackxi.R;
@@ -23,7 +24,7 @@ public class ThermometerView extends View {
     
     private int startProgress = 0;
     private int progress = 50;
-    public static final int JUMP_PROGRESS_ANIMATION = 1;
+    public static final int JUMP_PROGRESS_ANIMATION = 10;
     
     private int duration = 2000; //duration in millis
     
@@ -60,10 +61,10 @@ public class ThermometerView extends View {
 	public void initUI()
 	{
 		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-		params.leftMargin = (int) Utils.convertDpToPixel(getContext(), 5);
-		params.rightMargin = (int) Utils.convertDpToPixel(getContext(), 5);
-		params.topMargin = (int) Utils.convertDpToPixel(getContext(), 5);
-		params.bottomMargin = (int) Utils.convertDpToPixel(getContext(), 5);
+		params.leftMargin = (int) Utils.convertDpToPixel(getContext(), 16);
+		params.rightMargin = (int) Utils.convertDpToPixel(getContext(), 16);
+		params.topMargin = (int) Utils.convertDpToPixel(getContext(), 32);
+		params.bottomMargin = (int) Utils.convertDpToPixel(getContext(), 16);
 		setLayoutParams(params);
 		
 		setLayerType(View.LAYER_TYPE_SOFTWARE, null);
@@ -80,7 +81,7 @@ public class ThermometerView extends View {
         
         textPaint = new Paint();
         backgroundPaint.setAntiAlias(true);
-		textPaint.setColor(Color.WHITE);
+		textPaint.setColor(Color.BLACK);
 		textPaint.setStyle(Paint.Style.FILL);
 		textPaint.setTextSize(30);
         
