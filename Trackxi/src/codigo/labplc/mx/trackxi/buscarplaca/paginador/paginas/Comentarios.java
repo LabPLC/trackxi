@@ -8,11 +8,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 import codigo.labplc.mx.trackxi.R;
@@ -36,7 +38,7 @@ public class Comentarios extends View {
 	LinearLayout adeudos_ll_contenedor_fotos;
 	private FacebookLogin facebookLogin;
 	private Button btnLogin;
-	
+	private boolean foundFriend = true;
 	
 	public Comentarios(Activity context) {
 		super(context);
@@ -96,6 +98,16 @@ public class Comentarios extends View {
 		
 		for(int i = 0;i< autoBean.getArrayComentarioBean().size();i++){
 		llenarComentario(autoBean.getArrayComentarioBean().get(i).getComentario(),autoBean.getArrayComentarioBean().get(i).getCalificacion(),i);
+		}
+		if(autoBean.getArrayComentarioBean().size()<=0){
+			TextView tv = new TextView(context);
+			tv.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_ROJO));
+			tv.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
+			LinearLayout.LayoutParams lp= new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT,1);
+			lp.gravity= Gravity.CENTER;
+			tv.setLayoutParams(lp);
+			tv.setText("Este taxi no tiene comentarios");
+			container.addView(tv);
 		}
 		
 		if(facebookLogin.isSession()){
@@ -225,6 +237,10 @@ public class Comentarios extends View {
 					}
 					for(int j = 0;j< autoBean.getArrayComentarioBean().size();j++){
 						if(autoBean.getArrayComentarioBean().get(j).getId_facebook().equals(user.getId())){
+							if(foundFriend){
+								adeudos_ll_contenedor_fotos.removeAllViews();
+								foundFriend=false;
+							}
 							View viewFriend = addUserFriend(user,i,autoBean.getArrayComentarioBean().get(j).getCalificacion());
 								if(viewFriend != null) {
 									adeudos_ll_contenedor_fotos.addView(viewFriend);
@@ -232,9 +248,16 @@ public class Comentarios extends View {
 				}
 					}
 				}
-				if(i==-1){
-				//	adeudos_tv_ningun_amigos.setVisibility(TextView.VISIBLE);
+				if(foundFriend||i==-1){
 					btnLogin.setVisibility(Button.GONE);
+					TextView tv = new TextView(context);
+					tv.setTypeface(new fonts(context).getTypeFace(fonts.FLAG_ROJO));
+					tv.setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
+					LinearLayout.LayoutParams lp= new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT,1);
+					lp.gravity= Gravity.CENTER;
+					tv.setLayoutParams(lp);
+					tv.setText("Ningun amigo a tomado este taxi");
+					adeudos_ll_contenedor_fotos.addView(tv);
 				}
 			}
 		});

@@ -42,7 +42,7 @@
             android:id="@+id/adeudos_titulo_tv_amigos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mis amigos en este taxi" />
+            android:text="Mis amigos en este taxi..." />
 
         <HorizontalScrollView
             android:id="@+id/adeudos_svh"
