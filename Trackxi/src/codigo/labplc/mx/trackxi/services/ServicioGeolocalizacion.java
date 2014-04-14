@@ -54,8 +54,8 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 	private MyLocationListener mLocationListener;
 	public static double latitud_inicial = 19.0f;
 	public static double longitud_inicial = -99.0f;
-	public static double latitud;
-	public static double longitud;
+	public static double latitud =0;
+	public static double longitud=0;
 	public static String horaInicio;
 	private Location currentLocation = null;
 	private boolean isFirstLocation = true;

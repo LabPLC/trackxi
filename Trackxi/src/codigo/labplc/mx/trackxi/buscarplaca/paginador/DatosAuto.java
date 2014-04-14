@@ -47,9 +47,9 @@ public class DatosAuto extends FragmentActivity{
 	
 	public final String TAG = this.getClass().getSimpleName();
 
-	private int PUNTOS=0;
+	//private int PUNTOS=0;
 	private int PUNTOS_APP = 80;
-	private int PUNTOS_USUARIO =0;
+	private int PUNTOS_USUARIO = 0;
 	private int PUNTOS_REVISTA = 50;
 	private int PUNTOS_INFRACCIONES = 15;
 	private int PUNTOS_TENENCIA = 5;
@@ -389,7 +389,7 @@ public class DatosAuto extends FragmentActivity{
 				datosVehiculo(hasRevista);
 				cargaComentarios();
 				
-				PUNTOS = (PUNTOS_APP+PUNTOS_USUARIO);
+				 int PUNTOS = (PUNTOS_APP+PUNTOS_USUARIO);
 				if(PUNTOS<=25){
 					autoBean.setDescripcion_calificacion_app(getResources().getString(R.string.texto_calificacion_25));
 				}else if(PUNTOS<=49 && PUNTOS>25){
