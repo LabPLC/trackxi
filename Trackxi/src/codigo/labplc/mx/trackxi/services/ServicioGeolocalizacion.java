@@ -172,7 +172,7 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 			if (mLocationListener != null)
 				mLocationManager.removeUpdates(mLocationListener);
 
-		//Toast.makeText(this, "Servicio detenido ", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "Servicio detenido ", Toast.LENGTH_SHORT).show();
 		super.onDestroy();
 		CancelNotification(this, 0);
 		timer.cancel();
@@ -322,12 +322,10 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 		Intent intent_mapa = new Intent(this, Mapa_tracking.class);
 		intent_mapa.putExtra("latitud_inicial", latitud_inicial);
 		intent_mapa.putExtra("longitud_inicial", longitud_inicial);
-		PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent_mapa,
-				PendingIntent.FLAG_UPDATE_CURRENT);
+		PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent_mapa,PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_CANCEL_CURRENT);
 
 		Intent intent_califica = new Intent(this, Califica_taxi.class);
-		PendingIntent pIntent_cal = PendingIntent.getActivity(this, 0,
-				intent_califica, PendingIntent.FLAG_UPDATE_CURRENT);
+		PendingIntent pIntent_cal = PendingIntent.getActivity(this, 0,intent_califica, PendingIntent.FLAG_UPDATE_CURRENT);
 
 		Notification noti = new Notification.Builder(this)
 				.setContentTitle("Traxi").setContentText("¿Qué quieres hacer?")
@@ -440,11 +438,10 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
          Context context = getApplicationContext();
          Intent notificationIntent = new Intent(this, Activity_null.class);
 
-         PendingIntent contentIntent = PendingIntent.getActivity(this, requestID, notificationIntent, 0);
+         PendingIntent contentIntent = PendingIntent.getActivity(this, requestID, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
          notification.setLatestEventInfo(context, "¿Todo bien?", "Tocame si es así", contentIntent);
                  notification.flags += Notification.FLAG_ONGOING_EVENT;
                  notification.flags += Notification.FLAG_AUTO_CANCEL;
-                 
                  AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
                  alarmManager.set(AlarmManager.RTC_WAKEUP,0, contentIntent);
                  
