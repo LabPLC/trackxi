@@ -121,7 +121,7 @@ public class DatosAuto extends FragmentActivity{
 			public void onClick(View v) {
 				
 				if (!mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-					new Dialogos().showDialogGPS(DatosAuto.this,"GPS apagado", "ÀDeseas activarlo?");		
+					new Dialogos().showDialogGPS(DatosAuto.this).show();		
 				}else{
 					ServicioGeolocalizacion.taxiActivity = DatosAuto.this;
 					startService(new Intent(DatosAuto.this,ServicioGeolocalizacion.class));

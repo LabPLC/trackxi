@@ -63,6 +63,10 @@
         <string name="paraque_cancelar">Cancelar</string>
             <string name="salir_subtitulo">TRAXI</string>
               <string name="salir_texto">¿Realmente quieres salir?</string>
+              
+        <!-- GPS -->
+         <string name="gps_subtitulo">GPS apagado</string>
+              <string name="gps_texto">¿Deseas activarlo?</string>  
     
     <!-- Textos Datos Auto -->
     <string name="texto_calificacion_25">Este vehículo no está registrado como un taxi, así como presenta varios problemas en otros rubros. por lo que recibe una calificación reprobatoria. En caso de abordar el vehículo, sugerimos lo hagas con todas las precauciones posibles y mantenerte alerta.</string>
