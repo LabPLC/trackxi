@@ -14,8 +14,8 @@ import android.widget.TextView;
 import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.fonts.fonts;
 import codigo.labplc.mx.trackxi.log.BeanDatosLog;
-import codigo.labplc.mx.trackxi.network.NetworkUtils;
-import codigo.labplc.mx.trackxi.tracking.ServicioGeolocalizacion;
+import codigo.labplc.mx.trackxi.services.ServicioGeolocalizacion;
+import codigo.labplc.mx.trackxi.utils.Utils;
 
 public class Califica_taxi extends Activity {
 
@@ -79,8 +79,14 @@ public class Califica_taxi extends Activity {
 							+"&calificacion="+Scalificacion
 							+"&comentario="+Scomentario
 							+"&placa="+placa
-							+"&id_face="+face;
-					NetworkUtils.doHttpConnection(url);	
+							+"&id_face="+face
+							+"&pointinilat="+ServicioGeolocalizacion.latitud_inicial
+							+"&pointinilon="+ServicioGeolocalizacion.longitud_inicial
+							+"&pointfinlat="+ServicioGeolocalizacion.latitud
+							+"&pointfinlon="+ServicioGeolocalizacion.longitud;
+					;
+					
+					Utils.doHttpConnection(url);	
 				}
 
 				Intent svc = new Intent(Califica_taxi.this, ServicioGeolocalizacion.class);

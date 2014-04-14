@@ -13,7 +13,7 @@ import android.view.Window;
 import codigo.labplc.mx.trackxi.log.BeanDatosLog;
 import codigo.labplc.mx.trackxi.paginador.Paginador;
 import codigo.labplc.mx.trackxi.registro.MitaxiRegisterManuallyActivity;
-import codigo.labplc.mx.trackxi.tracking.ServicioGeolocalizacion;
+import codigo.labplc.mx.trackxi.services.ServicioGeolocalizacion;
 import codigo.labplc.mx.trackxi.tracking.map.Mapa_tracking;
 
 public class TrackxiMainActivity extends Activity {

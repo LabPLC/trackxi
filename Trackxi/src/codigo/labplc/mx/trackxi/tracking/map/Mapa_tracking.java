@@ -39,7 +39,7 @@ import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.califica.Califica_taxi;
 import codigo.labplc.mx.trackxi.fonts.fonts;
 import codigo.labplc.mx.trackxi.log.BeanDatosLog;
-import codigo.labplc.mx.trackxi.network.NetworkUtils;
+import codigo.labplc.mx.trackxi.utils.Utils;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -232,13 +232,13 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 					 String consulta2 = "http://datos.labplc.mx/~mikesaurio/taxi.php?act=chofer&type=getGoogleData&lato="
 								+latfin+"&lngo="+lonfin
 								+"&latd="+InfoPoint.get(0).getDblLatitude()+"&lngd="+InfoPoint.get(0).getDblLongitude()+"&filtro=velocidad";
-						String querty2 = NetworkUtils.doHttpConnection(consulta2).replaceAll("\"", "");
+						String querty2 = Utils.doHttpConnection(consulta2).replaceAll("\"", "");
 						String[] Squerty2 = querty2.split(",");
 						tiempo = Squerty2[0];
 						distancia =Squerty2[1];
 						marker_taxi.title("Estas a "+distancia+", "+tiempo+" de tu destino");
 					 }catch(Exception e){
-						 BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+						 BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 					 }
 					
 						map.addMarker(marker_taxi);
@@ -344,7 +344,7 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 						// Fetching the data from web service
 						data = new DirectionsJSONParser().downloadUrl(url[0]);
 					}catch(Exception e){
-						 BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+						 BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 					}
 					return data;		
 				}
@@ -372,7 +372,7 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
             	direccion_destino =destino;
             	destino = destino.replaceAll(" ", "+");
             	String consulta = "http://maps.googleapis.com/maps/api/geocode/json?address="+destino+"&sensor=true";
-				String querty = NetworkUtils.doHttpConnection(consulta);
+				String querty = Utils.doHttpConnection(consulta);
 				InfoPoint = null;
 				InfoPoint = new DirectionsJSONParser().parsePoints(querty);
 				map.clear();
@@ -414,7 +414,7 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 		            	// Starts parsing data
 		            	routes = parser.parse(jObject);    
 		            }catch(Exception e){
-		            	 BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+		            	 BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 		            }
 		            return routes;
 				}

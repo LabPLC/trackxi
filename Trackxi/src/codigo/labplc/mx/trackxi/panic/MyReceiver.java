@@ -1,6 +1,6 @@
 package codigo.labplc.mx.trackxi.panic;
 
-import codigo.labplc.mx.trackxi.tracking.ServicioGeolocalizacion;
+import codigo.labplc.mx.trackxi.services.ServicioGeolocalizacion;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;

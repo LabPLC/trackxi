@@ -36,10 +36,10 @@ import codigo.labplc.mx.trackxi.dialogos.Dialogos;
 import codigo.labplc.mx.trackxi.facebook.FacebookLogin;
 import codigo.labplc.mx.trackxi.fonts.fonts;
 import codigo.labplc.mx.trackxi.log.BeanDatosLog;
-import codigo.labplc.mx.trackxi.network.NetworkUtils;
 import codigo.labplc.mx.trackxi.paginador.Paginador;
 import codigo.labplc.mx.trackxi.registro.MitaxiRegisterManuallyActivity;
-import codigo.labplc.mx.trackxi.tracking.ServicioGeolocalizacion;
+import codigo.labplc.mx.trackxi.services.ServicioGeolocalizacion;
+import codigo.labplc.mx.trackxi.utils.Utils;
 
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -167,7 +167,7 @@ public class DatosAuto extends FragmentActivity{
 	 */
 	private void cargaComentarios() {
 		try{
-			  String Sjson=  NetworkUtils.doHttpConnection("http://datos.labplc.mx/~mikesaurio/taxi.php?act=pasajero&type=getcomentario&placa="+placa);
+			  String Sjson=  Utils.doHttpConnection("http://datos.labplc.mx/~mikesaurio/taxi.php?act=pasajero&type=getcomentario&placa="+placa);
 		      JSONObject json= (JSONObject) new JSONTokener(Sjson).nextValue();
 		      JSONObject json2 = json.getJSONObject("message");
 		      JSONObject jsonResponse = new JSONObject(json2.toString());
@@ -185,7 +185,7 @@ public class DatosAuto extends FragmentActivity{
 							 sumaCalificacion+=calif;
 							 entreComentarios=true;
 						 } catch (JSONException e) {  
-							 BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+							 BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 						 }
 			      }
 			      autoBean.setArrayComentarioBean(arrayComenario);
@@ -197,7 +197,7 @@ public class DatosAuto extends FragmentActivity{
 			    	  autoBean.setCalificacion_usuarios(0);
 			      }
 			}catch(JSONException e){
-				BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+				BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 			}
 	}
 
@@ -206,7 +206,7 @@ public class DatosAuto extends FragmentActivity{
 	 */
 	private void datosVehiculo(boolean esta_en_revista) {
 		try{
-			  String Sjson=  NetworkUtils.doHttpConnection("http://dev.datos.labplc.mx/movilidad/vehiculos/"+placa+".json");
+			  String Sjson=  Utils.doHttpConnection("http://dev.datos.labplc.mx/movilidad/vehiculos/"+placa+".json");
 			      JSONObject json= (JSONObject) new JSONTokener(Sjson).nextValue();
 			      JSONObject json2 = json.getJSONObject("consulta");
 			      JSONObject jsonResponse = new JSONObject(json2.toString());
@@ -233,7 +233,7 @@ public class DatosAuto extends FragmentActivity{
 							 }
 							
 						 } catch (JSONException e) { 
-							 BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+							 BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 						 }
 			      }
 			      if(hasInfraccion){
@@ -277,13 +277,13 @@ public class DatosAuto extends FragmentActivity{
 								}
 								
 							 } catch (JSONException e) { 
-								 BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+								 BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 							 }
 				      }
 				
 			    
 			}catch(JSONException e){
-				BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+				BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 			}
 		
 	}
@@ -297,7 +297,7 @@ public class DatosAuto extends FragmentActivity{
 	 */
 	private boolean estaEnRevista() {
 		try{
-		  String Sjson=  NetworkUtils.doHttpConnection("http://mikesaurio.dev.datos.labplc.mx/movilidad/taxis/"+placa+".json");
+		  String Sjson=  Utils.doHttpConnection("http://mikesaurio.dev.datos.labplc.mx/movilidad/taxis/"+placa+".json");
 		    String marca="",submarca="",anio="";
 		    
 		    JSONObject json= (JSONObject) new JSONTokener(Sjson).nextValue();
@@ -337,7 +337,7 @@ public class DatosAuto extends FragmentActivity{
 		      }
 		      
 		}catch(JSONException e){
-			BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+			BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 			return false;
 		}
 		
@@ -407,7 +407,7 @@ public class DatosAuto extends FragmentActivity{
 				autoBean.setCalificaion_app(PUNTOS_APP);	
 				
 			} catch (Exception e) {
-				BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+				BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 			}
 			return null;
 		}

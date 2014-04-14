@@ -61,7 +61,7 @@ import codigo.labplc.mx.trackxi.buscarplaca.paginador.DatosAuto;
 import codigo.labplc.mx.trackxi.dialogos.Dialogos;
 import codigo.labplc.mx.trackxi.fonts.fonts;
 import codigo.labplc.mx.trackxi.log.BeanDatosLog;
-import codigo.labplc.mx.trackxi.network.NetworkUtils;
+import codigo.labplc.mx.trackxi.utils.Utils;
 
 public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 
@@ -100,7 +100,7 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 		this.context=con;
 		BeanDatosLog.setTagLog(TAG);
 
-		foto = Environment.getExternalStorageDirectory() + "/imagen"+ NetworkUtils.getCode() + ".jpg";
+		foto = Environment.getExternalStorageDirectory() + "/imagen"+ Utils.getCode() + ".jpg";
 
 		LayoutInflater inflater = (LayoutInflater)   getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE); 
 		view = inflater.inflate(R.layout.activity_busca_placa, null);		
@@ -127,7 +127,7 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 				try{
 					camera.takePicture(myShutterCallback,myPictureCallback_RAW, myPictureCallback_JPG);
 				}catch(Exception e){
-					BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+					BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 				}
 			}
 		});
@@ -177,7 +177,7 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 						context.finish();
 						placa.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
 					} catch (Exception e) {
-						BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+						BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 						placa.setText("");
 					}
 				}
@@ -250,7 +250,7 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 						
 					}
 					catch (Exception e) {
-						BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+						BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 					}
 				}};
 
@@ -272,7 +272,7 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 						}
 					}
 					catch (IOException e) {
-						BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+						BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 					}
 					if (camera != null) {
 						try {
@@ -281,7 +281,7 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 							camera.startPreview();
 							previewing = true;
 						} catch (IOException e) {
-							BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+							BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 						}
 					}
 					if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
@@ -304,7 +304,7 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 						try{
 							camera = Camera.open();
 						}catch(Exception e){
-							BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+							BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 						}
 					}
 
@@ -383,7 +383,7 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 							}
 							file.delete();
 						} catch (Exception e) {
-							BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+							BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 						}
 						return null;
 					}

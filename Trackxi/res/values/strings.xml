@@ -53,11 +53,17 @@
     <string name="paraque_correoemer">Correo emergencia: Para hacer el seguimiento de tu camino y estado mientras te sientas amenazado.</string>
     <string name="paraque_foto">Foto: Para personaliar tu perfil.</string>
     <string name="paraque_aceptar">Aceptar</string>
+
     <string name="title_activity_buscar_chofer">BuscarChofer</string>
     <string name="title_activity_datos">Datos</string>
     <string name="title_activity_adeudos">Adeudos</string>
     <string name="title_activity_comentarios">Comentarios</string>
 
+    <!-- salir -->
+        <string name="paraque_cancelar">Cancelar</string>
+            <string name="salir_subtitulo">TRAXI</string>
+              <string name="salir_texto">¿Realmente quieres salir?</string>
+    
     <!-- Textos Datos Auto -->
     <string name="texto_calificacion_25">Este vehículo no está registrado como un taxi, así como presenta varios problemas en otros rubros. por lo que recibe una calificación reprobatoria. En caso de abordar el vehículo, sugerimos lo hagas con todas las precauciones posibles y mantenerte alerta.</string>
     <string name="texto_calificacion_49">Este vehículo no está registrado como un taxi, así como presenta inconsistencias en otros rubros. por lo que recibe una calificación reprobatoria. En caso de abordar el vehículo, se sugiere que lo hagas con todas las precauciones posibles y mantenerte muy alerta</string>
