@@ -36,7 +36,7 @@
     <string name="edittext_wrong_info">Corrige campos de texto incorrectos.</string>
     <string name="edittext_error_string">Escribe cadena válida [a-z A-Z].</string>
     <string name="edittext_error_number">Escribe número válido [0&#8211;9].</string>
-     <string name="edittext_error_nickname">Escribe sólo [a-z A-Z 0&#8211;9 .-_ ].</string>
+    <string name="edittext_error_nickname">Escribe sólo [a-z A-Z 0&#8211;9 .-_ ].</string>
     <string name="edittext_error_email">Escribe sintaxis de correo válida.</string>
     <string name="edittext_error_telephone_repeated">Teléfono de usuario y emergencia no debe ser el mismo</string>
 
@@ -53,21 +53,20 @@
     <string name="paraque_correoemer">Correo emergencia: Para hacer el seguimiento de tu camino y estado mientras te sientas amenazado.</string>
     <string name="paraque_foto">Foto: Para personaliar tu perfil.</string>
     <string name="paraque_aceptar">Aceptar</string>
-
     <string name="title_activity_buscar_chofer">BuscarChofer</string>
     <string name="title_activity_datos">Datos</string>
     <string name="title_activity_adeudos">Adeudos</string>
     <string name="title_activity_comentarios">Comentarios</string>
 
     <!-- salir -->
-        <string name="paraque_cancelar">Cancelar</string>
-            <string name="salir_subtitulo">TRAXI</string>
-              <string name="salir_texto">¿Realmente quieres salir?</string>
-              
-        <!-- GPS -->
-         <string name="gps_subtitulo">GPS apagado</string>
-              <string name="gps_texto">¿Deseas activarlo?</string>  
-    
+    <string name="paraque_cancelar">Cancelar</string>
+    <string name="salir_subtitulo">TRAXI</string>
+    <string name="salir_texto">¿Realmente quieres salir?</string>
+
+    <!-- GPS -->
+    <string name="gps_subtitulo">GPS apagado</string>
+    <string name="gps_texto">¿Deseas activarlo?</string>
+
     <!-- Textos Datos Auto -->
     <string name="texto_calificacion_25">Este vehículo no está registrado como un taxi, así como presenta varios problemas en otros rubros. por lo que recibe una calificación reprobatoria. En caso de abordar el vehículo, sugerimos lo hagas con todas las precauciones posibles y mantenerte alerta.</string>
     <string name="texto_calificacion_49">Este vehículo no está registrado como un taxi, así como presenta inconsistencias en otros rubros. por lo que recibe una calificación reprobatoria. En caso de abordar el vehículo, se sugiere que lo hagas con todas las precauciones posibles y mantenerte muy alerta</string>
@@ -118,13 +117,25 @@
     <string name="titulo_tres_comentarios">COMENTARIOS</string>
     <string name="title_activity_activity_null">Activity_null</string>
     <string name="title_activity_send_foto">SendFoto</string>
-    
-        <!-- Latitude, longitude format -->
+
+    <!-- Latitude, longitude format -->
     <string name="latitude_longitude">%1$.8f, %2$.8f</string>
 
-
     <!-- Facebook -->
-        <string name="facebook_id">622752297805514</string>
+    <string name="facebook_id">622752297805514</string>
     <string name="exception">Exception: %1$s</string>
+
+    <!-- preferences -->
+    <string name="prefKeyResetQuests">resetQuests</string>
+    <string name="prefKeyResetQuests_titulo">Acerca de</string>
+    <string name="prefKeyResetQuests_subtitulo">TRAXI</string>
+    <string name="prefKeyResetQuests_texto">Aplicación realizada dentro del programa CÓDIGO.CDMX\n\n
+        Desarrolladores:\n
+        \tMike Morán @yosoymikesaurio\n
+        \tAntuan Chávez @ntuanChavez\n
+        \tEdgar Zavala @zace3d\n\n
+        Diseñador:\n
+        \tSergio Beltrán @ssbeltran</string>
+    <string name="prefKeyResetQuests_boton">Aceptar</string>
 
 </resources>

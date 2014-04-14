@@ -543,6 +543,11 @@ int string paraque_nombre 0x7f080056
 int string paraque_subtitulo 0x7f080054
 int string paraque_telemer 0x7f080058
 int string paraque_titulo 0x7f080055
+int string prefKeyResetQuests 0x7f08008b
+int string prefKeyResetQuests_boton 0x7f08008f
+int string prefKeyResetQuests_subtitulo 0x7f08008d
+int string prefKeyResetQuests_texto 0x7f08008e
+int string prefKeyResetQuests_titulo 0x7f08008c
 int string pref_send_report 0x7f080077
 int string pref_send_report_summary 0x7f080078
 int string pref_sync_frequency 0x7f080079
