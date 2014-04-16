@@ -71,15 +71,18 @@ public class ScreenSlidePageFragment extends Fragment {
 		if(index==1){
 			BuscaPlaca pag = new BuscaPlaca(actividad);
 			return pag.getView();
-		}else if(index==2){
-			//BuscarChofer cho = new BuscarChofer(actividad);
-			return null;//cho.getView();
-		}else{
-			ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_screen_slide_page, container, false);
-			TextView tvIndex = (TextView) rootView.findViewById(R.id.tvIndex);
-			rootView.setBackgroundColor(this.color);
-			return rootView;
-		}
+		}/*else if(index==2){
+			SitiosDeTaxi sit = new SitiosDeTaxi(actividad);
+			return sit.getView();
+		}else if(index==3){
+			GuiaAyuda gui = new GuiaAyuda(actividad);
+			return gui.getView();
+		}*/else{
+				ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_screen_slide_page, container, false);
+				TextView tvIndex = (TextView) rootView.findViewById(R.id.tvIndex);
+				rootView.setBackgroundColor(this.color);
+				return rootView;
+			}	
 
 	}
 }

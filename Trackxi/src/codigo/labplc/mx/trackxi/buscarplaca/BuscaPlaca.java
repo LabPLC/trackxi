@@ -232,7 +232,7 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 					Bitmap bMapRotate = Bitmap.createBitmap(bitmapPicture, 0, 0,bitmapPicture.getWidth(), bitmapPicture.getHeight(), mat, true);
 					int alto_num = bMapRotate.getHeight()/12;
 					Bitmap esizedbitmap1 = Bitmap.createBitmap(bMapRotate,0,(alto_num*5),bMapRotate.getWidth(),(alto_num*2));
-					Bitmap	resized = toGrayscale(Bitmap.createScaledBitmap(esizedbitmap1,(int)(esizedbitmap1.getWidth()*0.5), (int)(esizedbitmap1.getHeight()*0.5), true));
+					Bitmap	resized = Utils.toGrayscale(Bitmap.createScaledBitmap(esizedbitmap1,(int)(esizedbitmap1.getWidth()*0.5), (int)(esizedbitmap1.getHeight()*0.5), true));
 					try{
 						File file = new File(foto);
 						FileOutputStream fOut = new FileOutputStream(file);
@@ -392,7 +392,7 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 						super.onPreExecute();
 						pDialog = new ProgressDialog(context);
 						pDialog.setCanceledOnTouchOutside(false);
-						pDialog.setMessage("Procesando la foto, espere....");
+						pDialog.setMessage(getResources().getString(R.string.cargando_foto));
 						pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 						pDialog.setCancelable(true);
 						pDialog.show();
@@ -401,7 +401,7 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 					protected void onPostExecute(Void result) {
 						super.onPostExecute(result);
 						if(resultado.equals("falla")){
-							Dialogos.Toast(context, "ÁLa foto a fallado!, intenta de nuevo", Toast.LENGTH_LONG);
+							Dialogos.Toast(context, getResources().getString(R.string.foto_fallida), Toast.LENGTH_LONG);
 						}else{
 							Dialogos.Toast(context, resultado, Toast.LENGTH_LONG);
 							Intent intent= new Intent().setClass(context,DatosAuto.class);
@@ -413,26 +413,6 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 					}
 				}
 
-/*
- * metodo que convierte una imagen a grises
- * 
- * @return bitmap
- */
-	public Bitmap toGrayscale(Bitmap bmpOriginal)
-	{        
-		int width, height;
-		height = bmpOriginal.getHeight();
-		width = bmpOriginal.getWidth();    
-		Bitmap bmpGrayscale = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
-		Canvas c = new Canvas(bmpGrayscale);
-		Paint paint = new Paint();
-		ColorMatrix cm = new ColorMatrix();
-		cm.setSaturation(0);
-		ColorMatrixColorFilter f = new ColorMatrixColorFilter(cm);
-		paint.setColorFilter(f);
-		c.drawBitmap(bmpOriginal, 0, 0, paint);
-		return bmpGrayscale;
-	}
 
 
 

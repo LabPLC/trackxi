@@ -178,13 +178,13 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 			map.getUiSettings().setTiltGesturesEnabled(true); //TILT GESTURES
 			
 			// create marker
-			marker = new MarkerOptions().position(new LatLng(latitud, longitud)).title("Inicio del viaje");
+			marker = new MarkerOptions().position(new LatLng(latitud, longitud)).title(getResources().getString(R.string.mapa_inicio_de_viaje));
 			marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher_chinche_llena));
 			
 			CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(latitud, longitud)).zoom(21).build();
 			map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 			 
-			 marker_taxi = new MarkerOptions().position(new LatLng(latitud, longitud)).title("Mi posici—n");
+			 marker_taxi = new MarkerOptions().position(new LatLng(latitud, longitud)).title(getResources().getString(R.string.mapa_mi_posicion));
 			 marker_taxi.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher_taxi));
 			// adding marker
 			map.addMarker(marker);
@@ -236,7 +236,7 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 						String[] Squerty2 = querty2.split(",");
 						tiempo = Squerty2[0];
 						distancia =Squerty2[1];
-						marker_taxi.title("Estas a "+distancia+", "+tiempo+" de tu destino");
+						marker_taxi.title(getResources().getString(R.string.mapa_estas)+distancia+", "+tiempo+getResources().getString(R.string.mapa_tu_destino));
 					 }catch(Exception e){
 						 BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 					 }
@@ -257,7 +257,7 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 							 new LatLng(dest.latitude,dest.longitude)).width(8).color(Color.BLUE).geodesic(true));
 						  }
 					 
-						marker_taxi_destino = new MarkerOptions().position(new LatLng(InfoPoint.get(0).getDblLatitude(), InfoPoint.get(0).getDblLongitude())).title("Mi destino");
+						marker_taxi_destino = new MarkerOptions().position(new LatLng(InfoPoint.get(0).getDblLatitude(), InfoPoint.get(0).getDblLongitude())).title(getResources().getString(R.string.mapa_mi_destino));
 						marker_taxi_destino.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher_fin_rojo));
 						map.addMarker(marker_taxi_destino);	
 						
@@ -376,7 +376,7 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 				InfoPoint = null;
 				InfoPoint = new DirectionsJSONParser().parsePoints(querty);
 				map.clear();
-				marker_taxi_destino = new MarkerOptions().position(new LatLng(InfoPoint.get(0).getDblLatitude(), InfoPoint.get(0).getDblLongitude())).title("Mi destino");
+				marker_taxi_destino = new MarkerOptions().position(new LatLng(InfoPoint.get(0).getDblLatitude(), InfoPoint.get(0).getDblLongitude())).title(getResources().getString(R.string.mapa_mi_destino));
 				marker_taxi_destino.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher_fin_viaje));
 				map.addMarker(marker_taxi_destino);
 				marker.position(new LatLng(latini,lonini));

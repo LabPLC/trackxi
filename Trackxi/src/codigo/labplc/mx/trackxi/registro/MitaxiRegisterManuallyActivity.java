@@ -569,7 +569,8 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
 			if(resultado.equals("muyLargo")){
-				new Dialogos().Toast(getBaseContext(), "La imagen es muy grande", Toast.LENGTH_LONG);
+				new Dialogos();
+				Dialogos.Toast(getBaseContext(), getResources().getString(R.string.imagen_muy_grande), Toast.LENGTH_LONG);
 			}
 			pDialog.dismiss();
 			this.cancel(true);

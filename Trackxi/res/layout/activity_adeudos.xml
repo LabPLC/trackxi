@@ -11,7 +11,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:gravity="center"
-        android:text="@string/titulo_dos_detalles" />
+        android:text="@string/titulo_dos_detalles"/>
 
     <LinearLayout
         android:id="@+id/linearLayout1"
@@ -42,7 +42,7 @@
             android:id="@+id/adeudos_titulo_tv_amigos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mis amigos en este taxi..." />
+            android:text="@string/adeudos_titulo_tv_amigos" />
 
         <HorizontalScrollView
             android:id="@+id/adeudos_svh"
@@ -67,7 +67,7 @@
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:background="@drawable/selector_btn_generic"
-                    android:text="Acceder a Facebook"
+                    android:text="@string/mitaxiregistermanually_btn_facebook"
                     android:textColor="@drawable/selector_txt_boton_redondo" />
             </LinearLayout>
         </HorizontalScrollView>

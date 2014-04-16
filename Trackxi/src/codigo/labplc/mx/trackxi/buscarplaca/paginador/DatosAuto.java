@@ -92,7 +92,7 @@ public class DatosAuto extends FragmentActivity{
 		
 		View view = inflater.inflate(R.layout.abs_layout,null);   
 		((TextView) view.findViewById(R.id.abs_layout_tv_titulo)).setTypeface(new fonts(DatosAuto.this).getTypeFace(fonts.FLAG_MAMEY));
-		((TextView) view.findViewById(R.id.abs_layout_tv_titulo)).setText("DATOS DEL TAXI");
+		((TextView) view.findViewById(R.id.abs_layout_tv_titulo)).setText(getResources().getString(R.string.datos_del_taxi));
 		ab.setDisplayShowCustomEnabled(true);     
 		ab.setCustomView(view,new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
 		ab.setCustomView(view);
@@ -267,10 +267,10 @@ public class DatosAuto extends FragmentActivity{
 									 int thisYear = calendar.get(Calendar.YEAR);
 									 
 									 if(thisYear-Integer.parseInt(autoBean.getAnio())<=10){
-										 autoBean.setDescripcion_vehiculo(getResources().getString(R.string.carro_nuevo)+" A–o "+autoBean.getAnio());
+										 autoBean.setDescripcion_vehiculo(getResources().getString(R.string.carro_nuevo)+getResources().getString(R.string.Anio)+autoBean.getAnio());
 										 autoBean.setImagen_vehiculo(imagen_verde);
 									 }else{
-										 autoBean.setDescripcion_vehiculo(getResources().getString(R.string.carro_viejo)+" A–o "+autoBean.getAnio());
+										 autoBean.setDescripcion_vehiculo(getResources().getString(R.string.carro_viejo)+getResources().getString(R.string.Anio)+autoBean.getAnio());
 										 autoBean.setImagen_vehiculo(imagen_rojo);
 										 PUNTOS_APP-=PUNTOS_ANIO_VEHICULO;
 									 }
@@ -322,10 +322,10 @@ public class DatosAuto extends FragmentActivity{
 						 int thisYear = calendar.get(Calendar.YEAR);
 						 
 						 if(thisYear-Integer.parseInt(anio)<=10){
-							 autoBean.setDescripcion_vehiculo(getResources().getString(R.string.carro_nuevo)+" A–o "+anio);
+							 autoBean.setDescripcion_vehiculo(getResources().getString(R.string.carro_nuevo)+getResources().getString(R.string.Anio)+anio);
 							 autoBean.setImagen_vehiculo(imagen_verde);
 						 }else{
-							 autoBean.setDescripcion_vehiculo(getResources().getString(R.string.carro_viejo)+" A–o "+anio);
+							 autoBean.setDescripcion_vehiculo(getResources().getString(R.string.carro_viejo)+getResources().getString(R.string.Anio)+anio);
 							 autoBean.setImagen_vehiculo(imagen_rojo);
 							 PUNTOS_APP-=PUNTOS_ANIO_VEHICULO;
 						 }
@@ -415,7 +415,7 @@ public class DatosAuto extends FragmentActivity{
 		protected void onPreExecute() {
 			super.onPreExecute();
 			pDialog = new ProgressDialog(DatosAuto.this);
-			pDialog.setMessage("Cargando la informaci—n, espere....");
+			pDialog.setMessage(getResources().getString(R.string.cargando_info));
 			pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 			pDialog.setCancelable(false);
 			pDialog.show();

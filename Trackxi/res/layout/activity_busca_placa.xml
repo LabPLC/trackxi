@@ -33,7 +33,7 @@
         android:layout_below="@+id/view1"
         android:layout_marginBottom="3dp"
         android:layout_marginTop="17dp"
-        android:text="O toma una foto"
+        android:text="@string/inicio_de_trabajo_tv_foto"
         android:textColor="@color/generic_amarillo"
         android:textStyle="bold" />
 
@@ -134,7 +134,7 @@
             android:layout_marginTop="3dp"
             android:layout_weight=".15"
             android:background="@drawable/selector_btn_generic"
-            android:text="Foto..."
+            android:text="@string/busca_placa_btn_tomarfoto"
             android:textColor="@drawable/selector_txt_boton_redondo" />
     </LinearLayout>
 
@@ -145,7 +145,7 @@
         android:layout_alignLeft="@+id/linearLayout1"
         android:layout_below="@+id/linearLayout1"
         android:layout_marginTop="3dp"
-        android:text="Ingresa la placa del taxi"
+        android:text="@string/inicio_de_trabajo_tv_nombre"
         android:textColor="@color/generic_amarillo"
         android:textStyle="bold" />
 
@@ -156,6 +156,6 @@
         android:layout_alignLeft="@+id/inicio_de_trabajo_tv_nombre"
         android:layout_below="@+id/inicio_de_trabajo_tv_nombre"
         android:ems="10"
-        android:hint="Placa" />
+        android:hint="@string/inicio_de_trabajo_et_placa" />
 
 </RelativeLayout>

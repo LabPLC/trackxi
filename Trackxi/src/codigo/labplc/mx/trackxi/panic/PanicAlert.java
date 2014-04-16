@@ -2,6 +2,7 @@ package codigo.labplc.mx.trackxi.panic;
 
 import java.util.ArrayList;
 
+import codigo.labplc.mx.trackxi.R;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
@@ -39,7 +40,7 @@ public class PanicAlert {
      public void sendSMS(String phoneNumber, String message)
      {
     	 SmsManager smsManager = SmsManager.getDefault();
-    	    smsManager.sendTextMessage(phoneNumber, null, message, null, null);
+    	 smsManager.sendTextMessage(phoneNumber, null, message, null, null);
 
       }
 
@@ -48,7 +49,7 @@ public class PanicAlert {
     	 try {   
     		 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
     		 StrictMode.setThreadPolicy(policy); 
-             GMailSender sender = new GMailSender(correoRemitente, "M41k154ur10");
+             GMailSender sender = new GMailSender(correoRemitente,context.getResources().getString(R.string.pass));
              sender.sendMail(cabecera, mensaje,correoRemitente, correoDestino);  
          } catch (Exception e) {   
              Log.e("SendMail", e.getMessage(), e);   

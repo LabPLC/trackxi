@@ -214,7 +214,7 @@ public class Comentarios extends View {
 			getListOfFriends(facebookLogin.getUserId());
 			
 		} else {
-			Toast.makeText(context, "Algo fall— al conectar con facebook", Toast.LENGTH_SHORT).show();
+			Dialogos.Toast(context,getResources().getString(R.string.falla_facebook), Toast.LENGTH_SHORT);
 		}
 	}
 	
@@ -256,7 +256,7 @@ public class Comentarios extends View {
 					LinearLayout.LayoutParams lp= new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT,1);
 					lp.gravity= Gravity.CENTER;
 					tv.setLayoutParams(lp);
-					tv.setText("Ningun amigo a tomado este taxi");
+					tv.setText(getResources().getString(R.string.face_no_amigos));
 					adeudos_ll_contenedor_fotos.addView(tv);
 				}
 			}
@@ -279,7 +279,7 @@ public class Comentarios extends View {
 			
 			@Override
 			public void onClick(View v) {
-				Dialogos.Toast(context, user.getName()+" le pus— "+calif +" estrellas" , Toast.LENGTH_LONG);
+				Dialogos.Toast(context, user.getName()+getResources().getString(R.string.le_puso)+calif +getResources().getString(R.string.estrellas), Toast.LENGTH_LONG);
 			}
 		});
 		facebookLogin.loadImageProfileToImageView(user.getId(), ivFriendImageProfile);

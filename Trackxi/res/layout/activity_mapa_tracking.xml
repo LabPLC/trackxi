@@ -37,7 +37,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".8"
-                    android:text="Destino del viaje"
+                    android:text="@string/mitaxi_googlemaps_tv_destination"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@android:color/black"
                     android:textStyle="bold" />
@@ -48,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".2"
                     android:background="@drawable/selector_btn_generic"
-                    android:text="Ir"
+                    android:text="@string/mitaxi_googlemaps_btn_destino"
                     android:textColor="@drawable/selector_txt_boton_redondo" />
             </LinearLayout>
 
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:lines="1"
                 android:maxLines="1"
-                android:hint="Colonia Ejemplo calle 37"
+                android:hint="@string/mitaxi_googlemaps_actv_destination"
                 android:textColor="@android:color/black" />
         </LinearLayout>
     </LinearLayout>
@@ -80,7 +80,7 @@
         android:layout_alignLeft="@+id/mitaxi_trip_map"
         android:layout_alignParentBottom="true"
         android:background="@drawable/selector_btn_generic"
-        android:text="Terminó viaje..."
+        android:text="@string/mapa_tracking_terminoviaje"
         android:textColor="@drawable/selector_txt_boton_redondo" />
 
 </RelativeLayout>

@@ -87,7 +87,7 @@ public class Califica_taxi extends Activity {
 							+"&pointfinlon="+ServicioGeolocalizacion.longitud;
 					
 					
-					Log.d("**************", url+"");
+					//Log.d("**************", url+"");
 					Utils.doHttpConnection(url);	
 				}
 
