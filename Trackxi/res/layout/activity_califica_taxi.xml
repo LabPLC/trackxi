@@ -65,6 +65,7 @@
                 android:layout_marginTop="5dp"
                 android:lines="5"
                 android:maxLength="49"
+                 android:textCursorDrawable="@drawable/color_cursor" 
                  />
         </LinearLayout>
 

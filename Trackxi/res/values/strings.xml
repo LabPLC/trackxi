@@ -12,7 +12,7 @@
     <string name="abs_layout_tv_titulo">Buscar</string>
 
     <!-- Registro -->
-    <string name="mitaxiregister_btn_manually">Registrate</string>
+    <string name="mitaxiregister_btn_manually">Regístrate</string>
     <string name="title_activity_busca_placa">BuscaPlaca</string>
 
     <!-- Registro manualmente -->
@@ -80,12 +80,12 @@
     <string name="gps_texto">¿Deseas activarlo?</string>
 
     <!-- Textos Datos Auto -->
-    <string name="texto_calificacion_25">Este vehículo no está registrado como un taxi, así como presenta varios problemas en otros rubros. por lo que recibe una calificación reprobatoria. En caso de abordar el vehículo, sugerimos lo hagas con todas las precauciones posibles y mantenerte alerta.</string>
-    <string name="texto_calificacion_49">Este vehículo no está registrado como un taxi, así como presenta inconsistencias en otros rubros. por lo que recibe una calificación reprobatoria. En caso de abordar el vehículo, se sugiere que lo hagas con todas las precauciones posibles y mantenerte muy alerta</string>
+    <string name="texto_calificacion_25">Este vehículo no está registrado como un taxi, y presenta varios problemas en otros rubros. por lo que recibe una calificación reprobatoria. En caso de abordar el vehículo, sugerimos lo hagas con todas las precauciones posibles y mantenerte alerta.</string>
+    <string name="texto_calificacion_49">Este vehículo no está registrado como un taxi, y presenta inconsistencias en otros rubros. por lo que recibe una calificación reprobatoria. En caso de abordar el vehículo, se sugiere que lo hagas con todas las precauciones posibles y mantenerte muy alerta</string>
     <string name="texto_calificacion_60">Este vehículo está registrado como un taxi, pero presenta varios problemas en otros rubros. Es un taxi de bajo riesgo, pero se sugiere que en caso de abordar el vehículo, lo hagas con todas las precauciones posibles y mantenerte alerta.</string>
     <string name="texto_calificacion_80">Este vehículo está registrado como un taxi, pero presenta algunos problemas en otros rubros. Es un taxi de confiable, pero como tu seguridad es importante se sugiere que te mantengas alerta.</string>
-    <string name="texto_calificacion_90">Este vehículo es un taxi altamente confiable, pero aún tiene áreas de oportunidad para mejorar. Es un taxi de confiable, pero como tu seguridad es importante se sugiere que te mantengas alerta.</string>
-    <string name="texto_calificacion_100">¡Felicidades! Encontraste un taxi altamente confiable y tienes una alta probabilidad de tener un viaje agradable. Este taxi es responsable al dar servicio, así como que está pendiente de sus obligaciones legales, pero como tu seguridad es impor- tante se sugiere que siempre te mantengas alerta.</string>
+    <string name="texto_calificacion_90">Este vehículo es un taxi altamente confiable, pero aún tiene áreas de oportunidad para mejorar. Es un taxi confiable, pero como tu seguridad es importante se sugiere que te mantengas alerta.</string>
+    <string name="texto_calificacion_100">¡Felicidades! Encontraste un taxi altamente confiable y tienes una alta probabilidad de tener un viaje agradable. Este taxi es responsable al dar servicio, así como que está pendiente de sus obligaciones legales, pero como tu seguridad es importante se sugiere que siempre te mantengas alerta.</string>
     <string name="texto_significado_calif"> ¿Qué significa esta calificación?</string>
 
     <!-- buscar placa -->
@@ -95,33 +95,33 @@
     <string name="inicio_de_trabajo_et_placa">Placa</string>
 
     <!-- Tenencia -->
-    <string name="sin_adeudo_tenencia">Este vehiculo no tiene adeudos.</string>
-    <string name="con_adeudo_tenencia">Este vehiculo es irregular.</string>
+    <string name="sin_adeudo_tenencia">Este vehículo no tiene adeudos.</string>
+    <string name="con_adeudo_tenencia">Este vehículo es irregular.</string>
 
     <!-- Revista -->
-    <string name="sin_revista">Este vehiculo no esta en la revista.</string>
-    <string name="con_revista">Este vehiculo es regular.</string>
+    <string name="sin_revista">Este vehículo no esta en la revista.</string>
+    <string name="con_revista">Este vehículo es regular.</string>
 
     <!-- año carro -->
-    <string name="carro_viejo">Este vehiculo ya no es optimo.</string>
-    <string name="carro_nuevo">Este vehiculo aun es optimo.</string>
+    <string name="carro_viejo">Este vehículo ya no es optimo.</string>
+    <string name="carro_nuevo">Este vehículo aun es optimo.</string>
 
     <!-- infraccion -->
-    <string name="tiene_infraccion">Este vehiculo tiene multas</string>
-    <string name="no_tiene_infraccion">Este vehiculo no tiene multas</string>
+    <string name="tiene_infraccion">Este vehículo tiene multas</string>
+    <string name="no_tiene_infraccion">Este vehículo no tiene multas</string>
 
     <!-- verificaciones -->
-    <string name="tiene_verificaciones">Este vehiculo tiene calcomanía: </string>
-    <string name="no_tiene_verificaciones">Este vehiculo no tiene verificaciones</string>
+    <string name="tiene_verificaciones">Este vehículo tiene calcomanía: </string>
+    <string name="no_tiene_verificaciones">Este vehículo no tiene verificaciones</string>
     <string name="title_activity_trackxi_setting">TrackxiSettingActivity</string>
 
     <!-- Preferencias -->
     <string name="pref_send_report">Enviar reportes de fallo</string>
     <string name="pref_send_report_summary">Ayudanos a mejorar la app</string>
     <string name="pref_sync_frequency">Frecuencia de rastreo</string>
-    <string name="pref_sync_frequency_summary">Selecciona la frecuancia</string>
+    <string name="pref_sync_frequency_summary">Selecciona la frecuencia</string>
     <string name="pref_sync_frequency_paranoia">Frecuencia de avisos</string>
-    <string name="pref_sync_frequency_summary_paranoia">Frecuancia de cada cuanto quieres recibir avisos durante el viaje</string>
+    <string name="pref_sync_frequency_summary_paranoia">Frecuencia de cada cuanto quieres recibir avisos durante el viaje</string>
     <string name="pref_user_profile">Configuración</string>
     <string name="pref_update_setting">Rastreo</string>
     <string name="pref_update_setting_ayuda">Ayuda</string>
@@ -145,7 +145,7 @@
     <!-- dialogo calificar taxis -->
     <string name="califica_taxi_tv_titulo">Ayudanos a evaluar el servicio</string>
     <string name="califica_taxi_tv_titulo_calif">¿Qué tal te pareció el servicio del taxi?</string>
-    <string name="califica_taxi_tv_titulo_opinion">Danos tu opinion</string>
+    <string name="califica_taxi_tv_titulo_opinion">Danos tu opinión</string>
     <string name="dialogo_califica_servicio_et_comentario">El servicio me pareció..</string>
     <string name="dialogo_califica_servicio_btnCancelar">Cancelar</string>
     <string name="dialogo_califica_servicio_btnAceptar">Aceptar</string>
@@ -178,13 +178,13 @@
 
     <string name="cargando_info">Cargando la información, espere....</string>
     <string name="cargando_foto">Procesando la foto, espere....</string>
-    <string name="sms_emer">Estoy en peligro!, eres mi contacto de emergencia, revisa tu correo porfavor</string>
+    <string name="sms_emer">Estoy en peligro!, eres mi contacto de emergencia, revisa tu correo por favor</string>
 
     <!-- Mapa -->
     <string name="mapa_inicio_de_viaje">Inicio del viaje</string>
     <string name="mapa_mi_posicion">Mi posición</string>
     <string name="mapa_estas">Estas a</string>
-    <string name="mapa_tu_destino">de tu destino</string>
+    <string name="mapa_tu_destino">\tde tu destino</string>
     <string name="mapa_mi_destino">Mi destino</string>
 
     <!-- notificaciones -->
@@ -194,8 +194,8 @@
 
     <!-- panic -->
     <string name="panic_estoy_en_peligro">Estoy en peligro en taxi placas:</string>
-    <string name="panic_ubicacion">mi ubicacion es https://www.google.com.mx/maps/place/</string>
-    <string name="panic_bateria"> batería:</string>
+    <string name="panic_ubicacion">\tmi ubicación es https://www.google.com.mx/maps/place/</string>
+    <string name="panic_bateria">\tbatería:</string>
     <string name="panic_todo_bien">¿Todo bien?</string>
     <string name="panic_tocame">Tocame si es así</string>
 
