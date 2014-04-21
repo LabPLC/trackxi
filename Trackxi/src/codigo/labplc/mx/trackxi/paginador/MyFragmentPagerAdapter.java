@@ -55,7 +55,9 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 		if(posicion==1){
 			return "Placa";
 		}else if(posicion==2){
-			return "Chofer";
+			return "Sitios";
+		}else if(posicion==2){
+			return "Guia";
 		}
 		return "falla";
 	}

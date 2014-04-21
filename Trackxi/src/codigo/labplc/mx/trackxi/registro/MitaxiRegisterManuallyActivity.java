@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -60,10 +59,10 @@ import codigo.labplc.mx.trackxi.dialogos.Dialogos;
 import codigo.labplc.mx.trackxi.expresionesregulares.RegularExpressions;
 import codigo.labplc.mx.trackxi.fonts.fonts;
 import codigo.labplc.mx.trackxi.log.BeanDatosLog;
-import codigo.labplc.mx.trackxi.network.NetworkUtils;
 import codigo.labplc.mx.trackxi.paginador.Paginador;
 import codigo.labplc.mx.trackxi.registro.bean.UserBean;
 import codigo.labplc.mx.trackxi.registro.validador.EditTextValidator;
+import codigo.labplc.mx.trackxi.utils.Utils;
 
 public class MitaxiRegisterManuallyActivity extends Activity {
 	
@@ -77,7 +76,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 	private int RESULT_LOAD_FOTO = 200;
 	private int RESULT_LOAD_CONTACT = 300;
 	  private String selectedImagePath;
-	  private String filemanagerstring;
+	
 
 	private AlertDialog customDialog = null; // Creamos el dialogo generico
 
@@ -211,7 +210,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		public void onClick(View v) {
 			if (!isAnyEditTextEmpty() && hasFoto) {
 				if (!hasErrorEditText()) {
-					if (NetworkUtils.isNetworkConnectionOk(getBaseContext())) {
+					if (Utils.isNetworkConnectionOk(getBaseContext())) {
 						try {
 							saveUserInfo();
 						} catch (JSONException e) {
@@ -397,33 +396,63 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		if (requestCode == RESULT_LOAD_FOTO) {
 			File file = new File(foto);
 			if (file.exists()) {
-				Bitmap myBitmap = BitmapFactory.decodeFile(file
-						.getAbsolutePath());
+				Bitmap myBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()), 800,480 , false);//Utils.decodeSampledBitmapFromResource(file.getAbsolutePath(),200,200);
 				Matrix mat = new Matrix();
 				mat.postRotate(-90);
-				Bitmap bMapRotate = Bitmap.createBitmap(myBitmap, 0, 0,
-						myBitmap.getWidth(), myBitmap.getHeight(), mat, true);
+				Bitmap bMapRotate = Bitmap.createBitmap(myBitmap, 0, 0,	myBitmap.getWidth(), myBitmap.getHeight(), mat, true);
 				userfoto.setImageBitmap(bMapRotate);
+				BitmapDrawable drawable = (BitmapDrawable) userfoto.getDrawable();
+	  			Bitmap bitmap_prev = drawable.getBitmap();
+	  			 try{
+	  			       
+	  			        FileOutputStream fOut = new FileOutputStream(file);
+	  			        bitmap_prev.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+	  			        fOut.flush();
+	  			        fOut.close();}
+	  			    catch (Exception e) {
+	  			    	BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
+	  			}
 				hasFoto = true;
 			}
 			          
 		}else if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK	&& null != data) {
 			 Uri selectedImageUri = data.getData();
 			 try{
-				 Bitmap	myBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
+				 Bitmap	myBitmap = Bitmap.createScaledBitmap( MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri),800,480 , false);
 				 userfoto.setImageBitmap(myBitmap);
+				 BitmapDrawable drawable = (BitmapDrawable) userfoto.getDrawable();
+	  			Bitmap bitmap_prev = drawable.getBitmap();
+	  			 try{
+	  				selectedImagePath = getPath(selectedImageUri);
+		             if(selectedImagePath!=null){
+		              copyFile(selectedImagePath,fotoNotFull,foto);
+		             }
+		         	File file = new File(selectedImagePath);
+	  			        FileOutputStream fOut = new FileOutputStream(file);
+	  			        bitmap_prev.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+	  			        fOut.flush();
+	  			        fOut.close();}
+	  			    catch (Exception e) {
+	  			    	BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
+	  			}
 				 hasFoto = true; 
-	             filemanagerstring = selectedImageUri.getPath();
-	             selectedImagePath = getPath(selectedImageUri);
-	             if(selectedImagePath!=null){
-	              copyFile(selectedImagePath,fotoNotFull,foto);
-	             }
+
+	             
 				 }catch(Exception e){
-					 BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e)); 
+					 BeanDatosLog.setDescripcion(Utils.getStackTrace(e)); 
 				 }
          }else if (requestCode == RESULT_LOAD_CONTACT) {
  			getContactInfo(data);
  		}
+	}
+
+	@Override
+	public void onBackPressed() {
+		if(origen.equals("menu")){
+				super.onBackPressed();
+		}else{
+			new Dialogos().seguroQuiereSalir(MitaxiRegisterManuallyActivity.this).show();
+		}
 	}
 
 	/**
@@ -513,7 +542,9 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 						savePreferences(user); // guardamos todo en preferencias
 
 					} else if (errorJson != null) {
+				
 						Log.d("error 201", resultado+"");
+						resultado="muyLargo";
 						
 					}
 				} else {
@@ -521,7 +552,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 					
 				}
 			} catch (Exception e) {
-				BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+				BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 			}
 			return null;
 		}
@@ -537,6 +568,10 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
+			if(resultado.equals("muyLargo")){
+				new Dialogos();
+				Dialogos.Toast(getBaseContext(), getResources().getString(R.string.imagen_muy_grande), Toast.LENGTH_LONG);
+			}
 			pDialog.dismiss();
 			this.cancel(true);
 		}
@@ -568,7 +603,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 
 					@Override
 					public void onClick(View view) {
-						foto = Environment.getExternalStorageDirectory() + "/Traxi/perfil/imagen"+NetworkUtils.getCode()+".jpg";
+						foto = Environment.getExternalStorageDirectory() + "/Traxi/perfil/imagen"+Utils.getCode()+".jpg";
 						//foto = Environment.getExternalStorageDirectory() + "/imagen"+ NetworkUtils.getCode() + ".jpg";
 						File dir = new File (Environment.getExternalStorageDirectory() + "/Traxi/perfil"); 
 			    	       if (!dir.exists())
@@ -591,7 +626,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 
 					@Override
 					public void onClick(View view) {
-						foto = Environment.getExternalStorageDirectory() + "/Traxi/perfil/imagen"+NetworkUtils.getCode()+".jpg";
+						foto = Environment.getExternalStorageDirectory() + "/Traxi/perfil/imagen"+Utils.getCode()+".jpg";
 						fotoNotFull = Environment.getExternalStorageDirectory() + "/Traxi/perfil";
 					//	foto = Environment.getExternalStorageDirectory() + "/hancel";
 						//foto = Environment.getExternalStorageDirectory() + "/imagen"+ NetworkUtils.getCode() + ".jpg";
@@ -648,7 +683,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 			  }  
 			  }
 		}catch(Exception e){
-			BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+			BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 		}
 	}
 	

@@ -61,7 +61,7 @@ import codigo.labplc.mx.trackxi.buscarplaca.paginador.DatosAuto;
 import codigo.labplc.mx.trackxi.dialogos.Dialogos;
 import codigo.labplc.mx.trackxi.fonts.fonts;
 import codigo.labplc.mx.trackxi.log.BeanDatosLog;
-import codigo.labplc.mx.trackxi.network.NetworkUtils;
+import codigo.labplc.mx.trackxi.utils.Utils;
 
 public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 
@@ -100,7 +100,7 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 		this.context=con;
 		BeanDatosLog.setTagLog(TAG);
 
-		foto = Environment.getExternalStorageDirectory() + "/imagen"+ NetworkUtils.getCode() + ".jpg";
+		foto = Environment.getExternalStorageDirectory() + "/imagen"+ Utils.getCode() + ".jpg";
 
 		LayoutInflater inflater = (LayoutInflater)   getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE); 
 		view = inflater.inflate(R.layout.activity_busca_placa, null);		
@@ -127,7 +127,7 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 				try{
 					camera.takePicture(myShutterCallback,myPictureCallback_RAW, myPictureCallback_JPG);
 				}catch(Exception e){
-					BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+					BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 				}
 			}
 		});
@@ -177,7 +177,7 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 						context.finish();
 						placa.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
 					} catch (Exception e) {
-						BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+						BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 						placa.setText("");
 					}
 				}
@@ -232,7 +232,7 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 					Bitmap bMapRotate = Bitmap.createBitmap(bitmapPicture, 0, 0,bitmapPicture.getWidth(), bitmapPicture.getHeight(), mat, true);
 					int alto_num = bMapRotate.getHeight()/12;
 					Bitmap esizedbitmap1 = Bitmap.createBitmap(bMapRotate,0,(alto_num*5),bMapRotate.getWidth(),(alto_num*2));
-					Bitmap	resized = toGrayscale(Bitmap.createScaledBitmap(esizedbitmap1,(int)(esizedbitmap1.getWidth()*0.5), (int)(esizedbitmap1.getHeight()*0.5), true));
+					Bitmap	resized = Utils.toGrayscale(Bitmap.createScaledBitmap(esizedbitmap1,(int)(esizedbitmap1.getWidth()*0.5), (int)(esizedbitmap1.getHeight()*0.5), true));
 					try{
 						File file = new File(foto);
 						FileOutputStream fOut = new FileOutputStream(file);
@@ -250,7 +250,7 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 						
 					}
 					catch (Exception e) {
-						BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+						BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 					}
 				}};
 
@@ -272,7 +272,7 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 						}
 					}
 					catch (IOException e) {
-						BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+						BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 					}
 					if (camera != null) {
 						try {
@@ -281,7 +281,7 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 							camera.startPreview();
 							previewing = true;
 						} catch (IOException e) {
-							BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+							BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 						}
 					}
 					if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
@@ -304,7 +304,7 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 						try{
 							camera = Camera.open();
 						}catch(Exception e){
-							BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+							BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 						}
 					}
 
@@ -383,7 +383,7 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 							}
 							file.delete();
 						} catch (Exception e) {
-							BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+							BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 						}
 						return null;
 					}
@@ -392,7 +392,7 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 						super.onPreExecute();
 						pDialog = new ProgressDialog(context);
 						pDialog.setCanceledOnTouchOutside(false);
-						pDialog.setMessage("Procesando la foto, espere....");
+						pDialog.setMessage(getResources().getString(R.string.cargando_foto));
 						pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 						pDialog.setCancelable(true);
 						pDialog.show();
@@ -401,7 +401,7 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 					protected void onPostExecute(Void result) {
 						super.onPostExecute(result);
 						if(resultado.equals("falla")){
-							Dialogos.Toast(context, "ÁLa foto a fallado!, intenta de nuevo", Toast.LENGTH_LONG);
+							Dialogos.Toast(context, getResources().getString(R.string.foto_fallida), Toast.LENGTH_LONG);
 						}else{
 							Dialogos.Toast(context, resultado, Toast.LENGTH_LONG);
 							Intent intent= new Intent().setClass(context,DatosAuto.class);
@@ -413,26 +413,6 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 					}
 				}
 
-/*
- * metodo que convierte una imagen a grises
- * 
- * @return bitmap
- */
-	public Bitmap toGrayscale(Bitmap bmpOriginal)
-	{        
-		int width, height;
-		height = bmpOriginal.getHeight();
-		width = bmpOriginal.getWidth();    
-		Bitmap bmpGrayscale = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
-		Canvas c = new Canvas(bmpGrayscale);
-		Paint paint = new Paint();
-		ColorMatrix cm = new ColorMatrix();
-		cm.setSaturation(0);
-		ColorMatrixColorFilter f = new ColorMatrixColorFilter(cm);
-		paint.setColorFilter(f);
-		c.drawBitmap(bmpOriginal, 0, 0, paint);
-		return bmpGrayscale;
-	}
 
 
 

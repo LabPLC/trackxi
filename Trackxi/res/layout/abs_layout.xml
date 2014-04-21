@@ -19,7 +19,7 @@
         android:layout_weight=".8"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="Buscar"
+        android:text="@string/abs_layout_tv_titulo"
         android:textColor="#ffffff"
         android:textSize="18sp" />
     

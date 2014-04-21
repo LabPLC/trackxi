@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:gravity="center"
     android:background="@drawable/gradient_drawable1"
+    android:gravity="center"
     tools:context=".MitaxiRegisterManuallyActivity" >
 
     <TextView
@@ -57,10 +57,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:paddingLeft="3dp"
         android:layout_below="@+id/mitaxiregistermanually_tv_label"
         android:layout_marginBottom="15dp"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:paddingLeft="3dp" >
 
         <ImageView
             android:id="@+id/mitaxiregistermanually_im_fotousuario"
@@ -96,25 +96,33 @@
                     android:id="@+id/mitaxiregistermanually_et_infousername"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:background="@drawable/rounded_edittext"
                     android:ems="10"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:hint="@string/mitaxiregister_et_name_hint"
                     android:inputType="textPersonName|textCapWords"
+                    android:paddingLeft="3dp"
                     android:paddingTop="@dimen/activity_vertical_margin"
-                    android:textColorHint="@android:color/darker_gray" />
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textCursorDrawable="@drawable/color_cursor" />
 
                 <EditText
                     android:id="@+id/mitaxiregistermanually_et_infouseremail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:background="@drawable/rounded_edittext"
                     android:ems="10"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:hint="@string/mitaxiregister_et_email_hint"
                     android:inputType="textEmailAddress"
+                    android:paddingLeft="3dp"
                     android:paddingTop="@dimen/activity_vertical_margin"
-                    android:textColorHint="@android:color/darker_gray" />
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textCursorDrawable="@drawable/color_cursor" />
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
@@ -150,14 +158,18 @@
                     android:id="@+id/mitaxiregistermanually_et_telemer"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
                     android:layout_weight=".8"
+                    android:background="@drawable/rounded_edittext"
                     android:ems="10"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:hint="@string/mitaxiregister_et_telemergency_hint"
                     android:inputType="phone"
+                    android:paddingLeft="3dp"
                     android:paddingTop="@dimen/activity_vertical_margin"
-                    android:textColorHint="@android:color/darker_gray" />
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textCursorDrawable="@drawable/color_cursor" />
 
                 <Button
                     android:id="@+id/mitaxiregistermanually_btn_contactos"
@@ -167,7 +179,7 @@
                     android:layout_margin="3dp"
                     android:layout_weight=".2"
                     android:background="@drawable/selector_btn_generic"
-                    android:text="..."
+                    android:text="@string/mitaxiregistermanually_btn_contactos"
                     android:textColor="@drawable/selector_txt_boton_redondo" />
             </LinearLayout>
 
@@ -175,13 +187,17 @@
                 android:id="@+id/mitaxiregistermanually_et_correoemer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
+                android:background="@drawable/rounded_edittext"
                 android:ems="10"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:hint="@string/mitaxiregister_et_mailemergency_hint"
                 android:inputType="textEmailAddress"
+                android:paddingLeft="3dp"
                 android:paddingTop="@dimen/activity_vertical_margin"
-                android:textColorHint="@android:color/darker_gray" />
+                android:textColorHint="@android:color/darker_gray"
+                android:textCursorDrawable="@drawable/color_cursor" />
         </LinearLayout>
     </ScrollView>
 

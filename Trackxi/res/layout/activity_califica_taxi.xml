@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Ayudanos a evaluar el servicio"
+            android:text="@string/califica_taxi_tv_titulo"
             android:textColor="@color/generic_amarillo" />
 
         <LinearLayout
@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/generic_amarillo"
-                android:text="¿Qué tal te pareció el servicio del taxi?" />
+                android:text="@string/califica_taxi_tv_titulo_calif" />
 
             <RatingBar
                 android:id="@+id/dialogo_califica_servicio_ratingBarServicio"
@@ -53,18 +53,19 @@
                 android:id="@+id/califica_taxi_tv_titulo_opinion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Danos tu opinion" />
+                android:text="@string/califica_taxi_tv_titulo_opinion" />
 
             <EditText
                 android:id="@+id/dialogo_califica_servicio_et_comentario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="2dp"
-                android:hint="El servicio me pareció..."
+                android:hint="@string/dialogo_califica_servicio_et_comentario"
                 android:background="@drawable/rounded_background"
                 android:layout_marginTop="5dp"
                 android:lines="5"
                 android:maxLength="49"
+                 android:textCursorDrawable="@drawable/color_cursor" 
                  />
         </LinearLayout>
 
@@ -83,7 +84,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/selector_btn_generic"
-                android:text="Cancelar"
+                android:text="@string/dialogo_califica_servicio_btnCancelar"
                 android:textColor="@drawable/selector_txt_boton_redondo" />
 
             <Button
@@ -94,7 +95,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/selector_btn_generic"
-                android:text="Aceptar"
+                android:text="@string/dialogo_califica_servicio_btnAceptar"
                 android:textColor="@drawable/selector_txt_boton_redondo"  />
         </LinearLayout>
     </LinearLayout>

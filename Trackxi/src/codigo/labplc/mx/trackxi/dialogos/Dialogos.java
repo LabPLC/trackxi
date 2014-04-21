@@ -98,7 +98,97 @@ public class Dialogos {
         return (customDialog=builder.create());// return customDialog;//regresamos el diálogo
     }   
 	
+	/**
+	 * Dialogo para asegurar que quieres salir de la app
+	 *
+	 * @param Activity (actividad que llama al diálogo)
+	 * @return Dialog (regresa el dialogo creado)
+	 **/
 	
+	public Dialog seguroQuiereSalir(final Activity activity)
+    {
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+	    View view = activity.getLayoutInflater().inflate(R.layout.dialogo_salir, null);
+	    builder.setView(view);
+	    builder.setCancelable(true);
+        //tipografias
+	    ((Button) view.findViewById(R.id.dialogo_salir_btnAceptar)).setTypeface(new fonts(activity).getTypeFace(fonts.FLAG_AMARILLO));
+	    ((Button) view.findViewById(R.id.dialogo_salir_btnCancelar)).setTypeface(new fonts(activity).getTypeFace(fonts.FLAG_AMARILLO));
+	    
+	    ((TextView) view.findViewById(R.id.dialogo_salir_tv_titulo)).setTypeface(new fonts(activity).getTypeFace(fonts.FLAG_ROJO));
+	    ((TextView) view.findViewById(R.id.dialogo_salir_tv_titulo)).setTextColor(new fonts(activity).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
+	    
+	    
+	    ((TextView) view.findViewById(R.id.dialogo_salir_tv_nombre)).setTypeface(new fonts(activity).getTypeFace(fonts.FLAG_ROJO));
+	    ((TextView) view.findViewById(R.id.dialogo_salir_tv_nombre)).setTextColor(new fonts(activity).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
+	  //escucha del boton aceptar
+        ((Button) view.findViewById(R.id.dialogo_salir_btnAceptar)).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+            	 customDialog.dismiss(); 
+            	activity.finish();
+            }
+        });
+
+        ((Button) view.findViewById(R.id.dialogo_salir_btnCancelar)).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                customDialog.dismiss();    
+            }
+        });
+        return (customDialog=builder.create());// return customDialog;//regresamos el diálogo
+    }   
+	
+	
+	
+	/**
+	 * Dialogo para asegurar que quieres salir de la app
+	 *
+	 * @param Activity (actividad que llama al diálogo)
+	 * @return Dialog (regresa el dialogo creado)
+	 **/
+	
+	public Dialog showDialogGPS(final Activity activity)
+    {
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+	    View view = activity.getLayoutInflater().inflate(R.layout.dialogo_gps, null);
+	    builder.setView(view);
+	    builder.setCancelable(true);
+        //tipografias
+	    ((Button) view.findViewById(R.id.dialogo_salir_btnAceptar)).setTypeface(new fonts(activity).getTypeFace(fonts.FLAG_AMARILLO));
+	    ((Button) view.findViewById(R.id.dialogo_salir_btnCancelar)).setTypeface(new fonts(activity).getTypeFace(fonts.FLAG_AMARILLO));
+	    
+	    ((TextView) view.findViewById(R.id.dialogo_salir_tv_titulo)).setTypeface(new fonts(activity).getTypeFace(fonts.FLAG_ROJO));
+	    ((TextView) view.findViewById(R.id.dialogo_salir_tv_titulo)).setTextColor(new fonts(activity).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
+	    
+	    
+	    ((TextView) view.findViewById(R.id.dialogo_salir_tv_nombre)).setTypeface(new fonts(activity).getTypeFace(fonts.FLAG_ROJO));
+	    ((TextView) view.findViewById(R.id.dialogo_salir_tv_nombre)).setTextColor(new fonts(activity).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
+	  //escucha del boton aceptar
+        ((Button) view.findViewById(R.id.dialogo_salir_btnAceptar)).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+            	 customDialog.dismiss(); 
+            	 Intent settingsIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+ 				settingsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+ 				activity.startActivity(settingsIntent);
+            }
+        });
+
+        ((Button) view.findViewById(R.id.dialogo_salir_btnCancelar)).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                customDialog.dismiss();    
+            }
+        });
+        return (customDialog=builder.create());// return customDialog;//regresamos el diálogo
+    }   
 	
 	/**
 	 * Muestra diálogo en dado caso que el GPS esté apagado
@@ -106,7 +196,7 @@ public class Dialogos {
 	 * @param titulo Título del diálogo
 	 * @param message Mensaje del diálogo
 	 */
-	public void showDialogGPS(final Activity act,String title, String message) {
+	/*public void showDialogGPS(final Activity act,String title, String message) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(act);
         builder.setTitle(title);
         builder.setMessage(message);
@@ -127,7 +217,7 @@ public class Dialogos {
 		dialog.show();
 		dialog.setCancelable(false);
 		dialog.setCanceledOnTouchOutside(false);
-	}
+	}*/
 	
 	
 	

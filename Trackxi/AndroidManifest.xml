@@ -113,7 +113,7 @@
             android:windowSoftInputMode="adjustPan" >
         </activity>
 
-        <service android:name="codigo.labplc.mx.trackxi.tracking.ServicioGeolocalizacion" />
+        <service android:name="codigo.labplc.mx.trackxi.services.ServicioGeolocalizacion" />
 
         <activity
             android:name="codigo.labplc.mx.trackxi.tracking.map.Mapa_tracking"

@@ -1,18 +1,9 @@
 package codigo.labplc.mx.trackxi.tracking.map;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.ActionBar;
@@ -24,7 +15,6 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
@@ -39,7 +29,8 @@ import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.califica.Califica_taxi;
 import codigo.labplc.mx.trackxi.fonts.fonts;
 import codigo.labplc.mx.trackxi.log.BeanDatosLog;
-import codigo.labplc.mx.trackxi.network.NetworkUtils;
+import codigo.labplc.mx.trackxi.services.ServicioGeolocalizacion;
+import codigo.labplc.mx.trackxi.utils.Utils;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -53,6 +44,12 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 public class Mapa_tracking extends Activity implements OnItemClickListener {
 	
+	@Override
+	protected void onStart() {
+		ServicioGeolocalizacion.stopNotification();
+		super.onStart();
+	}
+
 	public final String TAG = this.getClass().getSimpleName();
 	
 	 private GoogleMap map;
@@ -155,7 +152,15 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 
 	
 	
-	 private void setUpMapIfNeeded() {
+	 @Override
+	protected void onStop() {
+		ServicioGeolocalizacion.showNotification();
+		super.onStop();
+	}
+
+
+
+	private void setUpMapIfNeeded() {
 			if (map == null) {
 				map = ((MapFragment) getFragmentManager().findFragmentById(R.id.mitaxi_trip_map)).getMap();
 				if (map != null) {
@@ -178,13 +183,13 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 			map.getUiSettings().setTiltGesturesEnabled(true); //TILT GESTURES
 			
 			// create marker
-			marker = new MarkerOptions().position(new LatLng(latitud, longitud)).title("Inicio del viaje");
+			marker = new MarkerOptions().position(new LatLng(latitud, longitud)).title(getResources().getString(R.string.mapa_inicio_de_viaje));
 			marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher_chinche_llena));
 			
 			CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(latitud, longitud)).zoom(21).build();
 			map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 			 
-			 marker_taxi = new MarkerOptions().position(new LatLng(latitud, longitud)).title("Mi posici—n");
+			 marker_taxi = new MarkerOptions().position(new LatLng(latitud, longitud)).title(getResources().getString(R.string.mapa_mi_posicion));
 			 marker_taxi.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher_taxi));
 			// adding marker
 			map.addMarker(marker);
@@ -232,13 +237,13 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 					 String consulta2 = "http://datos.labplc.mx/~mikesaurio/taxi.php?act=chofer&type=getGoogleData&lato="
 								+latfin+"&lngo="+lonfin
 								+"&latd="+InfoPoint.get(0).getDblLatitude()+"&lngd="+InfoPoint.get(0).getDblLongitude()+"&filtro=velocidad";
-						String querty2 = NetworkUtils.doHttpConnection(consulta2).replaceAll("\"", "");
+						String querty2 = Utils.doHttpConnection(consulta2).replaceAll("\"", "");
 						String[] Squerty2 = querty2.split(",");
 						tiempo = Squerty2[0];
 						distancia =Squerty2[1];
-						marker_taxi.title("Estas a "+distancia+", "+tiempo+" de tu destino");
+						marker_taxi.title(getResources().getString(R.string.mapa_estas)+distancia+", "+tiempo+getResources().getString(R.string.mapa_tu_destino));
 					 }catch(Exception e){
-						 BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+						 BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 					 }
 					
 						map.addMarker(marker_taxi);
@@ -257,7 +262,7 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 							 new LatLng(dest.latitude,dest.longitude)).width(8).color(Color.BLUE).geodesic(true));
 						  }
 					 
-						marker_taxi_destino = new MarkerOptions().position(new LatLng(InfoPoint.get(0).getDblLatitude(), InfoPoint.get(0).getDblLongitude())).title("Mi destino");
+						marker_taxi_destino = new MarkerOptions().position(new LatLng(InfoPoint.get(0).getDblLatitude(), InfoPoint.get(0).getDblLongitude())).title(getResources().getString(R.string.mapa_mi_destino));
 						marker_taxi_destino.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher_fin_rojo));
 						map.addMarker(marker_taxi_destino);	
 						
@@ -344,7 +349,7 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 						// Fetching the data from web service
 						data = new DirectionsJSONParser().downloadUrl(url[0]);
 					}catch(Exception e){
-						 BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+						 BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 					}
 					return data;		
 				}
@@ -372,11 +377,11 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
             	direccion_destino =destino;
             	destino = destino.replaceAll(" ", "+");
             	String consulta = "http://maps.googleapis.com/maps/api/geocode/json?address="+destino+"&sensor=true";
-				String querty = NetworkUtils.doHttpConnection(consulta);
+				String querty = Utils.doHttpConnection(consulta);
 				InfoPoint = null;
 				InfoPoint = new DirectionsJSONParser().parsePoints(querty);
 				map.clear();
-				marker_taxi_destino = new MarkerOptions().position(new LatLng(InfoPoint.get(0).getDblLatitude(), InfoPoint.get(0).getDblLongitude())).title("Mi destino");
+				marker_taxi_destino = new MarkerOptions().position(new LatLng(InfoPoint.get(0).getDblLatitude(), InfoPoint.get(0).getDblLongitude())).title(getResources().getString(R.string.mapa_mi_destino));
 				marker_taxi_destino.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher_fin_viaje));
 				map.addMarker(marker_taxi_destino);
 				marker.position(new LatLng(latini,lonini));
@@ -414,7 +419,7 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 		            	// Starts parsing data
 		            	routes = parser.parse(jObject);    
 		            }catch(Exception e){
-		            	 BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+		            	 BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 		            }
 		            return routes;
 				}
@@ -453,7 +458,11 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 					}
 					
 					// Drawing polyline in the Google Map for the i-th route
-					map.addPolyline(lineOptions);							
+					try{
+					map.addPolyline(lineOptions);		
+					}catch(Exception e){
+						BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
+					}
 				}			
 		    }   
 		    

@@ -71,8 +71,8 @@ public class Paginador extends FragmentActivity {
 		// Create an adapter with the fragments we show on the ViewPager
 		MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
 		adapter.addFragment(ScreenSlidePageFragment.newInstance(getResources().getColor(R.color.android_blue), 1,Paginador.this));
-		/*adapter.addFragment(ScreenSlidePageFragment.newInstance(getResources()
-				.getColor(R.color.android_red), 2,Paginador.this));*/
+		//adapter.addFragment(ScreenSlidePageFragmentMap.newInstance(getResources().getColor(R.color.android_red), 2,Paginador.this));
+	//	adapter.addFragment(ScreenSlidePageFragment.newInstance(getResources().getColor(R.color.android_blue), 3,Paginador.this));
 		this.pager.setAdapter(adapter);
 
 		// Bind the title indicator to the adapter

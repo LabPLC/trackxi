@@ -36,10 +36,10 @@ import codigo.labplc.mx.trackxi.dialogos.Dialogos;
 import codigo.labplc.mx.trackxi.facebook.FacebookLogin;
 import codigo.labplc.mx.trackxi.fonts.fonts;
 import codigo.labplc.mx.trackxi.log.BeanDatosLog;
-import codigo.labplc.mx.trackxi.network.NetworkUtils;
 import codigo.labplc.mx.trackxi.paginador.Paginador;
 import codigo.labplc.mx.trackxi.registro.MitaxiRegisterManuallyActivity;
-import codigo.labplc.mx.trackxi.tracking.ServicioGeolocalizacion;
+import codigo.labplc.mx.trackxi.services.ServicioGeolocalizacion;
+import codigo.labplc.mx.trackxi.utils.Utils;
 
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -47,9 +47,9 @@ public class DatosAuto extends FragmentActivity{
 	
 	public final String TAG = this.getClass().getSimpleName();
 
-	private int PUNTOS=0;
+	//private int PUNTOS=0;
 	private int PUNTOS_APP = 80;
-	private int PUNTOS_USUARIO =0;
+	private int PUNTOS_USUARIO = 0;
 	private int PUNTOS_REVISTA = 50;
 	private int PUNTOS_INFRACCIONES = 15;
 	private int PUNTOS_TENENCIA = 5;
@@ -92,7 +92,7 @@ public class DatosAuto extends FragmentActivity{
 		
 		View view = inflater.inflate(R.layout.abs_layout,null);   
 		((TextView) view.findViewById(R.id.abs_layout_tv_titulo)).setTypeface(new fonts(DatosAuto.this).getTypeFace(fonts.FLAG_MAMEY));
-		((TextView) view.findViewById(R.id.abs_layout_tv_titulo)).setText("DATOS DEL TAXI");
+		((TextView) view.findViewById(R.id.abs_layout_tv_titulo)).setText(getResources().getString(R.string.datos_del_taxi));
 		ab.setDisplayShowCustomEnabled(true);     
 		ab.setCustomView(view,new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
 		ab.setCustomView(view);
@@ -121,7 +121,7 @@ public class DatosAuto extends FragmentActivity{
 			public void onClick(View v) {
 				
 				if (!mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-					new Dialogos().showDialogGPS(DatosAuto.this,"GPS apagado", "ÀDeseas activarlo?");		
+					new Dialogos().showDialogGPS(DatosAuto.this).show();		
 				}else{
 					ServicioGeolocalizacion.taxiActivity = DatosAuto.this;
 					startService(new Intent(DatosAuto.this,ServicioGeolocalizacion.class));
@@ -167,7 +167,7 @@ public class DatosAuto extends FragmentActivity{
 	 */
 	private void cargaComentarios() {
 		try{
-			  String Sjson=  NetworkUtils.doHttpConnection("http://datos.labplc.mx/~mikesaurio/taxi.php?act=pasajero&type=getcomentario&placa="+placa);
+			  String Sjson=  Utils.doHttpConnection("http://datos.labplc.mx/~mikesaurio/taxi.php?act=pasajero&type=getcomentario&placa="+placa);
 		      JSONObject json= (JSONObject) new JSONTokener(Sjson).nextValue();
 		      JSONObject json2 = json.getJSONObject("message");
 		      JSONObject jsonResponse = new JSONObject(json2.toString());
@@ -185,7 +185,7 @@ public class DatosAuto extends FragmentActivity{
 							 sumaCalificacion+=calif;
 							 entreComentarios=true;
 						 } catch (JSONException e) {  
-							 BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+							 BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 						 }
 			      }
 			      autoBean.setArrayComentarioBean(arrayComenario);
@@ -197,7 +197,7 @@ public class DatosAuto extends FragmentActivity{
 			    	  autoBean.setCalificacion_usuarios(0);
 			      }
 			}catch(JSONException e){
-				BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+				BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 			}
 	}
 
@@ -206,7 +206,7 @@ public class DatosAuto extends FragmentActivity{
 	 */
 	private void datosVehiculo(boolean esta_en_revista) {
 		try{
-			  String Sjson=  NetworkUtils.doHttpConnection("http://dev.datos.labplc.mx/movilidad/vehiculos/"+placa+".json");
+			  String Sjson=  Utils.doHttpConnection("http://dev.datos.labplc.mx/movilidad/vehiculos/"+placa+".json");
 			      JSONObject json= (JSONObject) new JSONTokener(Sjson).nextValue();
 			      JSONObject json2 = json.getJSONObject("consulta");
 			      JSONObject jsonResponse = new JSONObject(json2.toString());
@@ -233,7 +233,7 @@ public class DatosAuto extends FragmentActivity{
 							 }
 							
 						 } catch (JSONException e) { 
-							 BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+							 BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 						 }
 			      }
 			      if(hasInfraccion){
@@ -267,23 +267,23 @@ public class DatosAuto extends FragmentActivity{
 									 int thisYear = calendar.get(Calendar.YEAR);
 									 
 									 if(thisYear-Integer.parseInt(autoBean.getAnio())<=10){
-										 autoBean.setDescripcion_vehiculo(getResources().getString(R.string.carro_nuevo)+" A–o "+autoBean.getAnio());
+										 autoBean.setDescripcion_vehiculo(getResources().getString(R.string.carro_nuevo)+getResources().getString(R.string.Anio)+autoBean.getAnio());
 										 autoBean.setImagen_vehiculo(imagen_verde);
 									 }else{
-										 autoBean.setDescripcion_vehiculo(getResources().getString(R.string.carro_viejo)+" A–o "+autoBean.getAnio());
+										 autoBean.setDescripcion_vehiculo(getResources().getString(R.string.carro_viejo)+getResources().getString(R.string.Anio)+autoBean.getAnio());
 										 autoBean.setImagen_vehiculo(imagen_rojo);
 										 PUNTOS_APP-=PUNTOS_ANIO_VEHICULO;
 									 }
 								}
 								
 							 } catch (JSONException e) { 
-								 BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+								 BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 							 }
 				      }
 				
 			    
 			}catch(JSONException e){
-				BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+				BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 			}
 		
 	}
@@ -297,7 +297,7 @@ public class DatosAuto extends FragmentActivity{
 	 */
 	private boolean estaEnRevista() {
 		try{
-		  String Sjson=  NetworkUtils.doHttpConnection("http://mikesaurio.dev.datos.labplc.mx/movilidad/taxis/"+placa+".json");
+		  String Sjson=  Utils.doHttpConnection("http://mikesaurio.dev.datos.labplc.mx/movilidad/taxis/"+placa+".json");
 		    String marca="",submarca="",anio="";
 		    
 		    JSONObject json= (JSONObject) new JSONTokener(Sjson).nextValue();
@@ -322,10 +322,10 @@ public class DatosAuto extends FragmentActivity{
 						 int thisYear = calendar.get(Calendar.YEAR);
 						 
 						 if(thisYear-Integer.parseInt(anio)<=10){
-							 autoBean.setDescripcion_vehiculo(getResources().getString(R.string.carro_nuevo)+" A–o "+anio);
+							 autoBean.setDescripcion_vehiculo(getResources().getString(R.string.carro_nuevo)+getResources().getString(R.string.Anio)+anio);
 							 autoBean.setImagen_vehiculo(imagen_verde);
 						 }else{
-							 autoBean.setDescripcion_vehiculo(getResources().getString(R.string.carro_viejo)+" A–o "+anio);
+							 autoBean.setDescripcion_vehiculo(getResources().getString(R.string.carro_viejo)+getResources().getString(R.string.Anio)+anio);
 							 autoBean.setImagen_vehiculo(imagen_rojo);
 							 PUNTOS_APP-=PUNTOS_ANIO_VEHICULO;
 						 }
@@ -337,7 +337,7 @@ public class DatosAuto extends FragmentActivity{
 		      }
 		      
 		}catch(JSONException e){
-			BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+			BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 			return false;
 		}
 		
@@ -389,7 +389,7 @@ public class DatosAuto extends FragmentActivity{
 				datosVehiculo(hasRevista);
 				cargaComentarios();
 				
-				PUNTOS = (PUNTOS_APP+PUNTOS_USUARIO);
+				 int PUNTOS = (PUNTOS_APP+PUNTOS_USUARIO);
 				if(PUNTOS<=25){
 					autoBean.setDescripcion_calificacion_app(getResources().getString(R.string.texto_calificacion_25));
 				}else if(PUNTOS<=49 && PUNTOS>25){
@@ -407,7 +407,7 @@ public class DatosAuto extends FragmentActivity{
 				autoBean.setCalificaion_app(PUNTOS_APP);	
 				
 			} catch (Exception e) {
-				BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
+				BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 			}
 			return null;
 		}
@@ -415,7 +415,7 @@ public class DatosAuto extends FragmentActivity{
 		protected void onPreExecute() {
 			super.onPreExecute();
 			pDialog = new ProgressDialog(DatosAuto.this);
-			pDialog.setMessage("Cargando la informaci—n, espere....");
+			pDialog.setMessage(getResources().getString(R.string.cargando_info));
 			pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 			pDialog.setCancelable(false);
 			pDialog.show();

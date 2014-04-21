@@ -28,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="¿Qué quieres abrir?" />
+                android:text="@string/dialogo_tipo_de_imagen_tv_texto" />
         </LinearLayout>
 
         <LinearLayout
@@ -46,7 +46,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/selector_btn_generic"
-                android:text="Camara"
+                android:text="@string/dialogo_tipo_de_imagen_btnCancelar"
                 android:textColor="@drawable/selector_txt_boton_redondo" />
 
             <Button
@@ -57,7 +57,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/selector_btn_generic"
-                android:text="Galería"
+                android:text="@string/dialogo_tipo_de_imagen_btnAceptar"
                 android:textColor="@drawable/selector_txt_boton_redondo" />
         </LinearLayout>
     </LinearLayout>

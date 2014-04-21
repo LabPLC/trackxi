@@ -9,7 +9,7 @@
         android:id="@+id/adeudos_row_titulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Titulo"
+        android:text="@string/adeudos_row_titulo"
         android:textColor="@color/generic_amarillo" />
 
     <View
@@ -29,7 +29,7 @@
             android:layout_marginTop="3dp"
             android:layout_height="match_parent"
             android:layout_weight=".8"
-            android:text="Descripcion"
+            android:text="@string/adeudos_row_descripcion"
             android:padding="3dp"
             android:textColor="@color/white" />
 
