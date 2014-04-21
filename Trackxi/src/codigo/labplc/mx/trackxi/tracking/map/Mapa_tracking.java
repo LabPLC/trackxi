@@ -1,18 +1,9 @@
 package codigo.labplc.mx.trackxi.tracking.map;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.ActionBar;
@@ -24,7 +15,6 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
@@ -39,6 +29,7 @@ import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.califica.Califica_taxi;
 import codigo.labplc.mx.trackxi.fonts.fonts;
 import codigo.labplc.mx.trackxi.log.BeanDatosLog;
+import codigo.labplc.mx.trackxi.services.ServicioGeolocalizacion;
 import codigo.labplc.mx.trackxi.utils.Utils;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -53,6 +44,12 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 public class Mapa_tracking extends Activity implements OnItemClickListener {
 	
+	@Override
+	protected void onStart() {
+		ServicioGeolocalizacion.stopNotification();
+		super.onStart();
+	}
+
 	public final String TAG = this.getClass().getSimpleName();
 	
 	 private GoogleMap map;
@@ -155,7 +152,15 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 
 	
 	
-	 private void setUpMapIfNeeded() {
+	 @Override
+	protected void onStop() {
+		ServicioGeolocalizacion.showNotification();
+		super.onStop();
+	}
+
+
+
+	private void setUpMapIfNeeded() {
 			if (map == null) {
 				map = ((MapFragment) getFragmentManager().findFragmentById(R.id.mitaxi_trip_map)).getMap();
 				if (map != null) {
@@ -453,7 +458,11 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 					}
 					
 					// Drawing polyline in the Google Map for the i-th route
-					map.addPolyline(lineOptions);							
+					try{
+					map.addPolyline(lineOptions);		
+					}catch(Exception e){
+						BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
+					}
 				}			
 		    }   
 		    

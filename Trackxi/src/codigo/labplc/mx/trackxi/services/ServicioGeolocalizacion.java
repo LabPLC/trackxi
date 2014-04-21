@@ -82,6 +82,7 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
     private boolean algoPaso=true;
     
     
+    
 
 	@Override
 	public void onCreate() {
@@ -308,32 +309,32 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 		}
 	}
 
-	public void showNotification() {
+	public static  void showNotification() {
 		// notification is selected
-		Vibrator v = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
+		Vibrator v = (Vibrator) taxiActivity.getSystemService(Context.VIBRATOR_SERVICE);
     	v.vibrate(3000);
 
-		Intent intent_mapa = new Intent(this, Mapa_tracking.class);
-		intent_mapa.putExtra("latitud_inicial", latitud_inicial);
-		intent_mapa.putExtra("longitud_inicial", longitud_inicial);
-		PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent_mapa,PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_CANCEL_CURRENT);
+		Intent intent_mapa = new Intent(taxiActivity, Mapa_tracking.class);
+		intent_mapa.putExtra("latitud_inicial", ServicioGeolocalizacion.latitud_inicial);
+		intent_mapa.putExtra("longitud_inicial", ServicioGeolocalizacion.longitud_inicial);
+		PendingIntent pIntent = PendingIntent.getActivity(taxiActivity, 0, intent_mapa,PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_CANCEL_CURRENT);
 
-		Intent intent_califica = new Intent(this, Califica_taxi.class);
-		PendingIntent pIntent_cal = PendingIntent.getActivity(this, 0,intent_califica, PendingIntent.FLAG_UPDATE_CURRENT);
+		Intent intent_califica = new Intent(taxiActivity, Califica_taxi.class);
+		PendingIntent pIntent_cal = PendingIntent.getActivity(taxiActivity, 0,intent_califica, PendingIntent.FLAG_UPDATE_CURRENT);
 
-		Notification noti = new Notification.Builder(this)
-				.setContentTitle("Traxi").setContentText(getResources().getString(R.string.notificacion_que_quieres_hacer))
+		Notification noti = new Notification.Builder(taxiActivity)
+				.setContentTitle("Traxi").setContentText(taxiActivity.getResources().getString(R.string.notificacion_que_quieres_hacer))
 				.setSmallIcon(R.drawable.ic_launcher)
 		
 				// .setContentIntent(pIntent)
-				.addAction(R.drawable.ic_launcher_chinche, getResources().getString(R.string.notificacion_viaje), pIntent)
-				.addAction(R.drawable.ic_launcher_fin_viaje, getResources().getString(R.string.notificacion_finalizar),
+				.addAction(R.drawable.ic_launcher_chinche, taxiActivity.getResources().getString(R.string.notificacion_viaje), pIntent)
+				.addAction(R.drawable.ic_launcher_fin_viaje, taxiActivity.getResources().getString(R.string.notificacion_finalizar),
 						pIntent_cal).build();
 		
 		
 		noti.flags += Notification.FLAG_ONGOING_EVENT;
 		
-		NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+		NotificationManager notificationManager = (NotificationManager) taxiActivity.getSystemService(NOTIFICATION_SERVICE);
 		// noti.flags |= Notification.FLAG_AUTO_CANCEL;
 		
 	
@@ -478,4 +479,10 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
    	{
        return	ServicioGeolocalizacion.panicoActivado;
    	}
+    
+    //detiene la notificacion cuando se abre la actividad mapa
+    public static void  stopNotification(){
+    	CancelNotification(taxiActivity, 0);
+    }
+    
 }
