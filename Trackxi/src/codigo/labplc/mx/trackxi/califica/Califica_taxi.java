@@ -116,6 +116,10 @@ public class Califica_taxi extends Activity {
 		
 		
 	}
-
+	@Override
+	protected void onStart() {
+		ServicioGeolocalizacion.stopNotification();
+		super.onStart();
+	}
 
 }
