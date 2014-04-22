@@ -33,6 +33,12 @@ public class Califica_taxi extends Activity {
 	private String Scalificacion = "0";
 	private String Scomentario;
 	@Override
+	protected void onStart() {
+		ServicioGeolocalizacion.stopNotification();
+		super.onStart();
+	}
+	
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	
@@ -116,10 +122,10 @@ public class Califica_taxi extends Activity {
 		
 		
 	}
+
 	@Override
-	protected void onStart() {
-		ServicioGeolocalizacion.stopNotification();
-		super.onStart();
+	public void onBackPressed() {
 	}
+	
 
 }
