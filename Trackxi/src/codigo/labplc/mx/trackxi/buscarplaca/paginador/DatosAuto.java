@@ -19,6 +19,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -450,6 +452,24 @@ public class DatosAuto extends FragmentActivity{
 		    PopupMenu popup = new PopupMenu(DatosAuto.this, v);
 		    MenuInflater inflater = popup.getMenuInflater();
 		    inflater.inflate(R.menu.popup, popup.getMenu());
+		    
+		    
+		    int positionOfMenuItem = 0; // or whatever...
+		    MenuItem item = popup.getMenu().getItem(positionOfMenuItem);
+		    SpannableString s = new SpannableString(getResources().getString(R.string.action_settings));
+		    s.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.rojo_logo)), 0, s.length(), 0);
+		    item.setTitle(s);
+		    positionOfMenuItem = 1; // or whatever...
+		    item = popup.getMenu().getItem(positionOfMenuItem);
+		    SpannableString s2 = new SpannableString(getResources().getString(R.string.action_cuenta));
+		    s2.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.rojo_logo)), 0, s2.length(), 0);
+		    item.setTitle(s2);
+		    positionOfMenuItem = 2; // or whatever...
+		    item = popup.getMenu().getItem(positionOfMenuItem);
+		    SpannableString s3 = new SpannableString(getResources().getString(R.string.action_help));
+		    s3.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.rojo_logo)), 0, s3.length(), 0);
+		    item.setTitle(s3);
+		    
 		    popup.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 				
 				@Override

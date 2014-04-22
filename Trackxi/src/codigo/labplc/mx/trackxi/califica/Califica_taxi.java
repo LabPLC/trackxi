@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +17,11 @@ import codigo.labplc.mx.trackxi.log.BeanDatosLog;
 import codigo.labplc.mx.trackxi.services.ServicioGeolocalizacion;
 import codigo.labplc.mx.trackxi.utils.Utils;
 
+/**
+ * Actividad que muestra un dialogo el cual sirve para calificar el servicio
+ * @author mikesaurio
+ *
+ */
 public class Califica_taxi extends Activity {
 
 	public final String TAG = this.getClass().getSimpleName();
@@ -28,6 +32,12 @@ public class Califica_taxi extends Activity {
 	RatingBar rank;
 	private String Scalificacion = "0";
 	private String Scomentario;
+	@Override
+	protected void onStart() {
+		ServicioGeolocalizacion.stopNotification();
+		super.onStart();
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -113,5 +123,9 @@ public class Califica_taxi extends Activity {
 		
 	}
 
+	@Override
+	public void onBackPressed() {
+	}
+	
 
 }

@@ -15,8 +15,11 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -324,6 +327,14 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 			    PopupMenu popup = new PopupMenu(Mapa_tracking.this, v);
 			    MenuInflater inflater = popup.getMenuInflater();
 			    inflater.inflate(R.menu.popup_ayuda, popup.getMenu());
+			    int positionOfMenuItem = 0; // or whatever...
+			    MenuItem item = popup.getMenu().getItem(positionOfMenuItem);
+			    SpannableString s = new SpannableString(getResources().getString(R.string.action_help));
+			    s.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.rojo_logo)), 0, s.length(), 0);
+			    item.setTitle(s);
+
+			    
+			    
 			    popup.show();
 			}
 		
@@ -373,32 +384,36 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 		     * llena la ruta destino cuando ya se a puesto alguno
 		     */
 		    public void llenarMapaConDestino(){
-		    	String destino = actvDestination.getText().toString();
-            	direccion_destino =destino;
-            	destino = destino.replaceAll(" ", "+");
-            	String consulta = "http://maps.googleapis.com/maps/api/geocode/json?address="+destino+"&sensor=true";
-				String querty = Utils.doHttpConnection(consulta);
-				InfoPoint = null;
-				InfoPoint = new DirectionsJSONParser().parsePoints(querty);
-				map.clear();
-				marker_taxi_destino = new MarkerOptions().position(new LatLng(InfoPoint.get(0).getDblLatitude(), InfoPoint.get(0).getDblLongitude())).title(getResources().getString(R.string.mapa_mi_destino));
-				marker_taxi_destino.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher_fin_viaje));
-				map.addMarker(marker_taxi_destino);
-				marker.position(new LatLng(latini,lonini));
-				map.addMarker(marker);
-				marker_taxi.position(new LatLng(latfin,lonfin));
-				map.addMarker(marker_taxi);
-				//.zoom(21);
-				CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(latfin, lonfin)).zoom(map.getCameraPosition().zoom).build();
-				map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-				 for (int i = 0; i < pointsLat.size() - 1; i++) {
-					 LatLng src = new LatLng(Double.parseDouble(pointsLat.get(i)),Double.parseDouble(pointsLon.get(i)));
-					 LatLng dest = new LatLng(Double.parseDouble(pointsLat.get(i+1)),Double.parseDouble(pointsLon.get(i+1)));
-					 Polyline line = map.addPolyline(new PolylineOptions() //mMap is the Map Object
-					 .add(new LatLng(src.latitude, src.longitude),
-					 new LatLng(dest.latitude,dest.longitude))
-					 .width(8).color(Color.BLUE).geodesic(true));
-				  }
+		    	try{
+			    	String destino = actvDestination.getText().toString();
+	            	direccion_destino =destino;
+	            	destino = destino.replaceAll(" ", "+");
+	            	String consulta = "http://maps.googleapis.com/maps/api/geocode/json?address="+destino+"&sensor=true";
+					String querty = Utils.doHttpConnection(consulta);
+					InfoPoint = null;
+					InfoPoint = new DirectionsJSONParser().parsePoints(querty);
+					map.clear();
+					marker_taxi_destino = new MarkerOptions().position(new LatLng(InfoPoint.get(0).getDblLatitude(), InfoPoint.get(0).getDblLongitude())).title(getResources().getString(R.string.mapa_mi_destino));
+					marker_taxi_destino.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher_fin_viaje));
+					map.addMarker(marker_taxi_destino);
+					marker.position(new LatLng(latini,lonini));
+					map.addMarker(marker);
+					marker_taxi.position(new LatLng(latfin,lonfin));
+					map.addMarker(marker_taxi);
+					//.zoom(21);
+					CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(latfin, lonfin)).zoom(map.getCameraPosition().zoom).build();
+					map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+					 for (int i = 0; i < pointsLat.size() - 1; i++) {
+						 LatLng src = new LatLng(Double.parseDouble(pointsLat.get(i)),Double.parseDouble(pointsLon.get(i)));
+						 LatLng dest = new LatLng(Double.parseDouble(pointsLat.get(i+1)),Double.parseDouble(pointsLon.get(i+1)));
+						 Polyline line = map.addPolyline(new PolylineOptions() //mMap is the Map Object
+						 .add(new LatLng(src.latitude, src.longitude),
+						 new LatLng(dest.latitude,dest.longitude))
+						 .width(8).color(Color.BLUE).geodesic(true));
+					  }
+		    	}catch(Exception e){
+		    		BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
+		    	}
 		    }
 		
 
