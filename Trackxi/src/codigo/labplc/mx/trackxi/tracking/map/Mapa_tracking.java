@@ -15,8 +15,11 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -324,6 +327,14 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 			    PopupMenu popup = new PopupMenu(Mapa_tracking.this, v);
 			    MenuInflater inflater = popup.getMenuInflater();
 			    inflater.inflate(R.menu.popup_ayuda, popup.getMenu());
+			    int positionOfMenuItem = 0; // or whatever...
+			    MenuItem item = popup.getMenu().getItem(positionOfMenuItem);
+			    SpannableString s = new SpannableString(getResources().getString(R.string.action_help));
+			    s.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.rojo_logo)), 0, s.length(), 0);
+			    item.setTitle(s);
+
+			    
+			    
 			    popup.show();
 			}
 		

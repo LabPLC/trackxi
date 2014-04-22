@@ -148,7 +148,7 @@
     <string name="califica_taxi_tv_titulo_opinion">Danos tu opinión</string>
     <string name="dialogo_califica_servicio_et_comentario">El servicio me pareció..</string>
     <string name="dialogo_califica_servicio_btnCancelar">Finalizar</string>
-    <string name="dialogo_califica_servicio_btnAceptar">Aceptar</string>
+    <string name="dialogo_califica_servicio_btnAceptar">Enviar</string>
 
     <!-- mapa_tracking -->
     <string name="mitaxi_googlemaps_tv_destination">Destino del viaje</string>

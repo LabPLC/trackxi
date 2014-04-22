@@ -1,4 +1,4 @@
-Traxi
+# Traxi
 ============
 
 ![alt tag](https://raw.githubusercontent.com/mikesaurio/trackxi/master/Trackxi/res/drawable-hdpi/splash.png)
@@ -20,21 +20,21 @@ Dado por los usuarios:
                 
 Adicionalmente puedes ver quien de tus amigos de Facebook han tomado ese taxi y sus calificaciones.
 
-NIVELES DE SEGURIDAD:
+# NIVELES DE SEGURIDAD:
 
 * Una vez iniciado el viaje la app te rastreara cada 5 segundos, 1 minuto, 2 minutos o 5 minutos.
 * Botón de pánico, durante tu viaje y sólo durante tu viaje puedes apretar 5 veces el botón de encendido del smartphone y se enviara un SMS a tu contacto de emergencia indicándole que revise su correo y n correos electrónicos mostrando tu ubicación y nivel de batería.
 * Modo paranoico, este esta desactivado por defecto per se puede hacer que te estén llegando notificaciones preguntando si te encuentras bien!, de no contestarla se envía un SMS a tu contacto de emergencia indicandole que revise su correo y n correos electrónicos mostrando tu ubicación y nivel de batería.
 
-MAPA
+# MAPA
 
 Durante el viaje el usuario puede ver un mapa (googleMaps) donde ve el camino que a recorrido y puede poner el destino, si hace esto se mostrara la ruta posible que puede tomar el taxi, la distancia y el tiempo que le falta por recorrer.
 
-CALIFICACIÓN
+# CALIFICACIÓN
 
 Al final del viaje el usuario puede calificar el servicio del 0 al 5 y puede hacer un comentario de 50 caracteres.
 
-LIBRERIAS REQUERIDAS
+# LIBRERIAS REQUERIDAS
 
     google_play_services_lib
     FacebookSDK
@@ -45,6 +45,13 @@ AYUDA PARA AGREGAR google_play_services_lib
     
 AYUDA PARA AGREGAR FacebookSDK
     se encuentra en https://github.com/facebook/facebook-android-sdk
+
+
+# ¿Quiéres probar la app?
+
+Puedes bajar un APK pre-compilado aquí:
+
+[Traxi](https://github.com/mikesaurio/trackxi/raw/master/Trackxi/bin/Traxi.apk?raw=true)
 
 
 dudas:
