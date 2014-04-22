@@ -121,83 +121,83 @@
     <string name="pref_sync_frequency">Tracking frequency</string>
     <string name="pref_sync_frequency_summary">Choose the frecuencia</string>
     <string name="pref_sync_frequency_paranoia">Notification frequency</string>
-    <string name="pref_sync_frequency_summary_paranoia">Frecuencia de cada cuanto quieres recibir avisos durante el viaje</string>
-    <string name="pref_user_profile">Configuración</string>
-    <string name="pref_update_setting">Rastreo</string>
-    <string name="pref_update_setting_ayuda">Ayuda</string>
-    <string name="title_activity_mapa_tracking">Mapa_tracking</string>
-    <string name="title_activity_califica_chofer">Califica_chofer</string>
-    <string name="title_activity_califica_taxi">Califica_taxi</string>
+    <string name="pref_sync_frequency_summary_paranoia">How many notifications would you like to get during a trip?</string>
+    <string name="pref_user_profile">Settings</string>
+    <string name="pref_update_setting">Tracking</string>
+    <string name="pref_update_setting_ayuda">Help</string>
+    <string name="title_activity_mapa_tracking">tracking_map</string>
+    <string name="title_activity_califica_chofer">rate_driver</string>
+    <string name="title_activity_califica_taxi">rate_taxi</string>
 
     <!-- titulos paginador -->
-    <string name="titulo_uno_general">GENERAL</string>
-    <string name="titulo_dos_detalles">DETALLES</string>
-    <string name="titulo_tres_comentarios">COMENTARIOS</string>
-    <string name="title_activity_activity_null">Activity_null</string>
+    <string name="titulo_uno_general">INFO</string>
+    <string name="titulo_dos_detalles">DETAILS</string>
+    <string name="titulo_tres_comentarios">COMMENTS</string>
+    <string name="title_activity_activity_null">null_Activity</string>
     <string name="title_activity_send_foto">SendFoto</string>
     <!-- activity_adeudos -->
-    <string name="adeudos_titulo_tv_amigos">Mis amigos en este taxi:</string>
-    <string name="mitaxiregistermanually_btn_facebook">Acceder a Facebook</string>
+    <string name="adeudos_titulo_tv_amigos">My friends in this taxi:</string>
+    <string name="mitaxiregistermanually_btn_facebook">Login to Facebook</string>
 
     <!-- Latitude, longitude format -->
     <string name="latitude_longitude">%1$.8f, %2$.8f</string>
 
     <!-- dialogo calificar taxis -->
-    <string name="califica_taxi_tv_titulo">Ayudanos a evaluar el servicio</string>
-    <string name="califica_taxi_tv_titulo_calif">¿Qué tal te pareció el servicio del taxi?</string>
-    <string name="califica_taxi_tv_titulo_opinion">Danos tu opinión</string>
-    <string name="dialogo_califica_servicio_et_comentario">El servicio me pareció..</string>
-    <string name="dialogo_califica_servicio_btnCancelar">Finalizar</string>
-    <string name="dialogo_califica_servicio_btnAceptar">Enviar</string>
+    <string name="califica_taxi_tv_titulo">Help us rate the service</string>
+    <string name="califica_taxi_tv_titulo_calif">Did you like this taxi's service?</string>
+    <string name="califica_taxi_tv_titulo_opinion">Give us your feedback</string>
+    <string name="dialogo_califica_servicio_et_comentario">This service was...</string>
+    <string name="dialogo_califica_servicio_btnCancelar">End</string>
+    <string name="dialogo_califica_servicio_btnAceptar">Send</string>
 
     <!-- mapa_tracking -->
-    <string name="mitaxi_googlemaps_tv_destination">Destino del viaje</string>
-    <string name="mitaxi_googlemaps_btn_destino">Ir</string>
-    <string name="mitaxi_googlemaps_actv_destination">Colonia Ejemplo calle 37</string>
-    <string name="mapa_tracking_terminoviaje">Terminó viaje..</string>
+    <string name="mitaxi_googlemaps_tv_destination">Destination</string>
+    <string name="mitaxi_googlemaps_btn_destino">Go</string>
+    <string name="mitaxi_googlemaps_actv_destination">Neiborhood (example Calle 13)</string>
+    <string name="mapa_tracking_terminoviaje">Trip ended...</string>
 
     <!-- activity_datos -->
-    <string name="datos_tv_titulo">Datos del vehículo</string>
-    <string name="datos_tv_marca">Marca: </string>
-    <string name="datos_tv_niveles_confianza">Nivel de confianza</string>
+    <string name="datos_tv_titulo">Vehicle info</string>
+    <string name="datos_tv_marca">Brand: </string>
+    <string name="datos_tv_niveles_confianza">Trust level</string>
     <string name="datos_tv_descripcion">blablablabla</string>
 
     <!-- TOAST -->
-    <string name="foto_fallida">¡La foto a fallado!, intenta de nuevo</string>
-    <string name="le_puso"> le pusó </string>
-    <string name="estrellas"> estrellas</string>
-    <string name="imagen_muy_grande">¡La imagen es muy grande!</string>
-    <string name="falla_facebook">Algo falló al conectar con facebook</string>
-    <string name="GPS_OFF">GPS apagado inesperadamente</string>
+    <string name="foto_fallida">We couldn't upload your photo! Try again</string>
+    <string name="le_puso"> rated </string>
+    <string name="estrellas"> stars</string>
+    <string name="imagen_muy_grande">The image is too big!</string>
+    <string name="falla_facebook">Something failed when loging to Facebook</string>
+    <string name="GPS_OFF">GPS was turned off</string>
 
     <!-- setText -->
-    <string name="datos_del_taxi">DATOS DEL TAXI</string>
-    <string name="Anio"> Año </string>
+    <string name="datos_del_taxi">TAXI INFO</string>
+    <string name="Anio"> Year </string>
 
     <!-- mensajes -->
 
-    <string name="cargando_info">Cargando la información, espere....</string>
-    <string name="cargando_foto">Procesando la foto, espere....</string>
-    <string name="sms_emer">Estoy en peligro!, eres mi contacto de emergencia, revisa tu correo por favor</string>
+    <string name="cargando_info">Loading, please wait....</string>
+    <string name="cargando_foto">Processing picture, please wait....</string>
+    <string name="sms_emer">I'm in danger! You are my emergency contact, please check your email</string>
 
     <!-- Mapa -->
-    <string name="mapa_inicio_de_viaje">Inicio del viaje</string>
-    <string name="mapa_mi_posicion">Mi posición</string>
-    <string name="mapa_estas">Estas a\t</string>
-    <string name="mapa_tu_destino">\tde tu destino</string>
-    <string name="mapa_mi_destino">Mi destino</string>
+    <string name="mapa_inicio_de_viaje">Trip start</string>
+    <string name="mapa_mi_posicion">My location</string>
+    <string name="mapa_estas">You are \t</string>
+    <string name="mapa_tu_destino">\tfrom your destiny</string>
+    <string name="mapa_mi_destino">My destiny</string>
 
     <!-- notificaciones -->
-    <string name="notificacion_que_quieres_hacer">¿Qué quieres hacer?</string>
-    <string name="notificacion_viaje">Viaje</string>
-    <string name="notificacion_finalizar">Finalizar</string>
+    <string name="notificacion_que_quieres_hacer">What do you want to do?</string>
+    <string name="notificacion_viaje">Travel</string>
+    <string name="notificacion_finalizar">End trip</string>
 
     <!-- panic -->
-    <string name="panic_estoy_en_peligro">Estoy en peligro en taxi placas:</string>
-    <string name="panic_ubicacion">\tmi ubicación es https://www.google.com.mx/maps/place/</string>
-    <string name="panic_bateria">\tbatería:</string>
-    <string name="panic_todo_bien">¿Todo bien?</string>
-    <string name="panic_tocame">Tocame si es así</string>
+    <string name="panic_estoy_en_peligro">I'm in danger in a taxi with licence plates:</string>
+    <string name="panic_ubicacion">\tmy location is https://www.google.com.mx/maps/place/</string>
+    <string name="panic_bateria">\tbattery:</string>
+    <string name="panic_todo_bien">Are you OK?</string>
+    <string name="panic_tocame">Press me if you are fine.</string>
 
     <!-- Pass -->
     <string name="correo">mitraxisaurio@gmail.com</string>
@@ -206,19 +206,19 @@
     <!-- Facebook -->
     <string name="facebook_id">622752297805514</string>
     <string name="exception">Exception: %1$s</string>
-    <string name="face_no_amigos">Ningun amigo a tomado este taxi</string>
+    <string name="face_no_amigos">Nobody of your friends had taken this taxi</string>
 
     <!-- preferences -->
     <string name="prefKeyResetQuests">resetQuests</string>
-    <string name="prefKeyResetQuests_titulo">Acerca de</string>
+    <string name="prefKeyResetQuests_titulo">About</string>
     <string name="prefKeyResetQuests_subtitulo">TRAXI</string>
-    <string name="prefKeyResetQuests_texto">Aplicación realizada dentro del programa CÓDIGO.CDMX\n\n
-        Desarrolladores:\n
+    <string name="prefKeyResetQuests_texto">This app was made in CÓDIGO.CDMX fellowship\n\n
+        Developers:\n
         \tMike Morán @yosoymikesaurio\n
         \tAntuan Chávez @ntuanChavez\n
         \tEdgar Zavala @zace3d\n\n
-        Diseñador:\n
+        Graphical designer:\n
         \tSergio Beltrán @ssbeltran</string>
-    <string name="prefKeyResetQuests_boton">Aceptar</string>
+    <string name="prefKeyResetQuests_boton">OK</string>
 
 </resources>
