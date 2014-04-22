@@ -21,7 +21,7 @@
     <string name="mitaxiregister_error_string">Write a valid word [a-z A-Z].</string>
     <string name="mitaxiregister_error_number">Write a valid number [0 9].</string>
     <string name="mitaxiregister_error_email">Your email is wrong.</string>
-    <string name="mitaxiregister_empty">You can't leave any blank fields.</string>
+    <string name="mitaxiregister_empty">You can not leave any blank fields.</string>
     <string name="mitaxiregister_tv_title">Sign up</string>
     <string name="mitaxiregister_et_name_hint">user</string>
     <string name="mitaxiregister_et_email_hint">example@mail.com</string>
@@ -144,7 +144,7 @@
 
     <!-- dialogo calificar taxis -->
     <string name="califica_taxi_tv_titulo">Help us rate the service</string>
-    <string name="califica_taxi_tv_titulo_calif">Did you like this taxi's service?</string>
+    <string name="califica_taxi_tv_titulo_calif">Did you like this service?</string>
     <string name="califica_taxi_tv_titulo_opinion">Give us your feedback</string>
     <string name="dialogo_califica_servicio_et_comentario">This service was...</string>
     <string name="dialogo_califica_servicio_btnCancelar">End</string>
@@ -163,7 +163,7 @@
     <string name="datos_tv_descripcion">blablablabla</string>
 
     <!-- TOAST -->
-    <string name="foto_fallida">We couldn't upload your photo! Try again</string>
+    <string name="foto_fallida">We could not upload your photo! Try again</string>
     <string name="le_puso"> rated </string>
     <string name="estrellas"> stars</string>
     <string name="imagen_muy_grande">The image is too big!</string>
@@ -178,7 +178,7 @@
 
     <string name="cargando_info">Loading, please wait....</string>
     <string name="cargando_foto">Processing picture, please wait....</string>
-    <string name="sms_emer">I'm in danger! You are my emergency contact, please check your email</string>
+    <string name="sms_emer">I am in danger! You are my emergency contact, please check your email</string>
 
     <!-- Mapa -->
     <string name="mapa_inicio_de_viaje">Trip start</string>
@@ -193,7 +193,7 @@
     <string name="notificacion_finalizar">End trip</string>
 
     <!-- panic -->
-    <string name="panic_estoy_en_peligro">I'm in danger in a taxi with licence plates:</string>
+    <string name="panic_estoy_en_peligro">I am in danger in a taxi with licence plates:</string>
     <string name="panic_ubicacion">\tmy location is https://www.google.com.mx/maps/place/</string>
     <string name="panic_bateria">\tbattery:</string>
     <string name="panic_todo_bien">Are you OK?</string>
