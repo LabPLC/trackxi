@@ -538,6 +538,7 @@ int string edittext_error_number 0x7f080054
 int string edittext_error_string 0x7f080053
 int string edittext_error_telephone_repeated 0x7f080057
 int string edittext_wrong_info 0x7f080052
+int string envio_mail 0x7f0800bc
 int string estrellas 0x7f0800a5
 int string exception 0x7f0800be
 int string face_no_amigos 0x7f0800bf
@@ -601,7 +602,6 @@ int string paraque_nombre 0x7f08005c
 int string paraque_subtitulo 0x7f08005a
 int string paraque_telemer 0x7f08005e
 int string paraque_titulo 0x7f08005b
-int string pass 0x7f0800bc
 int string prefKeyResetQuests 0x7f0800c0
 int string prefKeyResetQuests_boton 0x7f0800c4
 int string prefKeyResetQuests_subtitulo 0x7f0800c2

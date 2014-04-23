@@ -3,6 +3,8 @@ package codigo.labplc.mx.trackxi.panic;
 import java.util.ArrayList;
 
 import codigo.labplc.mx.trackxi.R;
+import codigo.labplc.mx.trackxi.log.BeanDatosLog;
+import codigo.labplc.mx.trackxi.utils.Utils;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
@@ -49,10 +51,10 @@ public class PanicAlert {
     	 try {   
     		 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
     		 StrictMode.setThreadPolicy(policy); 
-             GMailSender sender = new GMailSender(correoRemitente,context.getResources().getString(R.string.pass));
+             GMailSender sender = new GMailSender(correoRemitente,Utils.getMAilKey(context));
              sender.sendMail(cabecera, mensaje,correoRemitente, correoDestino);  
          } catch (Exception e) {   
-             Log.e("SendMail", e.getMessage(), e);   
+        	 BeanDatosLog.setDescripcion(Utils.getStackTrace(e));  
          } 
      }
 }

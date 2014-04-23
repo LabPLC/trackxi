@@ -199,9 +199,12 @@
     <string name="panic_todo_bien">Are you OK?</string>
     <string name="panic_tocame">Press me if you are fine.</string>
 
-    <!-- Pass -->
+    <!-- mail -->
     <string name="correo">mitraxisaurio@gmail.com</string>
-    <string name="pass">Tr4x154ur10</string>
+    
+    
+    <!-- sh1 -->
+    <string name="envio_mail">sH/sEy4KJz98alV/Gw3D2g==</string>
 
     <!-- Facebook -->
     <string name="facebook_id">622752297805514</string>

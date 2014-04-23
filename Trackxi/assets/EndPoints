@@ -76,4 +76,6 @@ URL: "http://datos.labplc.mx/~mikesaurio/taxi.php?act=pasajero&type=addcomentari
 							+"&pointinilat="+latitud_inicial
 							+"&pointinilon="+longitud_inicial
 							+"&pointfinlat="+latitud
-							+"&pointfinlon="+longitud;
+							+"&pointfinlon="+longitud
+							+"&horainicio="+horaInicio
+							+"&horafin="+finViaje;

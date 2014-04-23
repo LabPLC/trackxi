@@ -53,6 +53,9 @@ Puedes bajar un APK pre-compilado aquí:
 
 [Traxi](https://github.com/mikesaurio/trackxi/raw/master/Trackxi/bin/Traxi.apk?raw=true)
 
+visita:
+
+http://www.traxi.mx
 
 dudas:
 
