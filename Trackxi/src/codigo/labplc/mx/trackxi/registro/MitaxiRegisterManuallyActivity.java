@@ -141,6 +141,10 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		etInfousername.setTextColor(new fonts(this).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
 		
 		etInfouseremail = (EditText) findViewById(R.id.mitaxiregistermanually_et_infouseremail);
+		etInfouseremail.setText(Utils.getEmail(getApplicationContext()));
+		if(!etInfouseremail.getText().toString().equals("")){
+			etInfouseremail.setEnabled(false);
+		}
 		etInfouseremail.setTypeface(new fonts(this).getTypeFace(fonts.FLAG_ROJO));
 		etInfouseremail.setTextColor(new fonts(this).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
 
@@ -157,6 +161,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 
 		
 		Button contacto_emer = (Button) findViewById(R.id.mitaxiregistermanually_btn_contactos);
+		contacto_emer.setTypeface(new fonts(this).getTypeFace(fonts.FLAG_ROJO));
 		contacto_emer.setOnClickListener(new View.OnClickListener() {
 
 			@Override

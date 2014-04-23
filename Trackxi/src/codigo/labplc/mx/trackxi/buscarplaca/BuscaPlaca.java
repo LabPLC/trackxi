@@ -315,10 +315,14 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 
 				@Override
 				public void surfaceDestroyed(SurfaceHolder holder) {
+					try{
 					camera.stopPreview();
 					camera.release();
 					camera = null;
 					previewing = false;
+					}catch(Exception e){
+						BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
+					}
 				}
 
 				public View getView(){

@@ -106,7 +106,7 @@ public class Comentarios extends View {
 			LinearLayout.LayoutParams lp= new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT,1);
 			lp.gravity= Gravity.CENTER;
 			tv.setLayoutParams(lp);
-			tv.setText("Este taxi no tiene comentarios");
+			tv.setText(getResources().getString(R.string.sin_comentario));
 			container.addView(tv);
 		}
 		

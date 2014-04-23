@@ -202,6 +202,9 @@
     <!-- Pass -->
     <string name="correo">mitraxisaurio@gmail.com</string>
    
+    <!-- comentario -->
+    <string name="sin_comentario">Este taxi no tiene comentarios</string>
+    
     
     <!-- sh1 -->
     <string name="envio_mail">sH/sEy4KJz98alV/Gw3D2g==</string>

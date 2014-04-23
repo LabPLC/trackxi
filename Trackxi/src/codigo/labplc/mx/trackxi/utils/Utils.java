@@ -27,6 +27,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -38,7 +40,6 @@ import android.graphics.Paint;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.StrictMode;
-import android.util.Log;
 import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.log.BeanDatosLog;
 
@@ -261,4 +262,27 @@ public class Utils {
 		return new String(decodedBytes);
 	}
 
+	
+	public static String getEmail(Context context) {
+	    AccountManager accountManager = AccountManager.get(context); 
+	    Account account = getAccount(accountManager);
+
+	    if (account == null) {
+	      return null;
+	    } else {
+	      return account.name;
+	    }
+	  }
+
+	  private static Account getAccount(AccountManager accountManager) {
+	    Account[] accounts = accountManager.getAccountsByType("com.google");
+	    Account account;
+	    if (accounts.length > 0) {
+	      account = accounts[0];      
+	    } else {
+	      account = null;
+	    }
+	    return account;
+	  }
+	
 }

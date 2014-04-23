@@ -85,7 +85,7 @@
     <string name="texto_calificacion_60">This vehicle is a low risk taxi because it is registered as a taxi but has some inconsistencies. If you decide to board it, we advice you to stay alert.</string>
     <string name="texto_calificacion_80">This is a trusted vehicle because it is registered as a taxi but has some problems. We advice you to stay alert </string>
     <string name="texto_calificacion_90">This is a well-trusted vehicle but it can get better. We advice you as always to stay alert</string>
-    <string name="texto_calificacion_100">Congratulations! You found a very trusted taxi and you will have a pleasant trip. Howeve, since your security comes first, stay alert!</string>
+    <string name="texto_calificacion_100">Congratulations! You found a very trusted taxi and you will have a pleasant trip. However, since your security comes first, stay alert!</string>
     <string name="texto_significado_calif"> What does this score means?</string>
 
     <!-- buscar placa -->
@@ -202,6 +202,8 @@
     <!-- mail -->
     <string name="correo">mitraxisaurio@gmail.com</string>
     
+      <!-- comentario -->
+    <string name="sin_comentario">there ara no comments for this taxi</string>
     
     <!-- sh1 -->
     <string name="envio_mail">sH/sEy4KJz98alV/Gw3D2g==</string>
