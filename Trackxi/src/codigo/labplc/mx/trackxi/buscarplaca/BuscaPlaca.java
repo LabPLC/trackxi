@@ -119,7 +119,11 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 			@Override
 			public void onClick(View v) {
 				try{
-					camera.takePicture(myShutterCallback,myPictureCallback_RAW, myPictureCallback_JPG);
+					if(Utils.hasInternet(context)){
+						camera.takePicture(myShutterCallback,myPictureCallback_RAW, myPictureCallback_JPG);
+					}else{
+						Dialogos.Toast(context, "No tienes Internet", Toast.LENGTH_LONG);
+					}
 				}catch(Exception e){
 					BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 				}
@@ -162,14 +166,19 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 					//buscando datos del carro en el servidor
 					try {
 						//cerramos el teclado
-						InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
-						imm.hideSoftInputFromWindow(placa.getWindowToken(), 0);
-						Intent intent= new Intent().setClass(context,DatosAuto.class);
-						intent.putExtra("placa", Splaca);
-						context.startActivityForResult(intent, 0);
+						if(Utils.hasInternet(context)){
+							InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+							imm.hideSoftInputFromWindow(placa.getWindowToken(), 0);
+							Intent intent= new Intent().setClass(context,DatosAuto.class);
+							intent.putExtra("placa", Splaca);
+							context.startActivityForResult(intent, 0);
+							context.finish();
+							placa.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
+						}else{
+							Dialogos.Toast(context, "No tienes Internet", Toast.LENGTH_LONG);
+						}
 						placa.setText("");
-						context.finish();
-						placa.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
+						
 					} catch (Exception e) {
 						BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 						placa.setText("");
