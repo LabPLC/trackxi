@@ -205,6 +205,12 @@ public class Utils {
 		return bmpGrayscale;
 	}
 
+	/**
+	 * metodo que vaida que el telefono tenga internet
+	 * 
+	 * @param a
+	 * @return
+	 */
 	public static boolean hasInternet(Activity a) {
 		boolean hasConnectedWifi = false;
 		boolean hasConnectedMobile = false;

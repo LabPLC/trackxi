@@ -17,7 +17,7 @@ public class Traxi extends Application{
 		if(getPreferencia("prefSendReport")){
 		 	String  envio= "http://datos.labplc.mx/~mikesaurio/taxi.php?act=pasajero&type=addlog";
 	    	ACRA.init(this);
-	    	HockeySender MySender = new HockeySender(envio);
+	    	HockeySender MySender = new HockeySender(Traxi.this,envio);
 	        ACRA.getErrorReporter().setReportSender(MySender);
 		}
 		super.onCreate();

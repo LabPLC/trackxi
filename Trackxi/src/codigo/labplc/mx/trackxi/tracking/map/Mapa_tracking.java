@@ -71,7 +71,7 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 	ArrayList<String> pointsLon;
 	ArrayList<InfoPoint> InfoPoint = null;
 	private LatLng taxiPosition = null;
-	private static String direccion_destino= null;
+	public static String direccion_destino= null;
 	private boolean isFirstLocation= true;
 	private String tiempo;
 	private String distancia;

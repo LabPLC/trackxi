@@ -1,6 +1,8 @@
 package codigo.labplc.mx.trackxi.services;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -55,6 +57,7 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 	public static double latitud =0;
 	public static double longitud=0;
 	public static String horaInicio;
+	public static String horaFin;
 	private Location currentLocation = null;
 	private boolean isFirstLocation = true;
 	private Thread thread;
@@ -89,8 +92,11 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 		super.onCreate();
 		
 		
-		
-		
+		Calendar c = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd+HH:mm:ss");
+		 horaInicio = sdf.format(c.getTime());
+	
+		Log.d("*********", horaInicio);
 		   
 		   
 		mLocationListener = new MyLocationListener();
@@ -172,6 +178,7 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 		timerParanoico.cancel();
 		
 		serviceIsIniciado= false;
+		Mapa_tracking.direccion_destino= null;
 		// panic
 		unregisterReceiver(mReceiver);
 	}
@@ -342,10 +349,13 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 	}
 
 	public static void CancelNotification(Context ctx, int notifyId) {
+	try{
 		String ns = Context.NOTIFICATION_SERVICE;
-		NotificationManager nMgr = (NotificationManager) ctx
-				.getSystemService(ns);
+		NotificationManager nMgr = (NotificationManager) ctx.getSystemService(ns);
 		nMgr.cancel(notifyId);
+	}catch(Exception e){
+		BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
+	}
 	}
 
 	// panic
