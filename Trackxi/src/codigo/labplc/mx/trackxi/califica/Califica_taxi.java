@@ -35,11 +35,8 @@ public class Califica_taxi extends Activity {
 	RatingBar rank;
 	private String Scalificacion = "0";
 	private String Scomentario;
-	@Override
-	protected void onStart() {
-		ServicioGeolocalizacion.stopNotification();
-		super.onStart();
-	}
+	
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +45,7 @@ public class Califica_taxi extends Activity {
 		setContentView(R.layout.activity_califica_taxi);
 
 		BeanDatosLog.setTagLog(TAG);
+		
 		
 	    ((TextView) findViewById(R.id.califica_taxi_tv_titulo)).setTypeface(new fonts(Califica_taxi.this).getTypeFace(fonts.FLAG_MAMEY));	
 		((TextView) findViewById(R.id.califica_taxi_tv_titulo)).setTextColor(new fonts(Califica_taxi.this).getColorTypeFace(fonts.FLAG_ROJO));
@@ -136,5 +134,10 @@ public class Califica_taxi extends Activity {
 	public void onBackPressed() {
 	}
 	
-
+	@Override
+	protected void onStart() {
+		ServicioGeolocalizacion.stopNotification();
+		super.onStart();
+	}
+	
 }

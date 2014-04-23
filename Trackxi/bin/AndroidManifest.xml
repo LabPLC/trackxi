@@ -37,7 +37,7 @@
         android:allowBackup="true"
         android:name="Traxi"
         android:icon="@drawable/ic_launcher"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyAS8_xCUR0keLIzN1CkpLw4DkIRgtmgI84" />

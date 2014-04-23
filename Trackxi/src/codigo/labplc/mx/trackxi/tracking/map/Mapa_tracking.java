@@ -75,7 +75,7 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 	private boolean isFirstLocation= true;
 	private String tiempo;
 	private String distancia;
-	
+	private boolean isButtonExit = true;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -121,6 +121,7 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 		
 			@Override
 			public void onClick(View v) {
+				isButtonExit= false;
 				Intent intent_califica = new Intent(Mapa_tracking.this, Califica_taxi.class);
 				startActivity(intent_califica);
 				finish();
@@ -157,7 +158,9 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 	
 	 @Override
 	protected void onStop() {
+		 if(isButtonExit){
 		ServicioGeolocalizacion.showNotification();
+		 }
 		super.onStop();
 	}
 

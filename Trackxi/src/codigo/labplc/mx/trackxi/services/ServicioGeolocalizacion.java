@@ -96,7 +96,6 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd+HH:mm:ss");
 		 horaInicio = sdf.format(c.getTime());
 	
-		Log.d("*********", horaInicio);
 		   
 		   
 		mLocationListener = new MyLocationListener();
