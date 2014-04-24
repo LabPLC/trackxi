@@ -230,11 +230,12 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 				public void onPictureTaken(byte[] arg0, Camera arg1) {
 					Bitmap bitmapPicture  =  BitmapFactory.decodeByteArray(arg0, 0, arg0.length);	
 					System.gc();
+					Runtime.getRuntime().gc();
 					Matrix mat = new Matrix();
 					mat.postRotate(90);
-					Bitmap bMapRotate = Bitmap.createBitmap(bitmapPicture, 0, 0,bitmapPicture.getWidth(), bitmapPicture.getHeight(), mat, true);
-					int alto_num = bMapRotate.getHeight()/12;
-					Bitmap esizedbitmap1 = Bitmap.createBitmap(bMapRotate,0,(alto_num*5),bMapRotate.getWidth(),(alto_num*2));
+					//Bitmap bMapRotate = Bitmap.createBitmap(bitmapPicture, 0, 0,bitmapPicture.getWidth(), bitmapPicture.getHeight(), mat, true);
+					int alto_num = bitmapPicture.getHeight()/12;
+					Bitmap esizedbitmap1 = Bitmap.createBitmap(bitmapPicture,0,(alto_num*5),bitmapPicture.getWidth(),(alto_num*2),mat,true);
 					Bitmap	resized = Utils.toGrayscale(Bitmap.createScaledBitmap(esizedbitmap1,(int)(esizedbitmap1.getWidth()*0.5), (int)(esizedbitmap1.getHeight()*0.5), true));
 					try{
 						File file = new File(foto);
