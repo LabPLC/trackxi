@@ -71,6 +71,9 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 	private Activity context;
 	private View view;
 	private String foto;
+	private String resultado="";
+	
+
 
 	public BuscaPlaca(Activity context) {
 		super(context);
@@ -305,12 +308,23 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 				@Override
 				public void surfaceCreated(SurfaceHolder holder) {
 					if(camera==null){
+						Log.d("***", "if");
 						try{
 							camera = Camera.open();
+							
 						}catch(Exception e){
 							BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
+							Log.d("***zxczxc", Camera.getNumberOfCameras()+"");
+							    try {
+							    	camera = Camera.open(0);
+							    	Log.d("**DFsddfd", Camera.open(0)+":::");
+							    } catch (RuntimeException f) {
+							      Log.e(TAG,  f.getLocalizedMessage());
+							  }
+							
 						}
 					}
+					Log.d("***", "sali");
 
 				}
 
@@ -326,17 +340,25 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 					}
 				}
 
+				/**
+				 * metodo GET que regresa una vista
+				 * @return View (Vista generada)
+				 */
 				public View getView(){
 					return view;
 				}
 
 
-
+/**
+ * Calse que envia la foto por POST al servidor para ser analizada regresa el OCR
+ * @author mikesaurio
+ *
+ */
 				class Uploaded extends AsyncTask<String, Void, Void> {
 
 					private ProgressDialog pDialog;
 					private String miFoto = "";
-					private String resultado;
+					
 					public static final int HTTP_TIMEOUT = 60 * 1000;
 					@Override
 					protected Void doInBackground(String... params) {

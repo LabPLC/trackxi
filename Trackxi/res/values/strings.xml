@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+        <!-- textNuevos -->
+    <string name="mitaxiregister_et_mailemergency_hint_2">emergency contact email</string>
+    <string name="mitaxiregister_et_telemergency_hint_2">Emergency number</string>
+    
     <!-- general -->
     <string name="app_name">Traxi</string>
     <string name="action_settings">Settings</string>
@@ -40,7 +44,7 @@
     <string name="adeudos_row_descripcion">Description</string>
     <string name="mitaxiregister_et_mailemergency_hint">emergency contact email</string>
     <string name="mitaxiregister_et_paraque">Why?</string>
-    <string name="mitaxiregister_et_emergencias">Emergency contact</string>
+    <string name="mitaxiregister_et_emergencias">Emergency contacts</string>
     <string name="mitaxiregister_btn_cancel">Cancel</string>
     <string name="mitaxiregister_btn_ok">Sign up</string>
 

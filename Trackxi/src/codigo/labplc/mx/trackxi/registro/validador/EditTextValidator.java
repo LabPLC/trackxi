@@ -55,7 +55,7 @@ public class EditTextValidator {
 
 				String expression = s.toString();
 
-				if (!expression.equals("")) {
+			if (!expression.equals("")) {
 					int etType = Integer.parseInt(et_aux.getTag().toString());
 
 					if (etType == RegularExpressions.KEY_IS_STRING) {

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- textNuevos -->
+    <string name="mitaxiregister_et_mailemergency_hint_2">correo emergencia</string>
+    <string name="mitaxiregister_et_telemergency_hint_2">celular emergencia</string>
+    
     <!-- general -->
     <string name="app_name">Traxi</string>
     <string name="action_settings">Configuración</string>

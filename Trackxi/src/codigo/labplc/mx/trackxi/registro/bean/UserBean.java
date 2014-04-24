@@ -9,8 +9,25 @@ public class UserBean {
 	private String telemergencia; //telefono de emergencia
 	private String UUID; //llave del usuario
 	private String correoemergencia; //correo de emergencia
+	private String telemergencia_2; //telefono de emergencia
+	private String correoemergencia_2; //correo de emergencia
 	private String foto;//foto del usuario
 	private String os = "2"; //1 IOS 2 android
+	
+	
+	public String getTelemergencia_2() {
+		return telemergencia_2;
+	}
+	public void setTelemergencia_2(String telemergencia_2) {
+		this.telemergencia_2 = telemergencia_2;
+	}
+	public String getCorreoemergencia_2() {
+		return correoemergencia_2;
+	}
+	public void setCorreoemergencia_2(String correoemergencia_2) {
+		this.correoemergencia_2 = correoemergencia_2;
+	}
+
 	public String getFoto() {
 		return foto;
 	}
