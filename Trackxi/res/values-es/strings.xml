@@ -28,6 +28,7 @@
     <string name="mitaxiregister_et_teluser_hint">Teléfono</string>
     <string name="mitaxiregister_et_telemergency_hint">celular emergencia</string>
     <string name="mitaxiregistermanually_btn_contactos">+</string>
+     <string name="no_foto_add">Agrega una imagen</string>
 
     <!-- tipo de imagen -->
     <string name="dialogo_tipo_de_imagen_tv_texto">¿Qué quieres abrir?</string>

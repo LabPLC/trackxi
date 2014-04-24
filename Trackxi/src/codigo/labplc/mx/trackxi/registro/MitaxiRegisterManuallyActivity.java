@@ -213,16 +213,20 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		
 		@Override
 		public void onClick(View v) {
-			if (!isAnyEditTextEmpty() && hasFoto) {
+			if (!isAnyEditTextEmpty()) {
 				if (!hasErrorEditText()) {
+					if(hasFoto){
 					if (Utils.isNetworkConnectionOk(getBaseContext())) {
 						try {
 							saveUserInfo();
 						} catch (JSONException e) {
 							Log.d("error 301", "error fatal :(");	
 						}
-					} else {
+					}else{
 						Log.d("error 302", getString(R.string.no_internet_connection));
+					}
+					} else {
+						Dialogos.Toast(getApplicationContext(), getString(R.string.no_foto_add), Toast.LENGTH_LONG);
 						
 					}
 				} else {
@@ -346,56 +350,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		return empty;
 	}
 
-	/*
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		
-		
-		if (requestCode == RESULT_LOAD_FOTO) {
-			File file = new File(foto);
-			if (file.exists()) {
-				Bitmap myBitmap = BitmapFactory.decodeFile(file
-						.getAbsolutePath());
-				Matrix mat = new Matrix();
-				mat.postRotate(-90);
-				Bitmap bMapRotate = Bitmap.createBitmap(myBitmap, 0, 0,
-						myBitmap.getWidth(), myBitmap.getHeight(), mat, true);
-				userfoto.setImageBitmap(bMapRotate);
-				hasFoto = true;
-			}
-
-		}else if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK	&& null != data) {
-	 						Uri imageUri = data.getData();
-	 			  			Bitmap myBitmap;
-	 			  			try {
-	 			  				myBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-	 			  				userfoto.setImageBitmap(myBitmap);
-	 			  				BitmapDrawable drawable = (BitmapDrawable) userfoto.getDrawable();
-	 			  				Bitmap bitmap_prev = drawable.getBitmap();
-	 			  				hasFoto = true;
-	 			  			    try{
-	 			  			        File file = new File(foto);
-	 			  			        FileOutputStream fOut = new FileOutputStream(file);
-	 			  			        bitmap_prev.compress(Bitmap.CompressFormat.JPEG, 50, fOut);
-	 			  			        fOut.flush();
-	 			  			        fOut.close();}
-	 			  			    catch (Exception e) {
-	 			  			    	BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
-	 			  			}
-	 			  			} catch (FileNotFoundException e) {
-	 			  				BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
-	 			  			} catch (IOException e) {
-	 			  				BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
-	 			  			}
-
-			
-		}else if (requestCode == RESULT_LOAD_CONTACT) {
-			getContactInfo(data);
-		}else{
-			//facebookLogin.getFacebook().authorizeCallback(requestCode, resultCode, data);
-		}
-	}*/
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == RESULT_LOAD_FOTO) {
@@ -617,6 +572,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 			    	       }
 						// Camara
 						Intent intent = new Intent(	MediaStore.ACTION_IMAGE_CAPTURE);
+						intent.putExtra("android.intent.extras.CAMERA_FACING", 1);
 						Uri output = Uri.fromFile(new File(foto));
 						intent.putExtra(MediaStore.EXTRA_OUTPUT, output);
 						startActivityForResult(intent, RESULT_LOAD_FOTO); 
