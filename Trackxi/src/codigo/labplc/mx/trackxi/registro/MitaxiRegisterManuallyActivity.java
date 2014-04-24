@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -31,6 +32,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -72,7 +74,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 	private int RESULT_LOAD_FOTO = 200;
 	private int RESULT_LOAD_CONTACT = 300;
 	private int RESULT_LOAD_CONTACT_2 = 400;
-	private String selectedImagePath;
+
 	private AlertDialog customDialog = null; // Creamos el dialogo generico
 	private EditText etInfousername;
 	private EditText etInfouseremail;
@@ -87,7 +89,8 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 	private boolean hasFoto = false;
 	String origen;
 	String fotoNotFull;
-
+	  private String selectedImagePath;
+	
 	private boolean[] listHasErrorEditText = { false, false, false, false, false, false };
 
 	@Override
@@ -239,6 +242,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 						try {
 							if(!hasFoto){
 								guardarImagenEstatica();
+								hasFoto=true;
 							}
 							saveUserInfo();
 						} catch (JSONException e) {
@@ -393,7 +397,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 				Bitmap bMapRotate = Bitmap.createBitmap(myBitmap, 0, 0,	myBitmap.getWidth(), myBitmap.getHeight(), mat, true);
 				userfoto.setImageBitmap(bMapRotate);
 				BitmapDrawable drawable = (BitmapDrawable) userfoto.getDrawable();
-	  			Bitmap bitmap_prev = drawable.getBitmap();
+  			Bitmap bitmap_prev = drawable.getBitmap();
 	  			 try{
 	  			       
 	  			        FileOutputStream fOut = new FileOutputStream(file);
@@ -408,30 +412,41 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 			          
 		}else if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK	&& null != data) {
 			 Uri selectedImageUri = data.getData();
-			 try{
-				 Bitmap	myBitmap = Bitmap.createScaledBitmap( MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri),800,480 , false);
+			 Log.d("imagen uri", selectedImageUri+"");
+				 Bitmap myBitmap;
+				try {
+					myBitmap = Bitmap.createScaledBitmap( MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri),800,480 , false);
 				 userfoto.setImageBitmap(myBitmap);
 				 BitmapDrawable drawable = (BitmapDrawable) userfoto.getDrawable();
-	  			Bitmap bitmap_prev = drawable.getBitmap();
-	  			 try{
-	  				selectedImagePath = getPath(selectedImageUri);
-		             if(selectedImagePath!=null){
-		              copyFile(selectedImagePath,fotoNotFull,foto);
-		             }
-		         	File file = new File(selectedImagePath);
-	  			        FileOutputStream fOut = new FileOutputStream(file);
-	  			        bitmap_prev.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
-	  			        fOut.flush();
-	  			        fOut.close();}
-	  			    catch (Exception e) {
-	  			    	BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
-	  			}
+	  			foto = Environment.getExternalStorageDirectory() + "/Traxi/perfil/imagen"+Utils.getCode()+".jpg";
+				fotoNotFull = Environment.getExternalStorageDirectory() + "/Traxi/perfil";
+				File dir = new File (fotoNotFull); 
+				if (!dir.exists())
+				{
+		           dir.mkdirs();
+				}
+			    File fn2;  
+			    try { // Try to Save #2  
+			        fn2 = new File(foto);    
+			        FileOutputStream out = new FileOutputStream(fn2);  
+			        myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);  
+			        out.flush();  
+			        out.close();  
+			      
+			    } catch (Exception e) {  
+			    	BeanDatosLog.setDescripcion(Utils.getStackTrace(e)); 
+			    }
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				 hasFoto = true; 
 
-	             
-				 }catch(Exception e){
-					 BeanDatosLog.setDescripcion(Utils.getStackTrace(e)); 
-				 }
+
+	
          }else if (requestCode == RESULT_LOAD_CONTACT) {
  			getContactInfo(data,1);
  		}else if (requestCode == RESULT_LOAD_CONTACT_2) {
@@ -507,7 +522,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 				}
 				in.close();
 				resultado = sb.toString();
-			//	Log.d("******", sb.toString()+"sjkdnds,jn");
+				Log.d("******", sb.toString()+"sjkdnds,jn");
 				
 				httpclient = null;
 				response = null;
@@ -535,9 +550,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 						savePreferences(user); // guardamos todo en preferencias
 
 					} else if (errorJson != null) {
-				
 						Log.d("error 201", resultado+"");
-						
 							resultado="muyLargo";
 						
 					}
@@ -563,7 +576,6 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
 			if(resultado.equals("muyLargo")){
-				new Dialogos();
 				Dialogos.Toast(getBaseContext(), getResources().getString(R.string.imagen_muy_grande), Toast.LENGTH_LONG);
 			}
 			pDialog.dismiss();
@@ -621,8 +633,8 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 
 					@Override
 					public void onClick(View view) {
-						foto = Environment.getExternalStorageDirectory() + "/Traxi/perfil/imagen"+Utils.getCode()+".jpg";
-						fotoNotFull = Environment.getExternalStorageDirectory() + "/Traxi/perfil";
+					/*	foto = Environment.getExternalStorageDirectory() + "/Traxi/perfil/imagen"+Utils.getCode()+".jpg";
+						fotoNotFull = Environment.getExternalStorageDirectory() + "/Traxi/perfil";*/
 						Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 						startActivityForResult(i, RESULT_LOAD_IMAGE);
 
@@ -687,37 +699,23 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		}
 	}
 	
-	/*
-	 * obtiene la uri de la imagen de la galeria
-	 */
-	  public String getPath(Uri uri) {
-	        String[] projection = { MediaStore.Images.Media.DATA };
-	        Cursor cursor = managedQuery(uri, projection, null, null, null);
-	        if(cursor!=null)
-	        {
-	            int column_index = cursor
-	            .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-	            cursor.moveToFirst();
-	            return cursor.getString(column_index);
-	        }
-	        else return null;
-	    }
-	    
-	  
+	
 	  /*
 	   * copia el archivo de la galeria y lo copia en un file de traxi
 	   */
-	    private void copyFile(String inputPath, String outputPath,String fileFull) {
+	    private void copyFile(String inputPath) {
+			foto = Environment.getExternalStorageDirectory() + "/Traxi/perfil/imagen"+Utils.getCode()+".jpg";
+			fotoNotFull = Environment.getExternalStorageDirectory() + "/Traxi/perfil";
 	    	   InputStream in = null;
 	    	   OutputStream out = null;
 	    	   try {
-	    	       File dir = new File (outputPath); 
+	    	       File dir = new File (fotoNotFull); 
 	    	       if (!dir.exists())
 	    	       {
 	    	           dir.mkdirs();
 	    	       }
 	    	       in = new FileInputStream(inputPath);        
-	    	       out = new FileOutputStream(fileFull);
+	    	       out = new FileOutputStream(foto);
 	    	       byte[] buffer = new byte[1024];
 	    	       int read;
 	    	       while ((read = in.read(buffer)) != -1) {
@@ -730,9 +728,11 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 	    	       out = null;        
 
 	    	   }  catch (FileNotFoundException fnfe1) {
+	    		   Log.d("dadsadasd", "falle aqui");
 	    		   BeanDatosLog.setDescripcion(Utils.getStackTrace(fnfe1));
 	    	   }
 	    	           catch (Exception e) {
+	    	        	   Log.d("dadsadasd", "falle aca");
 	    	        	   BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 	    	   }
 
