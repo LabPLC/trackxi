@@ -417,7 +417,6 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 				try {
 					myBitmap = Bitmap.createScaledBitmap( MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri),800,480 , false);
 				 userfoto.setImageBitmap(myBitmap);
-				 BitmapDrawable drawable = (BitmapDrawable) userfoto.getDrawable();
 	  			foto = Environment.getExternalStorageDirectory() + "/Traxi/perfil/imagen"+Utils.getCode()+".jpg";
 				fotoNotFull = Environment.getExternalStorageDirectory() + "/Traxi/perfil";
 				File dir = new File (fotoNotFull); 
@@ -698,46 +697,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 			BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 		}
 	}
-	
-	
-	  /*
-	   * copia el archivo de la galeria y lo copia en un file de traxi
-	   */
-	    private void copyFile(String inputPath) {
-			foto = Environment.getExternalStorageDirectory() + "/Traxi/perfil/imagen"+Utils.getCode()+".jpg";
-			fotoNotFull = Environment.getExternalStorageDirectory() + "/Traxi/perfil";
-	    	   InputStream in = null;
-	    	   OutputStream out = null;
-	    	   try {
-	    	       File dir = new File (fotoNotFull); 
-	    	       if (!dir.exists())
-	    	       {
-	    	           dir.mkdirs();
-	    	       }
-	    	       in = new FileInputStream(inputPath);        
-	    	       out = new FileOutputStream(foto);
-	    	       byte[] buffer = new byte[1024];
-	    	       int read;
-	    	       while ((read = in.read(buffer)) != -1) {
-	    	           out.write(buffer, 0, read);
-	    	       }
-	    	       in.close();
-	    	       in = null;
-	    	       out.flush();
-	    	       out.close();
-	    	       out = null;        
 
-	    	   }  catch (FileNotFoundException fnfe1) {
-	    		   Log.d("dadsadasd", "falle aqui");
-	    		   BeanDatosLog.setDescripcion(Utils.getStackTrace(fnfe1));
-	    	   }
-	    	           catch (Exception e) {
-	    	        	   Log.d("dadsadasd", "falle aca");
-	    	        	   BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
-	    	   }
-
-	    	}
-	    
 	   /**
 	    * cuando el usuario no pone foto de perfil le asignamos una por defecto 
 	    */

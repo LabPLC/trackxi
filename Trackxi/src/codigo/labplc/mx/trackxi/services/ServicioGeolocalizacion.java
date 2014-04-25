@@ -74,6 +74,8 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 	private String uuid;
 	private String telemer;
 	private String correoemer;
+	private String telemer2;
+	private String correoemer2;
 	private String placa;
 	PanicAlert panic;
 	public static boolean countTimer = true;
@@ -139,12 +141,15 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 				           uuid = prefs.getString("uuid", null);
 				           telemer = prefs.getString("telemer", null);
 				           correoemer = prefs.getString("correoemer", null);
+				           telemer2 = prefs.getString("telemer2", null);
+				           correoemer2 = prefs.getString("correoemer2", null);
 				           placa = prefs.getString("placa", null);
 				           
 						panic = new PanicAlert(this.getApplicationContext());
 						panic.activate();
 					    String mensajeEmer=getResources().getString(R.string.sms_emer);
 					   panic.sendSMS(telemer,mensajeEmer);
+					   panic.sendSMS(telemer2,mensajeEmer);
 						isSendMesagge=true;
 	
 					} else {
@@ -372,7 +377,6 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 
     
     public void enviaCorreo(){
-    	Log.d("**************", "CORREO a "+correoemer+";");
     	timer.scheduleAtFixedRate(new TimerTask() {
 
     	    @Override
@@ -383,6 +387,13 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
     	    			panic.getLevelBattery()+"%",
 						getResources().getString(R.string.correo), 
 						correoemer);
+    	    	
+    	    	panic.sendMail("TRAXI",
+    	    			getResources().getString(R.string.panic_estoy_en_peligro)+placa+
+    	    			getResources().getString(R.string.panic_ubicacion)+latitud+","+longitud+getResources().getString(R.string.panic_bateria)+ 
+    	    			panic.getLevelBattery()+"%",
+						getResources().getString(R.string.correo), 
+						correoemer2);
     	    }
     	},
     	0,
@@ -419,11 +430,14 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 		           uuid = prefs.getString("uuid", null);
 		           telemer = prefs.getString("telemer", null);
 		           correoemer = prefs.getString("correoemer", null);
+		           telemer2 = prefs.getString("telemer2", null);
+		           correoemer2 = prefs.getString("correoemer2", null);
 		           placa = prefs.getString("placa", null); 
 		           panic = new PanicAlert(this.getApplicationContext());
 		           panic.activate();
 		           String mensajeEmer= getResources().getString(R.string.sms_emer);
 		           panic.sendSMS(telemer,mensajeEmer);
+		           panic.sendSMS(telemer2,mensajeEmer);
 		           isSendMesagge=true;
 		           algoPaso=false;
 			}

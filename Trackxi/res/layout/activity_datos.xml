@@ -53,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/datos_tv_niveles_confianza"
-            android:textColor="@color/generic_amarillo" />
+            android:textColor="@color/gris_obscuro" />
 
         <LinearLayout
             android:id="@+id/Thermometer_Container"

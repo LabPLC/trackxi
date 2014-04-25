@@ -23,7 +23,7 @@
         android:layout_alignLeft="@+id/inicio_de_trabajo_et_placa"
         android:layout_below="@+id/inicio_de_trabajo_et_placa"
         android:layout_marginTop="20dp"
-        android:background="@color/generic_amarillo" />
+        android:background="@color/gris_obscuro" />
 
     <TextView
         android:id="@+id/inicio_de_trabajo_tv_foto"
@@ -34,7 +34,7 @@
         android:layout_marginBottom="3dp"
         android:layout_marginTop="17dp"
         android:text="@string/inicio_de_trabajo_tv_foto"
-        android:textColor="@color/generic_amarillo"
+        android:textColor="@color/gris_obscuro"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -146,7 +146,7 @@
         android:layout_below="@+id/linearLayout1"
         android:layout_marginTop="3dp"
         android:text="@string/inicio_de_trabajo_tv_nombre"
-        android:textColor="@color/generic_amarillo"
+        android:textColor="@color/gris_obscuro"
         android:textStyle="bold" />
 
     <EditText
