@@ -26,7 +26,7 @@ public class EditTextValidator {
 		SpannableStringBuilder ssbuilder = new SpannableStringBuilder(
 				errorMessage);
 		ssbuilder.setSpan(fgcspan, 0, errorMessage.length(), 0);
-		editText.setError(ssbuilder, context.getResources().getDrawable(R.drawable.ic_launcher));
+		editText.setError(ssbuilder);
 	}
 	
 	public static boolean isEditTextEmpty(EditText editText) {

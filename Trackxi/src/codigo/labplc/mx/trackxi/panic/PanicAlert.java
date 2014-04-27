@@ -42,6 +42,7 @@ public class PanicAlert {
      public void sendSMS(String phoneNumber, String message)
      {
     	 SmsManager smsManager = SmsManager.getDefault();
+    	// Log.d("enviando mensaje ", "numero:"+phoneNumber+".. message"+message);
     	 smsManager.sendTextMessage(phoneNumber, null, message, null, null);
 
       }
@@ -51,8 +52,10 @@ public class PanicAlert {
     	 try {   
     		 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
     		 StrictMode.setThreadPolicy(policy); 
+    	       // Log.d("llave",(Utils.getMAilKey(context))+" tam:"+(Utils.getMAilKey(context).length()) );
              GMailSender sender = new GMailSender(correoRemitente,Utils.getMAilKey(context));
              sender.sendMail(cabecera, mensaje,correoRemitente, correoDestino);  
+           //  Log.d("enviando mail ", "correo:"+correoDestino+".. message"+mensaje);
          } catch (Exception e) {   
         	 BeanDatosLog.setDescripcion(Utils.getStackTrace(e));  
          } 

@@ -23,6 +23,7 @@ import codigo.labplc.mx.trackxi.paginador.Paginador;
 import codigo.labplc.mx.trackxi.registro.MitaxiRegisterManuallyActivity;
 import codigo.labplc.mx.trackxi.services.ServicioGeolocalizacion;
 import codigo.labplc.mx.trackxi.tracking.map.Mapa_tracking;
+import codigo.labplc.mx.trackxi.utils.Utils;
 
 public class TrackxiMainActivity extends Activity {
 
@@ -35,7 +36,7 @@ public class TrackxiMainActivity extends Activity {
 	
 		//guardamos el Tag
 		BeanDatosLog.setTagLog(TAG);		
-		
+	
 		
 		//solicitamos las preferencias del usuario para saber si esta registrado
 		SharedPreferences prefs = getSharedPreferences("MisPreferenciasTrackxi",Context.MODE_PRIVATE);

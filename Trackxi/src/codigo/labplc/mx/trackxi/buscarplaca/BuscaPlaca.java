@@ -102,6 +102,10 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 		LayoutInflater inflater = (LayoutInflater)   getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE); 
 		view = inflater.inflate(R.layout.activity_busca_placa, null);		
 		context.getWindow().setFormat(PixelFormat.UNKNOWN);
+		
+		
+		
+		
 
 		((TextView) view.findViewById(R.id.inicio_de_trabajo_tv_nombre)).setTypeface(new fonts(context).getTypeFace(fonts.FLAG_ROJO));	
 		((TextView) view.findViewById(R.id.inicio_de_trabajo_tv_nombre)).setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
@@ -308,23 +312,20 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 				@Override
 				public void surfaceCreated(SurfaceHolder holder) {
 					if(camera==null){
-						Log.d("***", "if");
 						try{
 							camera = Camera.open();
 							
 						}catch(Exception e){
 							BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
-							Log.d("***zxczxc", Camera.getNumberOfCameras()+"");
 							    try {
 							    	camera = Camera.open(0);
-							    	Log.d("**DFsddfd", Camera.open(0)+":::");
 							    } catch (RuntimeException f) {
-							      Log.e(TAG,  f.getLocalizedMessage());
+									BeanDatosLog.setDescripcion(Utils.getStackTrace(f));
 							  }
 							
 						}
 					}
-					Log.d("***", "sali");
+
 
 				}
 

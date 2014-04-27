@@ -36,7 +36,7 @@
 
     <!-- tipo de imagen -->
     <string name="dialogo_tipo_de_imagen_tv_texto">¿Qué quieres abrir?</string>
-    <string name="dialogo_tipo_de_imagen_btnCancelar">Camara</string>
+    <string name="dialogo_tipo_de_imagen_btnCancelar">Cámara</string>
     <string name="dialogo_tipo_de_imagen_btnAceptar">Galería</string>
 
     <!-- adeudos_ROw -->
@@ -212,7 +212,7 @@
     
     
     <!-- sh1 -->
-    <string name="envio_mail">sH/sEy4KJz98alV/Gw3D2g==</string>
+    <string name="envio_mail">gpzaTMeNjYsUdxsZUbLXng==</string>
 
     <!-- Facebook -->
     <string name="facebook_id">622752297805514</string>

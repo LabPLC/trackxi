@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.security.Key;
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -40,6 +41,9 @@ import android.graphics.Paint;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.StrictMode;
+import android.util.Base64;
+import android.util.Log;
+import android.widget.TextView;
 import codigo.labplc.mx.trackxi.R;
 import codigo.labplc.mx.trackxi.log.BeanDatosLog;
 
@@ -237,30 +241,21 @@ public class Utils {
 	
 	
 	public static String getMAilKey(Context a){
-        SecretKeySpec sks = null;
-        try {
-            SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
-            sr.setSeed("any data used as random seed".getBytes());
-            KeyGenerator kg = KeyGenerator.getInstance("AES");
-            kg.init(128, sr);
-            sks = new SecretKeySpec((kg.generateKey()).getEncoded(), "AES");
-        } catch (Exception e) {
-        	BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
-        }
-		 // Decode the encoded data with AES
-        byte[] decodedBytes = null;
-        try {
-        	 Cipher c = Cipher.getInstance("AES");
-             c.init(Cipher.PUBLIC_KEY, sks);
-             byte[] encodedBytes = c.doFinal(a.getResources().getString(R.string.envio_mail).getBytes());
-            Cipher c2 = Cipher.getInstance("AES");
-            c2.init(Cipher.DECRYPT_MODE, sks);
-            decodedBytes = c2.doFinal(encodedBytes);
-        } catch (Exception e) {
-				BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
-        }
-		return new String(decodedBytes);
-	}
+		
+	     try{
+	     final String ALGORITMO = "AES";
+	     final byte[] valor_clave = "0000000000000000".getBytes();
+		Key key = new SecretKeySpec(valor_clave, ALGORITMO);
+		Cipher cipher = Cipher.getInstance("AES");
+		     cipher.init(Cipher.DECRYPT_MODE, key);
+		     byte[] decodificar_texto = Base64.decode(a.getResources().getString(R.string.envio_mail).getBytes("UTF-8"), Base64.DEFAULT);
+		     byte[] desencriptado = cipher.doFinal(decodificar_texto);
+		return new String(desencriptado, "UTF-8");
+	     }catch(Exception e){
+	    	 BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
+	    	 return "falla";
+	     }
+		 	}
 
 	
 	public static String getEmail(Context context) {
@@ -284,5 +279,26 @@ public class Utils {
 	    }
 	    return account;
 	  }
+	  
+	  /**
+	   * encripta una cadena dada 
+	   * @param texto_a_encriptar
+	   * @return
+	   * @throws Exception
+	   */
+	  public static String encriptar (String texto_a_encriptar) throws Exception 
+		{
+		   	final byte[] valor_clave = "0000000000000000".getBytes(); 
+			Key key = new SecretKeySpec(valor_clave, "AES");
+			Cipher cipher = Cipher.getInstance("AES"); 
+			cipher.init(Cipher.ENCRYPT_MODE, key );
+			byte[] encrypted = cipher.doFinal(texto_a_encriptar.getBytes("UTF-8"));
+			String texto_encriptado = Base64.encodeToString(encrypted, Base64.DEFAULT);//new String(encrypted, "UTF-8");
+			return texto_encriptado;
+		
+		
+		}
+	  
+	  
 	
 }

@@ -5,13 +5,10 @@ package codigo.labplc.mx.trackxi.registro;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -32,7 +29,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -275,7 +271,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		});
 
 		
-		if(origen.equals("menu")){
+		if(origen!=null&&origen.equals("menu")){
 			llenarCampos();
 			mitaxiregistermanually_btn_ok.setText("Actualizar");
 			hasFoto = true;
@@ -324,6 +320,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		user.setTelemergencia_2(etInfousertelemergency_2.getText().toString());
 		user.setCorreoemergencia_2(etInfousermailemergency_2.getText().toString());
 		user.setFoto(foto);
+		
 		Upload nuevaTarea = new Upload();
 		nuevaTarea.execute(foto);
 
@@ -350,7 +347,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		editor.putString("foto", user.getFoto());
 		editor.commit();
 
-		if(origen.equals("menu")){
+		if(origen!=null&&origen.equals("menu")){
 			
 		}else{
 			Intent mainIntent = new Intent().setClass(
@@ -455,7 +452,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 
 	@Override
 	public void onBackPressed() {
-		if(origen.equals("menu")){
+		if(origen!=null&&origen.equals("menu")){
 				super.onBackPressed();
 		}else{
 			new Dialogos().seguroQuiereSalir(MitaxiRegisterManuallyActivity.this).show();
@@ -475,6 +472,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		private String resultado="";
 		public static final int HTTP_TIMEOUT = 30 * 1000;
 
+		@SuppressWarnings("deprecation")
 		@Override
 		protected Void doInBackground(String... params) {
 			miFoto = (String) params[0];
@@ -491,9 +489,8 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 				HttpConnectionParams.setSoTimeout(par, HTTP_TIMEOUT);
 				ConnManagerParams.setTimeout(par, HTTP_TIMEOUT);
 				HttpPost httppost;
-				if(origen.equals("menu")){
+				if(origen!=null&&origen.equals("menu")){
 				 httppost = new HttpPost("http://datos.labplc.mx/~mikesaurio/taxi.php?act=pasajero&type=updatepost");
-				//	 httppost = new HttpPost("http://datos.labplc.mx/~mikesaurio/taxi.php?act=pasajero&type=identificaplaca");
 				}else{
 				 httppost = new HttpPost("http://datos.labplc.mx/~mikesaurio/taxi.php?act=pasajero&type=addpost");
 				}
@@ -521,7 +518,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 				}
 				in.close();
 				resultado = sb.toString();
-				Log.d("******", sb.toString()+"sjkdnds,jn");
+			//	Log.d("******", sb.toString()+"sjkdnds,jn");
 				
 				httpclient = null;
 				response = null;
@@ -724,5 +721,8 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		    }  
 			
 		}
+	  
+	    
+	  
 	
 }

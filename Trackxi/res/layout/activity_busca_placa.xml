@@ -72,7 +72,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:background="@color/black"
+                android:background="@drawable/degradado_camara"
                 android:text="" />
 
             <View
@@ -82,7 +82,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/textView1"
-                android:background="@color/black" />
+                android:background="@drawable/degradado_camara_inferior" />
 
             <View
                 android:id="@+id/textView4"
@@ -91,7 +91,7 @@
                 android:layout_alignBottom="@+id/textView1"
                 android:layout_alignParentLeft="true"
                 android:layout_alignTop="@+id/textView1"
-                android:background="@color/black" />
+                android:background="@drawable/degradado_camara_lado" />
 
             <View
                 android:id="@+id/textView5"
@@ -100,7 +100,7 @@
                 android:layout_above="@+id/textView3"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/textView2"
-                android:background="@color/black" />
+                android:background="@drawable/degradado_camara_lado" />
 
             <View
                 android:id="@+id/textView6"
