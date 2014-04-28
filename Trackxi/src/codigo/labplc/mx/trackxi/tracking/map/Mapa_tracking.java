@@ -22,6 +22,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
@@ -71,11 +72,11 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 	ArrayList<String> pointsLon;
 	ArrayList<InfoPoint> InfoPoint = null;
 	private LatLng taxiPosition = null;
-	private static String direccion_destino= null;
+	public static String direccion_destino= null;
 	private boolean isFirstLocation= true;
 	private String tiempo;
 	private String distancia;
-	
+	private boolean isButtonExit = true;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -121,6 +122,7 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 		
 			@Override
 			public void onClick(View v) {
+				isButtonExit= false;
 				Intent intent_califica = new Intent(Mapa_tracking.this, Califica_taxi.class);
 				startActivity(intent_califica);
 				finish();
@@ -143,6 +145,8 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 	    	 @Override
 			public void onClick(View v) {
 		           if(!actvDestination.getText().toString().equals("")){
+		        	   InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+		        	   imm.hideSoftInputFromWindow(actvDestination.getWindowToken(), 0);
 		        	   llenarMapaConDestino();
 		           }else{
 		        	  
@@ -157,7 +161,9 @@ public class Mapa_tracking extends Activity implements OnItemClickListener {
 	
 	 @Override
 	protected void onStop() {
+		 if(isButtonExit){
 		ServicioGeolocalizacion.showNotification();
+		 }
 		super.onStop();
 	}
 

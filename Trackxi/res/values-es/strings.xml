@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- textNuevos -->
+    <string name="mitaxiregister_et_mailemergency_hint_2">correo emergencia</string>
+    <string name="mitaxiregister_et_telemergency_hint_2">celular emergencia</string>
+    
     <!-- general -->
     <string name="app_name">Traxi</string>
     <string name="action_settings">Configuración</string>
     <string name="action_cuenta">Cuenta</string>
-    <string name="action_help">Ayuda</string>
+    <string name="action_help">Guía</string>
     <string name="hello_world">Hello world!</string>
 
     <!-- actionBar -->
@@ -28,10 +32,11 @@
     <string name="mitaxiregister_et_teluser_hint">Teléfono</string>
     <string name="mitaxiregister_et_telemergency_hint">celular emergencia</string>
     <string name="mitaxiregistermanually_btn_contactos">+</string>
+     <string name="no_foto_add">Agrega una imagen</string>
 
     <!-- tipo de imagen -->
     <string name="dialogo_tipo_de_imagen_tv_texto">¿Qué quieres abrir?</string>
-    <string name="dialogo_tipo_de_imagen_btnCancelar">Camara</string>
+    <string name="dialogo_tipo_de_imagen_btnCancelar">Cámara</string>
     <string name="dialogo_tipo_de_imagen_btnAceptar">Galería</string>
 
     <!-- adeudos_ROw -->
@@ -201,7 +206,13 @@
 
     <!-- Pass -->
     <string name="correo">mitraxisaurio@gmail.com</string>
-    <string name="pass">Tr4x154ur10</string>
+   
+    <!-- comentario -->
+    <string name="sin_comentario">Este taxi no tiene comentarios</string>
+    
+    
+    <!-- sh1 -->
+    <string name="envio_mail">gpzaTMeNjYsUdxsZUbLXng==</string>
 
     <!-- Facebook -->
     <string name="facebook_id">622752297805514</string>

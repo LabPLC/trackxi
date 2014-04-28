@@ -51,7 +51,7 @@ public class Datos extends View {
 		view = inflater.inflate(R.layout.activity_datos, null);
 		
 		((TextView) view.findViewById(R.id.datos_tv_niveles_confianza)).setTypeface(new fonts(context).getTypeFace(fonts.FLAG_MAMEY));	
-		((TextView) view.findViewById(R.id.datos_tv_niveles_confianza)).setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_AMARILLO));
+		((TextView) view.findViewById(R.id.datos_tv_niveles_confianza)).setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
 		
 	//	((TextView) view.findViewById(R.id.datos_tv_calif_usuario)).setTypeface(new fonts(context).getTypeFace(fonts.FLAG_MAMEY));	
 	//	((TextView) view.findViewById(R.id.datos_tv_calif_usuario)).setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_AMARILLO));

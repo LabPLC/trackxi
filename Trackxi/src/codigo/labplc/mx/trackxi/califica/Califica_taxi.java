@@ -1,5 +1,8 @@
 package codigo.labplc.mx.trackxi.califica;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -32,11 +35,8 @@ public class Califica_taxi extends Activity {
 	RatingBar rank;
 	private String Scalificacion = "0";
 	private String Scomentario;
-	@Override
-	protected void onStart() {
-		ServicioGeolocalizacion.stopNotification();
-		super.onStart();
-	}
+	
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +45,7 @@ public class Califica_taxi extends Activity {
 		setContentView(R.layout.activity_califica_taxi);
 
 		BeanDatosLog.setTagLog(TAG);
+		
 		
 	    ((TextView) findViewById(R.id.califica_taxi_tv_titulo)).setTypeface(new fonts(Califica_taxi.this).getTypeFace(fonts.FLAG_MAMEY));	
 		((TextView) findViewById(R.id.califica_taxi_tv_titulo)).setTextColor(new fonts(Califica_taxi.this).getColorTypeFace(fonts.FLAG_ROJO));
@@ -85,6 +86,10 @@ public class Califica_taxi extends Activity {
 				String id_usuario = prefs.getString("uuid", null);
 				Scomentario=comentario.getText().toString().replaceAll(" ", "+");
 				if(!Scomentario.equals("")){
+					Calendar c = Calendar.getInstance();
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd+HH:mm:ss");
+					 String finViaje = sdf.format(c.getTime());
+					 
 					String url= "http://datos.labplc.mx/~mikesaurio/taxi.php?act=pasajero&type=addcomentario"
 							+"&id_usuario="+id_usuario
 							+"&calificacion="+Scalificacion
@@ -94,7 +99,9 @@ public class Califica_taxi extends Activity {
 							+"&pointinilat="+ServicioGeolocalizacion.latitud_inicial
 							+"&pointinilon="+ServicioGeolocalizacion.longitud_inicial
 							+"&pointfinlat="+ServicioGeolocalizacion.latitud
-							+"&pointfinlon="+ServicioGeolocalizacion.longitud;
+							+"&pointfinlon="+ServicioGeolocalizacion.longitud
+							+"&horainicio="+ServicioGeolocalizacion.horaInicio
+							+"&horafin="+finViaje;
 					
 					
 					//Log.d("**************", url+"");
@@ -127,5 +134,10 @@ public class Califica_taxi extends Activity {
 	public void onBackPressed() {
 	}
 	
-
+	@Override
+	protected void onStart() {
+		ServicioGeolocalizacion.stopNotification();
+		super.onStart();
+	}
+	
 }

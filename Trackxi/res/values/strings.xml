@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+        <!-- textNuevos -->
+    <string name="mitaxiregister_et_mailemergency_hint_2">emergency contact email</string>
+    <string name="mitaxiregister_et_telemergency_hint_2">Emergency number</string>
+    
     <!-- general -->
     <string name="app_name">Traxi</string>
     <string name="action_settings">Settings</string>
     <string name="action_cuenta">Acount</string>
-    <string name="action_help">Help</string>
+    <string name="action_help">Guia</string>
     <string name="hello_world">Hello world!</string>
 
     <!-- actionBar -->
@@ -21,13 +25,14 @@
     <string name="mitaxiregister_error_string">Write a valid word [a-z A-Z].</string>
     <string name="mitaxiregister_error_number">Write a valid number [0 9].</string>
     <string name="mitaxiregister_error_email">Your email is wrong.</string>
-    <string name="mitaxiregister_empty">You can't leave any blank fields.</string>
+    <string name="mitaxiregister_empty">You can not leave any blank fields.</string>
     <string name="mitaxiregister_tv_title">Sign up</string>
     <string name="mitaxiregister_et_name_hint">user</string>
     <string name="mitaxiregister_et_email_hint">example@mail.com</string>
     <string name="mitaxiregister_et_teluser_hint">Telephone</string>
     <string name="mitaxiregister_et_telemergency_hint">Emergency number</string>
     <string name="mitaxiregistermanually_btn_contactos">+</string>
+    <string name="no_foto_add">Add a picture</string>
 
     <!-- tipo de imagen -->
     <string name="dialogo_tipo_de_imagen_tv_texto">What do you want to open?</string>
@@ -39,7 +44,7 @@
     <string name="adeudos_row_descripcion">Description</string>
     <string name="mitaxiregister_et_mailemergency_hint">emergency contact email</string>
     <string name="mitaxiregister_et_paraque">Why?</string>
-    <string name="mitaxiregister_et_emergencias">Emergency contact</string>
+    <string name="mitaxiregister_et_emergencias">Emergency contacts</string>
     <string name="mitaxiregister_btn_cancel">Cancel</string>
     <string name="mitaxiregister_btn_ok">Sign up</string>
 
@@ -85,7 +90,7 @@
     <string name="texto_calificacion_60">This vehicle is a low risk taxi because it is registered as a taxi but has some inconsistencies. If you decide to board it, we advice you to stay alert.</string>
     <string name="texto_calificacion_80">This is a trusted vehicle because it is registered as a taxi but has some problems. We advice you to stay alert </string>
     <string name="texto_calificacion_90">This is a well-trusted vehicle but it can get better. We advice you as always to stay alert</string>
-    <string name="texto_calificacion_100">Congratulations! You found a very trusted taxi and you will have a pleasant trip. Howeve, since your security comes first, stay alert!</string>
+    <string name="texto_calificacion_100">Congratulations! You found a very trusted taxi and you will have a pleasant trip. However, since your security comes first, stay alert!</string>
     <string name="texto_significado_calif"> What does this score means?</string>
 
     <!-- buscar placa -->
@@ -144,7 +149,7 @@
 
     <!-- dialogo calificar taxis -->
     <string name="califica_taxi_tv_titulo">Help us rate the service</string>
-    <string name="califica_taxi_tv_titulo_calif">Did you like this taxi's service?</string>
+    <string name="califica_taxi_tv_titulo_calif">Did you like this service?</string>
     <string name="califica_taxi_tv_titulo_opinion">Give us your feedback</string>
     <string name="dialogo_califica_servicio_et_comentario">This service was...</string>
     <string name="dialogo_califica_servicio_btnCancelar">End</string>
@@ -163,7 +168,7 @@
     <string name="datos_tv_descripcion">blablablabla</string>
 
     <!-- TOAST -->
-    <string name="foto_fallida">We couldn't upload your photo! Try again</string>
+    <string name="foto_fallida">We could not upload your photo! Try again</string>
     <string name="le_puso"> rated </string>
     <string name="estrellas"> stars</string>
     <string name="imagen_muy_grande">The image is too big!</string>
@@ -178,7 +183,7 @@
 
     <string name="cargando_info">Loading, please wait....</string>
     <string name="cargando_foto">Processing picture, please wait....</string>
-    <string name="sms_emer">I'm in danger! You are my emergency contact, please check your email</string>
+    <string name="sms_emer">I am in danger! You are my emergency contact, please check your email</string>
 
     <!-- Mapa -->
     <string name="mapa_inicio_de_viaje">Trip start</string>
@@ -193,15 +198,20 @@
     <string name="notificacion_finalizar">End trip</string>
 
     <!-- panic -->
-    <string name="panic_estoy_en_peligro">I'm in danger in a taxi with licence plates:</string>
+    <string name="panic_estoy_en_peligro">I am in danger in a taxi with licence plates:</string>
     <string name="panic_ubicacion">\tmy location is https://www.google.com.mx/maps/place/</string>
     <string name="panic_bateria">\tbattery:</string>
     <string name="panic_todo_bien">Are you OK?</string>
     <string name="panic_tocame">Press me if you are fine.</string>
 
-    <!-- Pass -->
+    <!-- mail -->
     <string name="correo">mitraxisaurio@gmail.com</string>
-    <string name="pass">Tr4x154ur10</string>
+    
+      <!-- comentario -->
+    <string name="sin_comentario">there ara no comments for this taxi</string>
+    
+    <!-- sh1 -->
+    <string name="envio_mail">gpzaTMeNjYsUdxsZUbLXng==</string>
 
     <!-- Facebook -->
     <string name="facebook_id">622752297805514</string>

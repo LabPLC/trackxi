@@ -12,14 +12,19 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
+import android.content.Intent;
 import android.os.StrictMode;
 import android.util.Log;
+import codigo.labplc.mx.trackxi.Traxi;
+import codigo.labplc.mx.trackxi.services.ServicioGeolocalizacion;
  
 public  class HockeySender implements ReportSender {
   public static final int HTTP_TIMEOUT = 30 * 1000;
+  Traxi activity;
   String url;
  
-  public HockeySender(String envio) {
+  public HockeySender(Traxi traxi, String envio) {
+	  activity= traxi;
 	   url = envio;
 }
 
@@ -27,6 +32,10 @@ public  class HockeySender implements ReportSender {
   public void send(CrashReportData report) throws ReportSenderException {
 	
     try {
+    	Intent svc = new Intent(activity, ServicioGeolocalizacion.class);
+    	activity.stopService(svc);
+    	
+    	
     	System.setProperty("http.keepAlive", "false");
 		HttpClient httpclient = new DefaultHttpClient();
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();

@@ -60,7 +60,7 @@
                 android:background="@drawable/selector_btn_generic"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:text="Iniciar Viaje"
+                android:text="@string/mapa_inicio_de_viaje"
                 android:textColor="@drawable/selector_txt_boton_redondo" />
 
             <!--

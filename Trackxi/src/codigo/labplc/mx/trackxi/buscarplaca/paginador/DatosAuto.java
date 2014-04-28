@@ -21,6 +21,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -105,6 +106,8 @@ public class DatosAuto extends FragmentActivity{
 		
 		Bundle bundle = getIntent().getExtras();
 		placa = bundle.getString("placa");	
+		
+	
 		
 
 		SharedPreferences prefs = getSharedPreferences("MisPreferenciasTrackxi", Context.MODE_PRIVATE);
@@ -366,9 +369,8 @@ public class DatosAuto extends FragmentActivity{
 	class Upload extends AsyncTask<String, Void, Void> {
 
 		private ProgressDialog pDialog;;
-		public static final int HTTP_TIMEOUT = 30 * 1000;
+		public static final int HTTP_TIMEOUT = 40 * 1000;
 
-		@SuppressWarnings("deprecation")
 		@Override
 		protected Void doInBackground(String... params) {
 			try
@@ -377,6 +379,7 @@ public class DatosAuto extends FragmentActivity{
 				
 				mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 				titleIndicator = (CirclePageIndicator) findViewById(R.id.indicator_dialg);
+				
 				DatosAuto.this.pager = (ViewPager) DatosAuto.this.findViewById(R.id.pager_dialog);
 				DatosAuto.this.pager.setOffscreenPageLimit(4);
 				autoBean= new AutoBean();

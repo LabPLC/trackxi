@@ -71,6 +71,9 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 	private Activity context;
 	private View view;
 	private String foto;
+	private String resultado="";
+	
+
 
 	public BuscaPlaca(Activity context) {
 		super(context);
@@ -99,11 +102,15 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 		LayoutInflater inflater = (LayoutInflater)   getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE); 
 		view = inflater.inflate(R.layout.activity_busca_placa, null);		
 		context.getWindow().setFormat(PixelFormat.UNKNOWN);
+		
+		
+		
+		
 
 		((TextView) view.findViewById(R.id.inicio_de_trabajo_tv_nombre)).setTypeface(new fonts(context).getTypeFace(fonts.FLAG_ROJO));	
-		((TextView) view.findViewById(R.id.inicio_de_trabajo_tv_nombre)).setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_AMARILLO));
+		((TextView) view.findViewById(R.id.inicio_de_trabajo_tv_nombre)).setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
 		((TextView) view.findViewById(R.id.inicio_de_trabajo_tv_foto)).setTypeface(new fonts(context).getTypeFace(fonts.FLAG_ROJO));
-		((TextView) view.findViewById(R.id.inicio_de_trabajo_tv_foto)).setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_AMARILLO));
+		((TextView) view.findViewById(R.id.inicio_de_trabajo_tv_foto)).setTextColor(new fonts(context).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
 
 
 		surfaceView = (SurfaceView) view.findViewById(R.id.camerapreview);
@@ -119,7 +126,11 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 			@Override
 			public void onClick(View v) {
 				try{
-					camera.takePicture(myShutterCallback,myPictureCallback_RAW, myPictureCallback_JPG);
+					if(Utils.hasInternet(context)){
+						camera.takePicture(myShutterCallback,myPictureCallback_RAW, myPictureCallback_JPG);
+					}else{
+						Dialogos.Toast(context, "No tienes Internet", Toast.LENGTH_LONG);
+					}
 				}catch(Exception e){
 					BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 				}
@@ -162,14 +173,19 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 					//buscando datos del carro en el servidor
 					try {
 						//cerramos el teclado
-						InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
-						imm.hideSoftInputFromWindow(placa.getWindowToken(), 0);
-						Intent intent= new Intent().setClass(context,DatosAuto.class);
-						intent.putExtra("placa", Splaca);
-						context.startActivityForResult(intent, 0);
+						if(Utils.hasInternet(context)){
+							InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+							imm.hideSoftInputFromWindow(placa.getWindowToken(), 0);
+							Intent intent= new Intent().setClass(context,DatosAuto.class);
+							intent.putExtra("placa", Splaca);
+							context.startActivityForResult(intent, 0);
+							context.finish();
+							placa.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
+						}else{
+							Dialogos.Toast(context, "No tienes Internet", Toast.LENGTH_LONG);
+						}
 						placa.setText("");
-						context.finish();
-						placa.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
+						
 					} catch (Exception e) {
 						BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 						placa.setText("");
@@ -221,11 +237,12 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 				public void onPictureTaken(byte[] arg0, Camera arg1) {
 					Bitmap bitmapPicture  =  BitmapFactory.decodeByteArray(arg0, 0, arg0.length);	
 					System.gc();
+					Runtime.getRuntime().gc();
 					Matrix mat = new Matrix();
 					mat.postRotate(90);
-					Bitmap bMapRotate = Bitmap.createBitmap(bitmapPicture, 0, 0,bitmapPicture.getWidth(), bitmapPicture.getHeight(), mat, true);
-					int alto_num = bMapRotate.getHeight()/12;
-					Bitmap esizedbitmap1 = Bitmap.createBitmap(bMapRotate,0,(alto_num*5),bMapRotate.getWidth(),(alto_num*2));
+					//Bitmap bMapRotate = Bitmap.createBitmap(bitmapPicture, 0, 0,bitmapPicture.getWidth(), bitmapPicture.getHeight(), mat, true);
+					int alto_num = bitmapPicture.getHeight()/12;
+					Bitmap esizedbitmap1 = Bitmap.createBitmap(bitmapPicture,0,(alto_num*5),bitmapPicture.getWidth(),(alto_num*2),mat,true);
 					Bitmap	resized = Utils.toGrayscale(Bitmap.createScaledBitmap(esizedbitmap1,(int)(esizedbitmap1.getWidth()*0.5), (int)(esizedbitmap1.getHeight()*0.5), true));
 					try{
 						File file = new File(foto);
@@ -297,32 +314,52 @@ public class BuscaPlaca extends View implements SurfaceHolder.Callback {
 					if(camera==null){
 						try{
 							camera = Camera.open();
+							
 						}catch(Exception e){
 							BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
+							    try {
+							    	camera = Camera.open(0);
+							    } catch (RuntimeException f) {
+									BeanDatosLog.setDescripcion(Utils.getStackTrace(f));
+							  }
+							
 						}
 					}
+
 
 				}
 
 				@Override
 				public void surfaceDestroyed(SurfaceHolder holder) {
+					try{
 					camera.stopPreview();
 					camera.release();
 					camera = null;
 					previewing = false;
+					}catch(Exception e){
+						BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
+					}
 				}
 
+				/**
+				 * metodo GET que regresa una vista
+				 * @return View (Vista generada)
+				 */
 				public View getView(){
 					return view;
 				}
 
 
-
+/**
+ * Calse que envia la foto por POST al servidor para ser analizada regresa el OCR
+ * @author mikesaurio
+ *
+ */
 				class Uploaded extends AsyncTask<String, Void, Void> {
 
 					private ProgressDialog pDialog;
 					private String miFoto = "";
-					private String resultado;
+					
 					public static final int HTTP_TIMEOUT = 60 * 1000;
 					@Override
 					protected Void doInBackground(String... params) {

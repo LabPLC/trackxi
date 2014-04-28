@@ -8,26 +8,25 @@ import android.view.Menu;
 
 public class Activity_null extends Activity {
 
-	public static int cuenta=0;
-	public static int cuenta_dest=0;
+	public static int cuenta = 0;
+	public static int cuenta_dest = 0;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		ServicioGeolocalizacion.setPanicoActivado(true);
-	this.finish();
-		
+		this.finish();
+
 	}
 
-@Override
+	@Override
 	protected void onDestroy() {
-	if(cuenta>0){
-	ServicioGeolocalizacion.setPanicoActivado(false);
-	cuenta = 0;
-	}else{
-		cuenta+=1;
-	}
+		if (cuenta > 0) {
+			ServicioGeolocalizacion.setPanicoActivado(false);
+			cuenta = 0;
+		} else {
+			cuenta += 1;
+		}
 		super.onDestroy();
 	}
-	
 
 }

@@ -23,7 +23,7 @@
         android:layout_alignLeft="@+id/inicio_de_trabajo_et_placa"
         android:layout_below="@+id/inicio_de_trabajo_et_placa"
         android:layout_marginTop="20dp"
-        android:background="@color/generic_amarillo" />
+        android:background="@color/gris_obscuro" />
 
     <TextView
         android:id="@+id/inicio_de_trabajo_tv_foto"
@@ -34,7 +34,7 @@
         android:layout_marginBottom="3dp"
         android:layout_marginTop="17dp"
         android:text="@string/inicio_de_trabajo_tv_foto"
-        android:textColor="@color/generic_amarillo"
+        android:textColor="@color/gris_obscuro"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -72,7 +72,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:background="@color/black"
+                android:background="@drawable/degradado_camara"
                 android:text="" />
 
             <View
@@ -82,7 +82,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/textView1"
-                android:background="@color/black" />
+                android:background="@drawable/degradado_camara_inferior" />
 
             <View
                 android:id="@+id/textView4"
@@ -91,7 +91,7 @@
                 android:layout_alignBottom="@+id/textView1"
                 android:layout_alignParentLeft="true"
                 android:layout_alignTop="@+id/textView1"
-                android:background="@color/black" />
+                android:background="@drawable/degradado_camara_lado" />
 
             <View
                 android:id="@+id/textView5"
@@ -100,7 +100,7 @@
                 android:layout_above="@+id/textView3"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/textView2"
-                android:background="@color/black" />
+                android:background="@drawable/degradado_camara_lado" />
 
             <View
                 android:id="@+id/textView6"
@@ -146,7 +146,7 @@
         android:layout_below="@+id/linearLayout1"
         android:layout_marginTop="3dp"
         android:text="@string/inicio_de_trabajo_tv_nombre"
-        android:textColor="@color/generic_amarillo"
+        android:textColor="@color/gris_obscuro"
         android:textStyle="bold" />
 
     <EditText

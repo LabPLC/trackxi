@@ -5,12 +5,10 @@ package codigo.labplc.mx.trackxi.registro;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.InputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -66,36 +64,30 @@ import codigo.labplc.mx.trackxi.utils.Utils;
 
 public class MitaxiRegisterManuallyActivity extends Activity {
 	
-	
-	
-	
-	
 	public final String TAG = this.getClass().getSimpleName();
 	
 	private int RESULT_LOAD_IMAGE = 100;
 	private int RESULT_LOAD_FOTO = 200;
 	private int RESULT_LOAD_CONTACT = 300;
-	  private String selectedImagePath;
-	
+	private int RESULT_LOAD_CONTACT_2 = 400;
 
 	private AlertDialog customDialog = null; // Creamos el dialogo generico
-
 	private EditText etInfousername;
 	private EditText etInfouseremail;
 	private EditText etInfousertelemergency;
 	private EditText etInfousermailemergency;
+	private EditText etInfousertelemergency_2;
+	private EditText etInfousermailemergency_2;
 	private ImageView txtparaque;
 	private ImageView userfoto;
 	private String foto;
 	private UserBean user;
 	private boolean hasFoto = false;
 	String origen;
-	 String fotoNotFull;
+	String fotoNotFull;
+	  private String selectedImagePath;
 	
-//	private FacebookLogin facebookLogin;
-	private Button btnLogin;
-
-	private boolean[] listHasErrorEditText = { false, false, false, false };
+	private boolean[] listHasErrorEditText = { false, false, false, false, false, false };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +133,10 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		etInfousername.setTextColor(new fonts(this).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
 		
 		etInfouseremail = (EditText) findViewById(R.id.mitaxiregistermanually_et_infouseremail);
+		etInfouseremail.setText(Utils.getEmail(getApplicationContext()));
+		if(!etInfouseremail.getText().toString().equals("")){
+			etInfouseremail.setEnabled(false);
+		}
 		etInfouseremail.setTypeface(new fonts(this).getTypeFace(fonts.FLAG_ROJO));
 		etInfouseremail.setTextColor(new fonts(this).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
 
@@ -153,10 +149,20 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		etInfousermailemergency = (EditText) findViewById(R.id.mitaxiregistermanually_et_correoemer);
 		etInfousermailemergency.setTypeface(new fonts(this).getTypeFace(fonts.FLAG_ROJO));
 		etInfousermailemergency.setTextColor(new fonts(this).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
+		
+		etInfousertelemergency_2 = (EditText) findViewById(R.id.mitaxiregistermanually_et_telemer_2);
+		etInfousertelemergency_2.setTypeface(new fonts(this).getTypeFace(fonts.FLAG_ROJO));
+		etInfousertelemergency_2.setTextColor(new fonts(this).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
+
+		
+		etInfousermailemergency_2 = (EditText) findViewById(R.id.mitaxiregistermanually_et_correoemer_2);
+		etInfousermailemergency_2.setTypeface(new fonts(this).getTypeFace(fonts.FLAG_ROJO));
+		etInfousermailemergency_2.setTextColor(new fonts(this).getColorTypeFace(fonts.FLAG_GRIS_OBSCURO));
 
 
 		
 		Button contacto_emer = (Button) findViewById(R.id.mitaxiregistermanually_btn_contactos);
+		contacto_emer.setTypeface(new fonts(this).getTypeFace(fonts.FLAG_ROJO));
 		contacto_emer.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -166,6 +172,18 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 			}
 		});
 
+		Button contacto_emer_2 = (Button) findViewById(R.id.mitaxiregistermanually_btn_contactos_2);
+		contacto_emer_2.setTypeface(new fonts(this).getTypeFace(fonts.FLAG_ROJO));
+		contacto_emer_2.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(Intent.ACTION_PICK,Contacts.CONTENT_URI);
+				startActivityForResult(intent, RESULT_LOAD_CONTACT_2);
+			}
+		});
+
+		
 		userfoto = (ImageView) findViewById(R.id.mitaxiregistermanually_im_fotousuario);
 		userfoto.setOnClickListener(new View.OnClickListener() {
 
@@ -192,6 +210,8 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		etInfouseremail.setTag(RegularExpressions.KEY_IS_EMAIL);
 		etInfousertelemergency.setTag(RegularExpressions.KEY_IS_NUMBER);
 		etInfousermailemergency.setTag(RegularExpressions.KEY_IS_EMAIL);
+		etInfousertelemergency_2.setTag(RegularExpressions.KEY_IS_NUMBER);
+		etInfousermailemergency_2.setTag(RegularExpressions.KEY_IS_EMAIL);
 
 		etInfousername.addTextChangedListener(new EditTextValidator().new CurrencyTextWatcher(
 						getBaseContext(), etInfousername, listHasErrorEditText,0));
@@ -201,6 +221,10 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 						getBaseContext(), etInfousertelemergency,listHasErrorEditText, 2));
 		etInfousermailemergency.addTextChangedListener(new EditTextValidator().new CurrencyTextWatcher(
 						getBaseContext(), etInfousermailemergency,listHasErrorEditText, 3));
+		etInfousertelemergency_2.addTextChangedListener(new EditTextValidator().new CurrencyTextWatcher(
+				getBaseContext(), etInfousertelemergency_2,listHasErrorEditText, 4));
+		etInfousermailemergency_2.addTextChangedListener(new EditTextValidator().new CurrencyTextWatcher(
+				getBaseContext(), etInfousermailemergency_2,listHasErrorEditText, 5));
 		
 	Button mitaxiregistermanually_btn_ok =(Button)findViewById(R.id.mitaxiregistermanually_btn_ok);
 	mitaxiregistermanually_btn_ok.setTypeface(new fonts(this).getTypeFace(fonts.FLAG_AMARILLO));
@@ -208,27 +232,33 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		
 		@Override
 		public void onClick(View v) {
-			if (!isAnyEditTextEmpty() && hasFoto) {
+			if (!isAnyEditTextEmpty()) {
 				if (!hasErrorEditText()) {
 					if (Utils.isNetworkConnectionOk(getBaseContext())) {
 						try {
+							if(!hasFoto){
+								guardarImagenEstatica();
+								hasFoto=true;
+							}
 							saveUserInfo();
 						} catch (JSONException e) {
-							Log.d("error 301", "error fatal :(");	
+							BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 						}
 					} else {
-						Log.d("error 302", getString(R.string.no_internet_connection));
-						
+						Log.d("error 302", getString(R.string.no_internet_connection));						
+					//	Dialogos.Toast(getApplicationContext(), getString(R.string.no_foto_add), Toast.LENGTH_LONG);
 					}
 				} else {
-					Toast.makeText(getApplicationContext(),getString(R.string.edittext_wrong_info),Toast.LENGTH_LONG).show();
+					Dialogos.Toast(MitaxiRegisterManuallyActivity.this,getString(R.string.edittext_wrong_info),Toast.LENGTH_LONG);
 
 				}
 			} else {
-				Toast.makeText(getApplicationContext(),getString(R.string.edittext_emtpy),Toast.LENGTH_LONG).show();
+					Dialogos.Toast(MitaxiRegisterManuallyActivity.this,getString(R.string.edittext_emtpy),Toast.LENGTH_LONG);
 
 			}
 		}
+
+		
 	});
 		Button mitaxiregistermanually_btn_cancel=(Button)findViewById(R.id.mitaxiregistermanually_btn_cancel);
 		mitaxiregistermanually_btn_cancel.setTypeface(new fonts(this).getTypeFace(fonts.FLAG_AMARILLO));
@@ -241,7 +271,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		});
 
 		
-		if(origen.equals("menu")){
+		if(origen!=null&&origen.equals("menu")){
 			llenarCampos();
 			mitaxiregistermanually_btn_ok.setText("Actualizar");
 			hasFoto = true;
@@ -257,6 +287,8 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		etInfouseremail.setEnabled(false);
 		etInfousertelemergency.setText(prefs.getString("telemer", null));
 		etInfousermailemergency.setText(prefs.getString("correoemer", null));
+		etInfousertelemergency_2.setText(prefs.getString("telemer2", null));
+		etInfousermailemergency_2.setText(prefs.getString("correoemer2", null));
 		foto = prefs.getString("foto", null);
 		File file = new File(foto);
 		if (file.exists()) {
@@ -285,7 +317,10 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		user.setCorreo(etInfouseremail.getText().toString());
 		user.setTelemergencia(etInfousertelemergency.getText().toString());
 		user.setCorreoemergencia(etInfousermailemergency.getText().toString());
+		user.setTelemergencia_2(etInfousertelemergency_2.getText().toString());
+		user.setCorreoemergencia_2(etInfousermailemergency_2.getText().toString());
 		user.setFoto(foto);
+		
 		Upload nuevaTarea = new Upload();
 		nuevaTarea.execute(foto);
 
@@ -306,11 +341,13 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		editor.putString("correo", user.getCorreo());
 		editor.putString("telemer", user.getTelemergencia());
 		editor.putString("correoemer", user.getCorreoemergencia());
+		editor.putString("telemer2", user.getTelemergencia_2());
+		editor.putString("correoemer2", user.getCorreoemergencia_2());
 		editor.putString("uuid", user.getUUID());
 		editor.putString("foto", user.getFoto());
 		editor.commit();
 
-		if(origen.equals("menu")){
+		if(origen!=null&&origen.equals("menu")){
 			
 		}else{
 			Intent mainIntent = new Intent().setClass(
@@ -338,59 +375,14 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 			empty = true;
 		if (EditTextValidator.isEditTextEmpty(etInfousermailemergency))
 			empty = true;
+		if(EditTextValidator.isEditTextEmpty(etInfousertelemergency_2))
+			empty = true;
+		if(EditTextValidator.isEditTextEmpty(etInfousermailemergency_2))
+			empty = true;
 		return empty;
 	}
 
-	/*
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		
-		
-		if (requestCode == RESULT_LOAD_FOTO) {
-			File file = new File(foto);
-			if (file.exists()) {
-				Bitmap myBitmap = BitmapFactory.decodeFile(file
-						.getAbsolutePath());
-				Matrix mat = new Matrix();
-				mat.postRotate(-90);
-				Bitmap bMapRotate = Bitmap.createBitmap(myBitmap, 0, 0,
-						myBitmap.getWidth(), myBitmap.getHeight(), mat, true);
-				userfoto.setImageBitmap(bMapRotate);
-				hasFoto = true;
-			}
-
-		}else if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK	&& null != data) {
-	 						Uri imageUri = data.getData();
-	 			  			Bitmap myBitmap;
-	 			  			try {
-	 			  				myBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-	 			  				userfoto.setImageBitmap(myBitmap);
-	 			  				BitmapDrawable drawable = (BitmapDrawable) userfoto.getDrawable();
-	 			  				Bitmap bitmap_prev = drawable.getBitmap();
-	 			  				hasFoto = true;
-	 			  			    try{
-	 			  			        File file = new File(foto);
-	 			  			        FileOutputStream fOut = new FileOutputStream(file);
-	 			  			        bitmap_prev.compress(Bitmap.CompressFormat.JPEG, 50, fOut);
-	 			  			        fOut.flush();
-	 			  			        fOut.close();}
-	 			  			    catch (Exception e) {
-	 			  			    	BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
-	 			  			}
-	 			  			} catch (FileNotFoundException e) {
-	 			  				BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
-	 			  			} catch (IOException e) {
-	 			  				BeanDatosLog.setDescripcion(NetworkUtils.getStackTrace(e));
-	 			  			}
-
-			
-		}else if (requestCode == RESULT_LOAD_CONTACT) {
-			getContactInfo(data);
-		}else{
-			//facebookLogin.getFacebook().authorizeCallback(requestCode, resultCode, data);
-		}
-	}*/
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == RESULT_LOAD_FOTO) {
@@ -402,7 +394,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 				Bitmap bMapRotate = Bitmap.createBitmap(myBitmap, 0, 0,	myBitmap.getWidth(), myBitmap.getHeight(), mat, true);
 				userfoto.setImageBitmap(bMapRotate);
 				BitmapDrawable drawable = (BitmapDrawable) userfoto.getDrawable();
-	  			Bitmap bitmap_prev = drawable.getBitmap();
+  			Bitmap bitmap_prev = drawable.getBitmap();
 	  			 try{
 	  			       
 	  			        FileOutputStream fOut = new FileOutputStream(file);
@@ -417,38 +409,50 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 			          
 		}else if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK	&& null != data) {
 			 Uri selectedImageUri = data.getData();
-			 try{
-				 Bitmap	myBitmap = Bitmap.createScaledBitmap( MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri),800,480 , false);
+			 Log.d("imagen uri", selectedImageUri+"");
+				 Bitmap myBitmap;
+				try {
+					myBitmap = Bitmap.createScaledBitmap( MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri),800,480 , false);
 				 userfoto.setImageBitmap(myBitmap);
-				 BitmapDrawable drawable = (BitmapDrawable) userfoto.getDrawable();
-	  			Bitmap bitmap_prev = drawable.getBitmap();
-	  			 try{
-	  				selectedImagePath = getPath(selectedImageUri);
-		             if(selectedImagePath!=null){
-		              copyFile(selectedImagePath,fotoNotFull,foto);
-		             }
-		         	File file = new File(selectedImagePath);
-	  			        FileOutputStream fOut = new FileOutputStream(file);
-	  			        bitmap_prev.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
-	  			        fOut.flush();
-	  			        fOut.close();}
-	  			    catch (Exception e) {
-	  			    	BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
-	  			}
+	  			foto = Environment.getExternalStorageDirectory() + "/Traxi/perfil/imagen"+Utils.getCode()+".jpg";
+				fotoNotFull = Environment.getExternalStorageDirectory() + "/Traxi/perfil";
+				File dir = new File (fotoNotFull); 
+				if (!dir.exists())
+				{
+		           dir.mkdirs();
+				}
+			    File fn2;  
+			    try { // Try to Save #2  
+			        fn2 = new File(foto);    
+			        FileOutputStream out = new FileOutputStream(fn2);  
+			        myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);  
+			        out.flush();  
+			        out.close();  
+			      
+			    } catch (Exception e) {  
+			    	BeanDatosLog.setDescripcion(Utils.getStackTrace(e)); 
+			    }
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				 hasFoto = true; 
 
-	             
-				 }catch(Exception e){
-					 BeanDatosLog.setDescripcion(Utils.getStackTrace(e)); 
-				 }
+
+	
          }else if (requestCode == RESULT_LOAD_CONTACT) {
- 			getContactInfo(data);
+ 			getContactInfo(data,1);
+ 		}else if (requestCode == RESULT_LOAD_CONTACT_2) {
+ 			getContactInfo(data,2);
  		}
 	}
 
 	@Override
 	public void onBackPressed() {
-		if(origen.equals("menu")){
+		if(origen!=null&&origen.equals("menu")){
 				super.onBackPressed();
 		}else{
 			new Dialogos().seguroQuiereSalir(MitaxiRegisterManuallyActivity.this).show();
@@ -465,9 +469,10 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 
 		private ProgressDialog pDialog;
 		private String miFoto = "";
-		private String resultado;
+		private String resultado="";
 		public static final int HTTP_TIMEOUT = 30 * 1000;
 
+		@SuppressWarnings("deprecation")
 		@Override
 		protected Void doInBackground(String... params) {
 			miFoto = (String) params[0];
@@ -484,9 +489,8 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 				HttpConnectionParams.setSoTimeout(par, HTTP_TIMEOUT);
 				ConnManagerParams.setTimeout(par, HTTP_TIMEOUT);
 				HttpPost httppost;
-				if(origen.equals("menu")){
+				if(origen!=null&&origen.equals("menu")){
 				 httppost = new HttpPost("http://datos.labplc.mx/~mikesaurio/taxi.php?act=pasajero&type=updatepost");
-				//	 httppost = new HttpPost("http://datos.labplc.mx/~mikesaurio/taxi.php?act=pasajero&type=identificaplaca");
 				}else{
 				 httppost = new HttpPost("http://datos.labplc.mx/~mikesaurio/taxi.php?act=pasajero&type=addpost");
 				}
@@ -496,7 +500,9 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 				entity.addPart("telemer",new StringBody(user.getTelemergencia() + ""));
 				entity.addPart("os", new StringBody(user.getOs() + ""));
 				entity.addPart("correoemer",new StringBody(user.getCorreoemergencia() + ""));
-
+				entity.addPart("telemer2",new StringBody(user.getTelemergencia_2() + ""));
+				entity.addPart("correoemer2",new StringBody(user.getCorreoemergencia_2() + ""));
+				
 				File file = new File(miFoto);
 				entity.addPart("foto", new FileBody(file));
 				System.setProperty("http.keepAlive", "false");
@@ -512,7 +518,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 				}
 				in.close();
 				resultado = sb.toString();
-				
+			//	Log.d("******", sb.toString()+"sjkdnds,jn");
 				
 				httpclient = null;
 				response = null;
@@ -520,9 +526,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 					String errorJson = "";
 					String successsJson = "";
 					String pk_user = "";
-
 					JSONObject json = (JSONObject) new JSONTokener(resultado).nextValue();
-
 					JSONObject json2 = json.getJSONObject("message");
 					try {
 						errorJson = (String) json2.get("error");
@@ -542,9 +546,8 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 						savePreferences(user); // guardamos todo en preferencias
 
 					} else if (errorJson != null) {
-				
 						Log.d("error 201", resultado+"");
-						resultado="muyLargo";
+							resultado="muyLargo";
 						
 					}
 				} else {
@@ -569,8 +572,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
 			if(resultado.equals("muyLargo")){
-				new Dialogos();
-				Dialogos.Toast(getBaseContext(), getResources().getString(R.string.imagen_muy_grande), Toast.LENGTH_LONG);
+				Dialogos.Toast(MitaxiRegisterManuallyActivity.this, getResources().getString(R.string.imagen_muy_grande), Toast.LENGTH_LONG);
 			}
 			pDialog.dismiss();
 			this.cancel(true);
@@ -612,6 +614,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 			    	       }
 						// Camara
 						Intent intent = new Intent(	MediaStore.ACTION_IMAGE_CAPTURE);
+						intent.putExtra("android.intent.extras.CAMERA_FACING", 1);
 						Uri output = Uri.fromFile(new File(foto));
 						intent.putExtra(MediaStore.EXTRA_OUTPUT, output);
 						startActivityForResult(intent, RESULT_LOAD_FOTO); 
@@ -626,11 +629,8 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 
 					@Override
 					public void onClick(View view) {
-						foto = Environment.getExternalStorageDirectory() + "/Traxi/perfil/imagen"+Utils.getCode()+".jpg";
-						fotoNotFull = Environment.getExternalStorageDirectory() + "/Traxi/perfil";
-					//	foto = Environment.getExternalStorageDirectory() + "/hancel";
-						//foto = Environment.getExternalStorageDirectory() + "/imagen"+ NetworkUtils.getCode() + ".jpg";
-						// Galeria
+					/*	foto = Environment.getExternalStorageDirectory() + "/Traxi/perfil/imagen"+Utils.getCode()+".jpg";
+						fotoNotFull = Environment.getExternalStorageDirectory() + "/Traxi/perfil";*/
 						Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 						startActivityForResult(i, RESULT_LOAD_IMAGE);
 
@@ -642,7 +642,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 	}
 	
 	
-	public void getContactInfo(Intent intent)
+	public void getContactInfo(Intent intent, int contacto)
 	{
 		try{
 			  Cursor   cursor =  managedQuery(intent.getData(), null, null, null, null);      
@@ -653,17 +653,22 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 			       String name = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME)); 
 			       String hasPhone = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
 		
-			       if ( hasPhone.equalsIgnoreCase("1"))
+			       if ( hasPhone.equalsIgnoreCase("1")){
 			           hasPhone = "true";
-			       else
+			           
+			       }else{
 			           hasPhone = "false" ;
+			       }
 			       if (Boolean.parseBoolean(hasPhone)) 
 			       {
 			        Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = "+ contactId,null, null);
 			        while (phones.moveToNext()) 
 			        {
 			          String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-			          etInfousertelemergency.setText(phoneNumber.replaceAll(" ", ""));
+			          if(contacto==1)
+			        	  etInfousertelemergency.setText(phoneNumber.replaceAll(" ", ""));
+			          else
+			        	  etInfousertelemergency_2.setText(phoneNumber.replaceAll(" ", "")); 
 			          break;
 			        }
 			        phones.close();
@@ -674,7 +679,10 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 			       while (emails.moveToNext()) 
 			       {
 			        String emailAddress = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
-			        etInfousermailemergency.setText(emailAddress);
+			        if(contacto==1)
+			        	etInfousermailemergency.setText(emailAddress);
+			        else
+			        	etInfousermailemergency_2.setText(emailAddress);
 			        break;
 			       }
 			       
@@ -686,57 +694,35 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 			BeanDatosLog.setDescripcion(Utils.getStackTrace(e));
 		}
 	}
-	
-	/*
-	 * obtiene la uri de la imagen de la galeria
-	 */
-	  public String getPath(Uri uri) {
-	        String[] projection = { MediaStore.Images.Media.DATA };
-	        Cursor cursor = managedQuery(uri, projection, null, null, null);
-	        if(cursor!=null)
-	        {
-	            int column_index = cursor
-	            .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-	            cursor.moveToFirst();
-	            return cursor.getString(column_index);
-	        }
-	        else return null;
-	    }
+
+	   /**
+	    * cuando el usuario no pone foto de perfil le asignamos una por defecto 
+	    */
+	    public void guardarImagenEstatica() {
+
+		 	Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher_dino);
+			foto = Environment.getExternalStorageDirectory() + "/Traxi/perfil/imagen"+Utils.getCode()+".jpg";
+			fotoNotFull = Environment.getExternalStorageDirectory() + "/Traxi/perfil";
+			File dir = new File (fotoNotFull); 
+			if (!dir.exists())
+			{
+	           dir.mkdirs();
+			}
+		    File fn2;  
+		    try { // Try to Save #2  
+		        fn2 = new File(foto);    
+		        FileOutputStream out = new FileOutputStream(fn2);  
+		        bmp.compress(Bitmap.CompressFormat.JPEG, 100, out);  
+		        out.flush();  
+		        out.close();  
+		      
+		    } catch (Exception e) {  
+		    	BeanDatosLog.setDescripcion(Utils.getStackTrace(e)); 
+		    }  
+			
+		}
+	  
 	    
 	  
-	  /*
-	   * copia el archivo de la galeria y lo copia en un file de traxi
-	   */
-	    private void copyFile(String inputPath, String outputPath,String fileFull) {
-	    	   InputStream in = null;
-	    	   OutputStream out = null;
-	    	   try {
-	    	       File dir = new File (outputPath); 
-	    	       if (!dir.exists())
-	    	       {
-	    	           dir.mkdirs();
-	    	       }
-	    	       in = new FileInputStream(inputPath);        
-	    	       out = new FileOutputStream(fileFull);
-	    	       byte[] buffer = new byte[1024];
-	    	       int read;
-	    	       while ((read = in.read(buffer)) != -1) {
-	    	           out.write(buffer, 0, read);
-	    	       }
-	    	       in.close();
-	    	       in = null;
-	    	       out.flush();
-	    	       out.close();
-	    	       out = null;        
-
-	    	   }  catch (FileNotFoundException fnfe1) {
-	    	       Log.e("tag", fnfe1.getMessage());
-	    	   }
-	    	           catch (Exception e) {
-	    	       Log.e("tag", e.getMessage());
-	    	   }
-
-	    	}
-	   
 	
 }
