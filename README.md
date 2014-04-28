@@ -50,7 +50,6 @@ La aplicación tiene soporte para idiomas español e ingles.
 # Pantallas
 
 <p align="center">
-<<<<<<< HEAD
   <img src="https://github.com/mikesaurio/trackxi/raw/master/screenshot/Screenshot_2014-04-28-13-32-02.png?raw=true" alt="Splash" height="460" width="240"/>
     <img src="https://github.com/mikesaurio/trackxi/raw/master/screenshot/Screenshot_2014-04-28-13-47-11.png?raw=true" alt="Registro"  height="460" width="240"/>
       <img src="https://github.com/mikesaurio/trackxi/raw/master/screenshot/Screenshot_2014-04-28-13-50-43.png?raw=true" alt="Buscar"  height="460" width="240"/>
@@ -66,21 +65,9 @@ La aplicación tiene soporte para idiomas español e ingles.
       <img src="https://github.com/mikesaurio/trackxi/raw/master/screenshot/Screenshot_2014-04-28-14-00-14.png?raw=true" alt="falta de viaje"  height="460" width="240"/>
         <img src="https://github.com/mikesaurio/trackxi/raw/master/screenshot/Screenshot_2014-04-28-14-00-29.png?raw=true" alt="Mi Destino"  height="460" width="240"/>
         <img src="https://github.com/mikesaurio/trackxi/raw/master/screenshot/Screenshot_2014-04-28-14-00-47.png?raw=true" alt="Calificar"  height="460" width="240"/>
-=======
-  <img src="https://github.com/mikesaurio/trackxi/raw/master/screenshot/Screenshot_2014-04-28-13-32-02.png?raw=true" alt="Splash"/>
-    <img src="https://github.com/mikesaurio/trackxi/raw/master/screenshot/Screenshot_2014-04-28-13-32-02.png?raw=true" alt="Splash"/>
-      <img src="https://github.com/mikesaurio/trackxi/raw/master/screenshot/Screenshot_2014-04-28-13-32-02.png?raw=true" alt="Splash"/>
-        <img src="https://github.com/mikesaurio/trackxi/raw/master/screenshot/Screenshot_2014-04-28-13-32-02.png?raw=true" alt="Splash"/>
->>>>>>> d398a2e4d5dbffa7c684ce53963c00b84a86b092
 </p>
 
-
-
-<<<<<<< HEAD
-# LIBRERIAS EXTERNAS
-=======
-# LIBRERIAS EXTERNAS REQUERIDAS
->>>>>>> d398a2e4d5dbffa7c684ce53963c00b84a86b092
+# LIBRERIAS EXTERNAS 
 
     google_play_services_lib
     FacebookSDK
