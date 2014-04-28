@@ -5,6 +5,6 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
-	<classpathentry kind="lib" path="/Users/mikesaurio/Downloads/acra-4.5.0/build/acra-4.5.0.jar"/>
+	<classpathentry kind="lib" path="/Users/mikesaurio/Documents/adt-bundle-mac-x86_64-20130917/git/trackxi.git/Trackxi/libs/acra-4.5.0.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

@@ -83,7 +83,7 @@ AYUDA PARA AGREGAR google_play_services_lib
     dar doble click en la ruta - "android-sdk\extras\google\google_play_services"
     
 AYUDA PARA AGREGAR FacebookSDK
-    se encuentra en https://github.com/facebook/facebook-android-sdk
+    se encuentra en https://developers.facebook.com/docs/android/
 
 
 # LIBRERIAS INTERNAS
