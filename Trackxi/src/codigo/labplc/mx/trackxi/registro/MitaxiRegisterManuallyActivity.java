@@ -249,11 +249,11 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 					//	Dialogos.Toast(getApplicationContext(), getString(R.string.no_foto_add), Toast.LENGTH_LONG);
 					}
 				} else {
-					Toast.makeText(getApplicationContext(),getString(R.string.edittext_wrong_info),Toast.LENGTH_LONG).show();
+					Dialogos.Toast(MitaxiRegisterManuallyActivity.this,getString(R.string.edittext_wrong_info),Toast.LENGTH_LONG);
 
 				}
 			} else {
-				Toast.makeText(getApplicationContext(),getString(R.string.edittext_emtpy),Toast.LENGTH_LONG).show();
+					Dialogos.Toast(MitaxiRegisterManuallyActivity.this,getString(R.string.edittext_emtpy),Toast.LENGTH_LONG);
 
 			}
 		}
@@ -572,7 +572,7 @@ public class MitaxiRegisterManuallyActivity extends Activity {
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
 			if(resultado.equals("muyLargo")){
-				Dialogos.Toast(getBaseContext(), getResources().getString(R.string.imagen_muy_grande), Toast.LENGTH_LONG);
+				Dialogos.Toast(MitaxiRegisterManuallyActivity.this, getResources().getString(R.string.imagen_muy_grande), Toast.LENGTH_LONG);
 			}
 			pDialog.dismiss();
 			this.cancel(true);

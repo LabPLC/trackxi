@@ -210,6 +210,9 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 		if (currentLocation != null) {
 			latitud = Double.parseDouble(currentLocation.getLatitude() + "");
 			longitud = Double.parseDouble(currentLocation.getLongitude() + "");
+			
+			Log.d(TAG, "latitud"+latitud);
+			Log.d(TAG, "longitud"+longitud);
 
 			if (isFirstLocation) {
 				latitud_inicial = latitud;
@@ -260,7 +263,7 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 			taxiActivity.runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
-					Dialogos.Toast(getApplicationContext(),
+					Dialogos.Toast(taxiActivity,
 							getResources().getString(R.string.GPS_OFF), Toast.LENGTH_LONG);
 				}
 			});
@@ -302,7 +305,7 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
 			taxiActivity.runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
-					Dialogos.Toast(getApplicationContext(),
+					Dialogos.Toast(taxiActivity,
 							getResources().getString(R.string.GPS_OFF), Toast.LENGTH_LONG);
 				}
 			});
@@ -511,7 +514,7 @@ public class ServicioGeolocalizacion extends Service implements Runnable {
     	try{
     	 if(getPanicoActivado()){
     	 if(algoPaso){
-    		 Log.d(TAG, "enviando mensaje de panico");
+    		// Log.d(TAG, "enviando mensaje de panico");
     		   Vibrator v = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
 			   v.vibrate(3000);
 			   SharedPreferences prefs = getSharedPreferences("MisPreferenciasTrackxi",Context.MODE_PRIVATE);
