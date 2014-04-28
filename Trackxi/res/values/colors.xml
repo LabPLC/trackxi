@@ -4,7 +4,6 @@
     <!-- Generic button -->
     <color name="generic_btn_unpressed">#EACC98</color>
     <color name="generic_btn_pressed">#FF8800</color>
-    <color name="generic_amarillo">#EACC98</color>
     <color name="selector_btn_background_pressed">#FF0099CC</color>
     <color name="selector_btn_background_focused">#77000000</color>
     <color name="selector_btn_background_default">#77000000</color>

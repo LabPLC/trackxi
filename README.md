@@ -1,6 +1,5 @@
 ![alt tag](https://github.com/mikesaurio/trackxi/raw/master/Trackxi/res/drawable-hdpi/ic_launcher.png) TRAXI
 ============
-Desarrollada en Eclipse Kepler y ADT para android 4.0 y superiores
 
 App que te auxilia en a la hora de tomar un taxi del Distrito Federal (DF), puedes tomar una foto al número de placa que esta en el tablero o en la puerta de un taxi o bien ingresarla manualmente, se te mostrarán los datos del vehículo ademas de un termómetro de confianza:
 
@@ -47,6 +46,8 @@ Podrás modificar la frecuencia con la que el telefono te rastrea, activar y dec
 
 La aplicación tiene soporte para idiomas español e ingles.
 
+___________________
+___________________
 # Pantallas
 
 <p align="center">
@@ -66,6 +67,11 @@ La aplicación tiene soporte para idiomas español e ingles.
         <img src="https://github.com/mikesaurio/trackxi/raw/master/screenshot/Screenshot_2014-04-28-14-00-29.png?raw=true" alt="Mi Destino"  height="460" width="240"/>
         <img src="https://github.com/mikesaurio/trackxi/raw/master/screenshot/Screenshot_2014-04-28-14-00-47.png?raw=true" alt="Calificar"  height="460" width="240"/>
 </p>
+
+
+___________________
+___________________
+Desarrollada en Eclipse Kepler y ADT para android 4.0 y superiores
 
 # LIBRERIAS EXTERNAS 
 
@@ -93,8 +99,8 @@ AYUDA PARA AGREGAR FacebookSDK
     socketio.jar
     
 Estas se encuentran en la carpeta libs del proyecto.
-
-
+___________________
+___________________
 # ¿QUIÉRES PROBAR LA APP?
 
 Estamos en pruebas BETA así que debes enviar un correo (gmail preferentemente) a miguel.moran@codigo.labplc.mx una vez agregado al grupo TRAXI podras descargarla de aqui [Traxi Beta](https://play.google.com/apps/testing/codigo.labplc.mx.trackxi)
